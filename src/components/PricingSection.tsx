@@ -398,7 +398,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onOpenCalculator
             <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto shrink-0">
               <button
                 onClick={() => onOpenDemoWidget?.('book')}
-                className="px-6 py-3.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-extrabold text-xs sm:text-sm shadow-lg shadow-emerald-500/20 flex items-center justify-center gap-2 transition-all hover:scale-105"
+                className="liquid-metal px-6 py-3.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-extrabold text-xs sm:text-sm shadow-lg shadow-emerald-500/20 flex items-center justify-center gap-2 transition-all hover:scale-105"
               >
                 <Sparkles className="w-4 h-4" />
                 <span>Записаться на демо</span>

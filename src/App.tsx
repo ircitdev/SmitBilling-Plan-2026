@@ -14,6 +14,7 @@ import { RiskMatrixSection } from './components/RiskMatrixSection';
 import { RecommendationsSection } from './components/RecommendationsSection';
 import { RoadmapStatusSection } from './components/RoadmapStatusSection';
 import { ConclusionSection } from './components/ConclusionSection';
+import { AuroraBackground } from './components/AuroraBackground';
 import { RoadmapCta } from './components/RoadmapCta';
 import { Footer } from './components/Footer';
 import { RoiCalculatorModal } from './components/RoiCalculatorModal';
@@ -172,6 +173,8 @@ export default function App() {
         isPlayingAudio={isPlayingAudio}
         onPlayAudio={() => setIsPlayingAudio(!isPlayingAudio)}
       />
+
+      <AuroraBackground />
 
       {/* Main Container */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8">

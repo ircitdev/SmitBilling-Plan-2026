@@ -58,7 +58,7 @@ export const RoadmapCta: React.FC = () => {
           <div className="lg:shrink-0">
             <a
               href="/plan2026/roadmap/"
-              className="group inline-flex w-full lg:w-auto items-center justify-center gap-2.5 px-7 py-4 rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-sm sm:text-base shadow-lg shadow-emerald-500/25 transition-all duration-200 hover:scale-[1.03] motion-reduce:transition-none motion-reduce:hover:scale-100"
+              className="liquid-metal group inline-flex w-full lg:w-auto items-center justify-center gap-2.5 px-7 py-4 rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-sm sm:text-base shadow-lg shadow-emerald-500/25 transition-all duration-200 hover:scale-[1.03] motion-reduce:transition-none motion-reduce:hover:scale-100"
             >
               <Map className="w-5 h-5" />
               Дорожная карта

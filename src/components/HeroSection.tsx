@@ -77,7 +77,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               <div className="flex flex-wrap items-center gap-3 mb-8">
                 <button
                   onClick={() => handleDemo('book')}
-                  className="px-5 py-3 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-extrabold text-xs sm:text-sm shadow-md shadow-emerald-600/30 flex items-center gap-2 transition-all hover:scale-[1.02]"
+                  className="liquid-metal px-5 py-3 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-extrabold text-xs sm:text-sm shadow-md shadow-emerald-600/30 flex items-center gap-2 transition-all hover:scale-[1.02]"
                 >
                   <Sparkles className="w-4 h-4 text-amber-300 animate-pulse" />
                   <span>Записаться на 30-мин live-демо</span>

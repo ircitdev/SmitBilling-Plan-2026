@@ -423,7 +423,7 @@ export const GeminiDemoWidget: React.FC<GeminiDemoWidgetProps> = ({
               setActiveTab('chat');
               onOpen();
             }}
-            className="group relative w-16 h-16 rounded-full bg-slate-900 hover:bg-slate-800 dark:bg-emerald-600 dark:hover:bg-emerald-500 text-white shadow-2xl hover:shadow-emerald-600/30 transition-all duration-300 hover:scale-105 border border-slate-700/50 dark:border-emerald-400/40 flex items-center justify-center motion-reduce:transition-none motion-reduce:hover:scale-100"
+            className="liquid-metal liquid-metal-dark group relative w-16 h-16 rounded-full bg-slate-900 hover:bg-slate-800 dark:bg-emerald-600 dark:hover:bg-emerald-500 text-white shadow-2xl hover:shadow-emerald-600/30 transition-all duration-300 hover:scale-105 border border-slate-700/50 dark:border-emerald-400/40 flex items-center justify-center motion-reduce:transition-none motion-reduce:hover:scale-100"
             title="Спросить AI и записаться на демо"
             aria-label="Спросить AI и записаться на демо"
           >
