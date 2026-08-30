@@ -29,12 +29,29 @@ export const SormModal: React.FC<SormModalProps> = ({ isOpen, onClose }) => {
     setCheckedIds((prev) => ({ ...prev, [id]: !prev[id] }));
   };
 
+  // Панель закрывается клавишей Esc, пока открыта
+  React.useEffect(() => {
+    if (!isOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-sm animate-in fade-in duration-200">
-      <div 
-        className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl p-6 sm:p-8"
+    <div
+      className="fixed inset-0 z-50 flex justify-end bg-slate-950/60 backdrop-blur-sm animate-in fade-in duration-200"
+      onClick={onClose}
+      role="presentation"
+    >
+      <div
+        className="w-full max-w-2xl h-full overflow-y-auto bg-white dark:bg-slate-900 border-l border-slate-200 dark:border-slate-800 shadow-2xl p-6 sm:p-8 animate-in slide-in-from-right duration-300 motion-reduce:animate-none"
+        role="dialog"
+        aria-modal="true"
+        aria-label="План сертификации СОРМ"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
@@ -135,7 +152,7 @@ export const SormModal: React.FC<SormModalProps> = ({ isOpen, onClose }) => {
             onClick={onClose}
             className="px-6 py-2.5 rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold text-xs hover:bg-slate-800 transition-colors shadow-xs"
           >
-            Понятно
+            Закрыть
           </button>
         </div>
       </div>

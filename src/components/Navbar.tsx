@@ -40,8 +40,8 @@ export const Navbar: React.FC<NavbarProps> = ({
         {/* Brand / Logo - Bento Style */}
         <div className="flex items-center gap-3 min-w-0">
           <a href="#tldr" className="flex items-center gap-3 group">
-            <div className="w-11 h-11 rounded-2xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 flex items-center justify-center font-bold shadow-md group-hover:scale-105 transition-transform">
-              <Sparkles className="w-5 h-5 text-emerald-400 dark:text-emerald-600" />
+            <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-400 text-white flex items-center justify-center font-extrabold text-xl shadow-md shadow-emerald-500/20 group-hover:scale-105 transition-transform">
+              С
             </div>
             <div className="min-w-0">
               <div className="flex items-center gap-2">

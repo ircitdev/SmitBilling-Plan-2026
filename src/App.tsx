@@ -93,7 +93,10 @@ export default function App() {
         />
 
         {/* TL;DR Executive Summary */}
-        <TLDRSection />
+        <TLDRSection
+          onOpenSormDrawer={() => setIsSormOpen(true)}
+          onOpenCalculator={() => setIsCalculatorOpen(true)}
+        />
 
         {/* Market Context & Regulatory Drivers */}
         <MarketSection onOpenSormModal={() => setIsSormOpen(true)} />
