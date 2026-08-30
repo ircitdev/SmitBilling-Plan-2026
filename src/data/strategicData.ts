@@ -1854,9 +1854,9 @@ export const ROADMAP_ITEMS: RoadmapItem[] = [
   {
     id: 'rd25',
     title: 'Captive Portal — сетевая часть (Walled Garden)',
-    description: 'Логика биллинга готова (block_policy.py, kill-switch), ожидается сетевая настройка оборудования NAS и IP портала на площадке.',
-    status: 'blocked',
-    statusLabel: 'Заблокирован сетью',
+    description: 'Логика биллинга готова (block_policy.py, kill-switch), сетевая часть настроена на площадке.',
+    status: 'done',
+    statusLabel: 'Готово',
     category: 'network'
   }
 ];

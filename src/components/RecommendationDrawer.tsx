@@ -43,7 +43,7 @@ export const RecommendationDrawer: React.FC<RecommendationDrawerProps> = ({
 
   return (
     <div 
-      className="fixed inset-0 z-50 flex justify-end bg-slate-950/60 backdrop-blur-sm animate-in fade-in duration-200"
+      className="fixed inset-0 z-[100] flex justify-end bg-slate-950/60 backdrop-blur-sm animate-in fade-in duration-200"
       onClick={onClose}
     >
       <div 

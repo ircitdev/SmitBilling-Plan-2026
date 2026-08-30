@@ -11,7 +11,7 @@ import { Map, ArrowRight, CheckCircle2, Clock } from 'lucide-react';
 export const RoadmapCta: React.FC = () => {
   return (
     <section className="mt-16 mb-4 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="relative overflow-hidden rounded-[32px] bg-slate-900 dark:bg-slate-950 border border-slate-800 shadow-xl">
+      <div className="rotating-gradient glow-shadow relative overflow-hidden rounded-[32px] bg-slate-900 dark:bg-slate-950 border border-slate-800 shadow-xl">
         {/* мягкое свечение бренда, чтобы блок читался как акцент, а не как ещё одна карточка */}
         <div
           aria-hidden="true"

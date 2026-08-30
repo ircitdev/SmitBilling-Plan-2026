@@ -63,7 +63,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 </span>
               </div>
 
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.15] mb-4">
+              <h1 className="shining-text text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.15] mb-4">
                 Стратегический план развития СмИТ Биллинг
               </h1>
 
@@ -121,7 +121,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         <ScrollStagger staggerDelay={0.1} className="flex flex-col gap-6">
           {/* Bento Tile 1: Solid Accent Card (Live Target ICP & Quick ROI) */}
           <ScrollStaggerItem distance={20}>
-            <div className="bg-emerald-600 text-white rounded-[32px] p-7 shadow-lg flex flex-col justify-between relative overflow-hidden group">
+            <div className="frosted-card bg-emerald-600/90 text-white rounded-[32px] p-7 shadow-lg flex flex-col justify-between relative overflow-hidden group">
               <div className="flex justify-between items-start">
                 <div className="w-11 h-11 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm">
                   <Target className="w-6 h-6 text-white" />

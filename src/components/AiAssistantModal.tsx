@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useExitAnimation } from '../hooks/useExitAnimation';
 import { 
   X, 
   Bot, 
@@ -11,6 +12,7 @@ import {
   TrendingUp,
   HelpCircle
 } from 'lucide-react';
+import { ChatMarkdown } from './ChatMarkdown';
 import { GoogleGenAI } from '@google/genai';
 import { COMPETITORS, RECOMMENDATIONS, METADATA, POSITIONING_DATA, PRICING_TIERS, PRICING_TERMS_CONFIG } from '../data/strategicData';
 
@@ -150,15 +152,18 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({ isOpen, onCl
     }
   };
 
-  if (!isOpen) return null;
+  const { mounted, closing } = useExitAnimation(isOpen);
+
+
+  if (!mounted) return null;
 
   return (
     <div 
-      className="fixed inset-0 z-50 flex justify-end bg-slate-950/60 backdrop-blur-sm animate-in fade-in duration-200"
+      className={`fixed inset-0 z-[100] flex justify-end bg-slate-950/60 backdrop-blur-sm animate-in fade-in duration-200 ${closing ? 'is-closing' : ''}`}
       onClick={onClose}
     >
       <div 
-        className="w-full max-w-xl sm:max-w-2xl bg-white dark:bg-slate-900 border-l border-slate-200 dark:border-slate-800 h-full shadow-2xl flex flex-col justify-between overflow-hidden animate-in slide-in-from-right duration-300"
+        className="panel-right w-full max-w-xl sm:max-w-2xl bg-white dark:bg-slate-900 border-l border-slate-200 dark:border-slate-800 h-full shadow-2xl flex flex-col justify-between overflow-hidden animate-in slide-in-from-right duration-300"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
@@ -205,13 +210,13 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({ isOpen, onCl
               )}
 
               <div
-                className={`p-4 rounded-[22px] max-w-[85%] text-xs sm:text-sm leading-relaxed whitespace-pre-wrap ${
+                className={`p-4 rounded-[22px] max-w-[85%] text-xs sm:text-sm leading-relaxed ${
                   msg.role === 'user'
                     ? 'bg-emerald-600 text-white rounded-tr-sm shadow-xs'
                     : 'bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-tl-sm border border-slate-200/60 dark:border-slate-700/60 shadow-xs'
                 }`}
               >
-                {msg.text}
+                <ChatMarkdown text={msg.text} />
               </div>
             </div>
           ))}

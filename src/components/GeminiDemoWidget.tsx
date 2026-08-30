@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useExitAnimation } from '../hooks/useExitAnimation';
 import {
   MessageCircle, 
   Sparkles, 
@@ -25,6 +26,7 @@ import {
   Trash2,
   CalendarCheck
 } from 'lucide-react';
+import { ChatMarkdown } from './ChatMarkdown';
 import { DemoBooking } from '../types';
 import { METADATA } from '../data/strategicData';
 import { 
@@ -100,11 +102,20 @@ export const GeminiDemoWidget: React.FC<GeminiDemoWidgetProps> = ({
 
   // Кнопка и подсказка появляются не сразу: первые секунды читатель
   // изучает документ, всплывающий помощник в этот момент только мешает.
+  const { mounted: chatMounted, closing: chatClosing } = useExitAnimation(isOpen);
   const [isRevealed, setIsRevealed] = useState(false);
   useEffect(() => {
     const t = window.setTimeout(() => setIsRevealed(true), 20000);
     return () => window.clearTimeout(t);
   }, []);
+
+  // Подсказка живёт полминуты и убирается сама: своё дело она сделала,
+  // дальше это просто плашка, перекрывающая текст. Кнопка остаётся.
+  useEffect(() => {
+    if (!isRevealed) return;
+    const t = window.setTimeout(() => setShowTeaser(false), 30000);
+    return () => window.clearTimeout(t);
+  }, [isRevealed]);
 
   // Chat State
   const [messages, setMessages] = useState<ChatMessage[]>([
@@ -370,12 +381,12 @@ export const GeminiDemoWidget: React.FC<GeminiDemoWidgetProps> = ({
     <>
       {/* FLOATING TRIGGER BUTTON (Fixed in bottom right) */}
       <div
-        className={`fixed bottom-5 right-5 z-50 flex flex-col items-end gap-3 transition-opacity duration-500 motion-reduce:transition-none ${isRevealed ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
+        className={`fixed bottom-5 right-5 z-[45] flex flex-col items-end gap-3 transition-opacity duration-500 motion-reduce:transition-none ${isRevealed ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
         aria-hidden={!isRevealed}
       >
         {/* Floating Teaser Bubble (Dismissable / Auto-inviting) */}
         {showTeaser && !isOpen && (
-          <div className="relative bg-white dark:bg-slate-900 border border-emerald-500/40 dark:border-emerald-500/30 rounded-2xl p-4 shadow-2xl max-w-xs sm:max-w-sm animate-in fade-in slide-in-from-bottom-4 duration-300">
+          <div className="frosted-card relative bg-white/70 dark:bg-slate-900/70 border border-emerald-500/40 dark:border-emerald-500/30 rounded-2xl p-4 shadow-2xl max-w-xs sm:max-w-sm animate-in fade-in slide-in-from-bottom-4 duration-300">
             <button
               onClick={() => setShowTeaser(false)}
               className="absolute top-2 right-2 p-1 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 rounded-lg transition-colors"
@@ -447,10 +458,10 @@ export const GeminiDemoWidget: React.FC<GeminiDemoWidgetProps> = ({
       </div>
 
       {/* MODAL / WIDGET WINDOW */}
-      {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-stretch sm:items-center justify-center p-0 sm:p-4 bg-slate-950/60 backdrop-blur-sm animate-in fade-in duration-200">
+      {chatMounted && (
+        <div className={`fixed inset-0 z-[100] flex items-stretch sm:items-center justify-center p-0 sm:p-4 bg-slate-950/60 backdrop-blur-sm animate-in fade-in duration-200 ${chatClosing ? 'is-closing' : ''}`}>
           <div 
-            className="w-full h-[100dvh] sm:h-auto sm:max-w-2xl bg-white dark:bg-slate-900 border-0 sm:border border-slate-200 dark:border-slate-800 rounded-none sm:rounded-[32px] shadow-2xl flex flex-col max-h-none sm:max-h-[85vh] overflow-hidden animate-in slide-in-from-bottom-6 duration-300 motion-reduce:animate-none"
+            className="panel-bottom w-full h-[100dvh] sm:h-auto sm:max-w-2xl bg-white dark:bg-slate-900 border-0 sm:border border-slate-200 dark:border-slate-800 rounded-none sm:rounded-[32px] shadow-2xl flex flex-col max-h-none sm:max-h-[85vh] overflow-hidden animate-in slide-in-from-bottom-6 duration-300 motion-reduce:animate-none"
           >
             {/* WIDGET HEADER */}
             <div className="p-4 sm:p-5 border-b border-slate-100 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-900/90 flex items-center justify-between gap-4">
@@ -546,8 +557,8 @@ export const GeminiDemoWidget: React.FC<GeminiDemoWidgetProps> = ({
                           ? 'bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-slate-900 dark:text-white'
                           : 'bg-slate-100 dark:bg-slate-800/90 text-slate-800 dark:text-slate-200 rounded-tl-none border border-slate-200/60 dark:border-slate-700/60'
                       }`}>
-                        <div className="whitespace-pre-line prose prose-sm dark:prose-invert">
-                          {msg.text}
+                        <div className="prose prose-sm dark:prose-invert max-w-none">
+                          <ChatMarkdown text={msg.text} />
                         </div>
 
                         {/* Suggested Agenda Items if present */}

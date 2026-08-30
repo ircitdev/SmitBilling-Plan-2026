@@ -21,6 +21,11 @@ interface PricingSectionProps {
 
 export const PricingSection: React.FC<PricingSectionProps> = ({ onOpenCalculator, onOpenDemoWidget }) => {
   const [copiedText, setCopiedText] = useState<string | null>(null);
+  const [period, setPeriod] = useState<'annual' | 'monthly'>('annual');
+
+  // Порядок карточек — по возрастанию цены: «Видеонаблюдение» дешевле
+  // «Старта», а в данных лежит четвёртым.
+  const orderedTiers = [...PRICING_TIERS].sort((a, b) => a.annualPrice - b.annualPrice);
 
   const handleCopy = (text: string, id: string) => {
     navigator.clipboard.writeText(text);
@@ -28,11 +33,6 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onOpenCalculator
     setTimeout(() => setCopiedText(null), 2000);
   };
 
-  const startTier = PRICING_TIERS.find(t => t.id === 'start');
-  const proTier = PRICING_TIERS.find(t => t.id === 'pro');
-  const businessTier = PRICING_TIERS.find(t => t.id === 'business');
-  const videoTier = PRICING_TIERS.find(t => t.id === 'video');
-  const enterpriseTier = PRICING_TIERS.find(t => t.id === 'enterprise');
 
   return (
     <section id="pricing" className="py-16 sm:py-20 border-b border-slate-200/80 dark:border-slate-800/80 relative">
@@ -62,207 +62,115 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onOpenCalculator
           </div>
         </ScrollReveal>
 
-        {/* Pricing Cards Grid */}
-        <div className="space-y-6 mb-8">
-          {/* Row 1: 3 main tiers (Старт, Pro, Бизнес) */}
-          <ScrollStagger staggerDelay={0.09} className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            
-            {/* 1. СТАРТ (Featured / First Client Target) */}
-            {startTier && (
-              <ScrollStaggerItem distance={22} className="h-full">
-                <div className="rounded-[28px] p-6 sm:p-8 bg-emerald-50/40 dark:bg-emerald-950/20 border-2 border-emerald-500/80 dark:border-emerald-500 shadow-sm relative flex flex-col justify-between transition-all hover:shadow-md h-full">
-                  <div>
-                    <div className="mb-4">
-                      <span className="inline-flex items-center px-3.5 py-1 rounded-full text-xs font-black tracking-wider uppercase bg-[#059669] text-white">
-                        {startTier.badge || 'ПРОДАЁМ ПЕРВЫМ'}
-                      </span>
-                    </div>
+        {/* Переключатель периода: одна цена на карточке вместо двух строк */}
+        <ScrollReveal direction="up" distance={16}>
+          <div className="flex justify-center mb-8">
+            <div
+              role="group"
+              aria-label="Период оплаты"
+              className="inline-flex items-center p-1 rounded-full bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700"
+            >
+              {(['annual', 'monthly'] as const).map((p) => (
+                <button
+                  key={p}
+                  onClick={() => setPeriod(p)}
+                  aria-pressed={period === p}
+                  className={`px-5 py-2 rounded-full text-sm font-bold transition-colors ${
+                    period === p
+                      ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-sm'
+                      : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
+                  }`}
+                >
+                  {p === 'annual' ? 'За год' : 'В месяц'}
+                </button>
+              ))}
+            </div>
+          </div>
+        </ScrollReveal>
 
-                    <h3 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white mb-2">
-                      {startTier.name}
-                    </h3>
+        {/* Карточки тарифов */}
+        <ScrollStagger staggerDelay={0.07} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5 mb-8 items-stretch">
+          {orderedTiers.map((tier) => {
+            const price = period === 'annual' ? tier.annualPrice : tier.monthlyPrice;
+            const isPrimary = !!tier.isPrimary;
 
-                    <div className="mb-2">
-                      <span className="text-3xl sm:text-4xl font-extrabold text-[#059669] dark:text-emerald-400 tracking-tight">
-                        {startTier.annualPrice.toLocaleString('ru-RU')} ₽
-                      </span>
-                      <span className="text-sm sm:text-base font-semibold text-slate-600 dark:text-slate-400"> / год</span>
-                    </div>
+            return (
+              <ScrollStaggerItem key={tier.id} distance={20} className="h-full">
+                <div
+                  className={`relative h-full flex flex-col rounded-[26px] p-6 border transition-shadow ${
+                    isPrimary
+                      ? 'border-beam bg-emerald-50/50 dark:bg-emerald-950/25 border-emerald-500/70 dark:border-emerald-500/50 shadow-lg shadow-emerald-500/10'
+                      : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md'
+                  }`}
+                >
+                  {tier.badge && (
+                    <span className="absolute -top-3 left-6 inline-flex items-center px-3 py-1 rounded-full bg-emerald-600 text-white text-[10px] font-black tracking-wider uppercase shadow-sm">
+                      {tier.badge}
+                    </span>
+                  )}
 
-                    <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mb-6 pb-6 border-b border-emerald-200/80 dark:border-emerald-800/50">
-                      {startTier.monthlyPrice.toLocaleString('ru-RU')} ₽ в месяц при помесячной оплате
+                  <h3 className="text-lg font-black text-slate-900 dark:text-white">
+                    {tier.name}
+                  </h3>
+
+                  {tier.recommendedFor && (
+                    <p className="mt-1.5 text-xs text-slate-500 dark:text-slate-400 leading-relaxed min-h-[2.5rem]">
+                      {tier.recommendedFor}
                     </p>
+                  )}
 
-                    <ul className="space-y-3">
-                      {startTier.features.map((feature, idx) => (
-                        <li key={idx} className="flex items-center gap-3 text-xs sm:text-sm font-medium text-slate-800 dark:text-slate-200">
-                          <Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400 stroke-[2.5] shrink-0" />
-                          <span>{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
+                  <div className="mt-4 pb-5 border-b border-slate-200/80 dark:border-slate-800">
+                    <div className="flex items-baseline gap-1.5">
+                      <span
+                        className={`text-3xl font-extrabold tracking-tight tabular-nums ${
+                          isPrimary ? 'text-[#059669] dark:text-emerald-400' : 'text-slate-900 dark:text-white'
+                        }`}
+                      >
+                        {price.toLocaleString('ru-RU')} ₽
+                      </span>
+                      <span className="text-sm font-semibold text-slate-500 dark:text-slate-400">
+                        {period === 'annual' ? '/ год' : '/ мес'}
+                      </span>
+                    </div>
+                    <p className="mt-1 text-[11px] text-slate-400 dark:text-slate-500">
+                      {period === 'annual'
+                        ? `или ${tier.monthlyPrice.toLocaleString('ru-RU')} ₽ в месяц`
+                        : `или ${tier.annualPrice.toLocaleString('ru-RU')} ₽ за год`}
+                    </p>
                   </div>
+
+                  {tier.inheritText && (
+                    <p className="mt-4 text-xs font-bold text-slate-600 dark:text-slate-300">
+                      {tier.inheritText}
+                    </p>
+                  )}
+
+                  <ul className={`space-y-2.5 ${tier.inheritText ? 'mt-3' : 'mt-4'}`}>
+                    {tier.features.map((feature, idx) => (
+                      <li key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-700 dark:text-slate-300">
+                        <Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400 stroke-[2.5] shrink-0 mt-0.5" />
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  {onOpenDemoWidget && (
+                    <button
+                      onClick={() => onOpenDemoWidget('book')}
+                      className={`mt-6 w-full py-2.5 rounded-full text-sm font-bold transition-colors ${
+                        isPrimary
+                          ? 'liquid-metal bg-emerald-600 hover:bg-emerald-500 text-white'
+                          : 'bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200'
+                      }`}
+                    >
+                      Запросить демо
+                    </button>
+                  )}
                 </div>
               </ScrollStaggerItem>
-            )}
-
-            {/* 2. PRO */}
-            {proTier && (
-              <ScrollStaggerItem distance={22} className="h-full">
-                <div className="rounded-[28px] p-6 sm:p-8 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between transition-all hover:border-slate-300 dark:hover:border-slate-700 h-full">
-                  <div>
-                    <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mb-2">
-                      {proTier.name}
-                    </h3>
-
-                    <div className="mb-2">
-                      <span className="text-3xl sm:text-4xl font-extrabold text-[#059669] dark:text-emerald-400 tracking-tight">
-                        {proTier.annualPrice.toLocaleString('ru-RU')} ₽
-                      </span>
-                      <span className="text-sm sm:text-base font-semibold text-slate-600 dark:text-slate-400"> / год</span>
-                    </div>
-
-                    <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mb-6 pb-6 border-b border-slate-100 dark:border-slate-800">
-                      {proTier.monthlyPrice.toLocaleString('ru-RU')} ₽ в месяц при помесячной оплате
-                    </p>
-
-                    {proTier.inheritText && (
-                      <p className="text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-200 mb-3">
-                        {proTier.inheritText}
-                      </p>
-                    )}
-
-                    <ul className="space-y-3">
-                      {proTier.features.map((feature, idx) => (
-                        <li key={idx} className="flex items-center gap-3 text-xs sm:text-sm font-medium text-slate-800 dark:text-slate-200">
-                          <Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400 stroke-[2.5] shrink-0" />
-                          <span>{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </ScrollStaggerItem>
-            )}
-
-            {/* 3. БИЗНЕС */}
-            {businessTier && (
-              <ScrollStaggerItem distance={22} className="h-full">
-                <div className="rounded-[28px] p-6 sm:p-8 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between transition-all hover:border-slate-300 dark:hover:border-slate-700 h-full">
-                  <div>
-                    <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mb-2">
-                      {businessTier.name}
-                    </h3>
-
-                    <div className="mb-2">
-                      <span className="text-3xl sm:text-4xl font-extrabold text-[#059669] dark:text-emerald-400 tracking-tight">
-                        {businessTier.annualPrice.toLocaleString('ru-RU')} ₽
-                      </span>
-                      <span className="text-sm sm:text-base font-semibold text-slate-600 dark:text-slate-400"> / год</span>
-                    </div>
-
-                    <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mb-6 pb-6 border-b border-slate-100 dark:border-slate-800">
-                      {businessTier.monthlyPrice.toLocaleString('ru-RU')} ₽ в месяц при помесячной оплате
-                    </p>
-
-                    {businessTier.inheritText && (
-                      <p className="text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-200 mb-3">
-                        {businessTier.inheritText}
-                      </p>
-                    )}
-
-                    <ul className="space-y-3">
-                      {businessTier.features.map((feature, idx) => (
-                        <li key={idx} className="flex items-center gap-3 text-xs sm:text-sm font-medium text-slate-800 dark:text-slate-200">
-                          <Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400 stroke-[2.5] shrink-0" />
-                          <span>{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </ScrollStaggerItem>
-            )}
-
-          </ScrollStagger>
-
-          {/* Row 2: 2 tiers (Видеонаблюдение, Enterprise) */}
-          <ScrollStagger staggerDelay={0.09} className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            
-            {/* 4. ВИДЕОНАБЛЮДЕНИЕ */}
-            {videoTier && (
-              <ScrollStaggerItem distance={22} className="h-full">
-                <div className="rounded-[28px] p-6 sm:p-8 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between transition-all hover:border-slate-300 dark:hover:border-slate-700 h-full">
-                  <div>
-                    <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mb-2">
-                      {videoTier.name}
-                    </h3>
-
-                    <div className="mb-2">
-                      <span className="text-3xl sm:text-4xl font-extrabold text-[#059669] dark:text-emerald-400 tracking-tight">
-                        {videoTier.annualPrice.toLocaleString('ru-RU')} ₽
-                      </span>
-                      <span className="text-sm sm:text-base font-semibold text-slate-600 dark:text-slate-400"> / год</span>
-                    </div>
-
-                    <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mb-6 pb-6 border-b border-slate-100 dark:border-slate-800">
-                      {videoTier.monthlyPrice.toLocaleString('ru-RU')} ₽ в месяц при помесячной оплате
-                    </p>
-
-                    <ul className="space-y-3">
-                      {videoTier.features.map((feature, idx) => (
-                        <li key={idx} className="flex items-center gap-3 text-xs sm:text-sm font-medium text-slate-800 dark:text-slate-200">
-                          <Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400 stroke-[2.5] shrink-0" />
-                          <span>{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </ScrollStaggerItem>
-            )}
-
-            {/* 5. ENTERPRISE */}
-            {enterpriseTier && (
-              <ScrollStaggerItem distance={22} className="h-full">
-                <div className="rounded-[28px] p-6 sm:p-8 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between transition-all hover:border-slate-300 dark:hover:border-slate-700 h-full">
-                  <div>
-                    <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mb-2">
-                      {enterpriseTier.name}
-                    </h3>
-
-                    <div className="mb-2">
-                      <span className="text-3xl sm:text-4xl font-extrabold text-[#059669] dark:text-emerald-400 tracking-tight">
-                        {enterpriseTier.annualPrice.toLocaleString('ru-RU')} ₽
-                      </span>
-                      <span className="text-sm sm:text-base font-semibold text-slate-600 dark:text-slate-400"> / год</span>
-                    </div>
-
-                    <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mb-6 pb-6 border-b border-slate-100 dark:border-slate-800">
-                      {enterpriseTier.monthlyPrice.toLocaleString('ru-RU')} ₽ в месяц при помесячной оплате
-                    </p>
-
-                    {enterpriseTier.inheritText && (
-                      <p className="text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-200 mb-3">
-                        {enterpriseTier.inheritText}
-                      </p>
-                    )}
-
-                    <ul className="space-y-3">
-                      {enterpriseTier.features.map((feature, idx) => (
-                        <li key={idx} className="flex items-center gap-3 text-xs sm:text-sm font-medium text-slate-800 dark:text-slate-200">
-                          <Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400 stroke-[2.5] shrink-0" />
-                          <span>{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </ScrollStaggerItem>
-            )}
-
-          </ScrollStagger>
-        </div>
+            );
+          })}
+        </ScrollStagger>
 
         {/* Info Banner for Individual Add-on Modules */}
         <ScrollReveal direction="up" distance={16} className="mb-8">

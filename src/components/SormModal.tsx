@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useExitAnimation } from '../hooks/useExitAnimation';
 import { 
   X, 
   ShieldAlert, 
@@ -39,15 +40,18 @@ export const SormModal: React.FC<SormModalProps> = ({ isOpen, onClose }) => {
     setCheckedIds((prev) => ({ ...prev, [id]: !prev[id] }));
   };
 
-  if (!isOpen) return null;
+  const { mounted, closing } = useExitAnimation(isOpen);
+
+
+  if (!mounted) return null;
 
   return (
     <div 
-      className="fixed inset-0 z-50 flex justify-end bg-slate-950/60 backdrop-blur-sm animate-in fade-in duration-200"
+      className={`fixed inset-0 z-[100] flex justify-end bg-slate-950/60 backdrop-blur-sm animate-in fade-in duration-200 ${closing ? 'is-closing' : ''}`}
       onClick={onClose}
     >
       <div 
-        className="w-full max-w-xl sm:max-w-2xl bg-white dark:bg-slate-900 border-l border-slate-200 dark:border-slate-800 h-full overflow-y-auto shadow-2xl p-6 sm:p-8 flex flex-col justify-between animate-in slide-in-from-right duration-300"
+        className="panel-right w-full max-w-xl sm:max-w-2xl bg-white dark:bg-slate-900 border-l border-slate-200 dark:border-slate-800 h-full overflow-y-auto shadow-2xl p-6 sm:p-8 flex flex-col justify-between animate-in slide-in-from-right duration-300"
         onClick={(e) => e.stopPropagation()}
       >
         <div>

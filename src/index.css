@@ -171,3 +171,216 @@ html {
 @media (prefers-reduced-motion: reduce) {
   .liquid-metal::before { animation: none; opacity: .35; }
 }
+
+/* ── Луч по рамке (border-beam-panel, rmahammad) ─────────────────────
+   Конический градиент вращается под маской, оставляя видимой только
+   рамку: получается огонёк, обегающий карточку по контуру. */
+
+.border-beam {
+  position: relative;
+}
+
+.border-beam::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: conic-gradient(
+    from var(--beam-angle, 0deg),
+    transparent 0deg,
+    transparent 300deg,
+    #34d399 340deg,
+    #2dd4bf 350deg,
+    transparent 360deg
+  );
+  /* видимой остаётся только рамка: заливка вычитается маской */
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: beam-spin 4s linear infinite;
+  pointer-events: none;
+}
+
+@property --beam-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes beam-spin {
+  to { --beam-angle: 360deg; }
+}
+
+/* ── Светящаяся тень (glowing-shadow, designali-in) ──────────────────
+   Размытый цветной ореол под блоком, дышит вместе с ним. */
+
+.glow-shadow {
+  position: relative;
+}
+
+.glow-shadow::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  z-index: -1;
+  border-radius: inherit;
+  background: radial-gradient(60% 80% at 50% 100%, rgba(16, 185, 129, 0.55), transparent 70%);
+  filter: blur(22px);
+  opacity: 0.6;
+  animation: glow-breathe 5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes glow-breathe {
+  0%, 100% { opacity: 0.45; }
+  50%      { opacity: 0.75; }
+}
+
+/* ── Вращающийся градиент (rotating-gradient-right, ruixen.ui) ───────
+   Крупное цветное пятно медленно ходит по блоку, оживляя плоскую
+   тёмную заливку. */
+
+.rotating-gradient {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.rotating-gradient::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  left: 50%;
+  width: 160%;
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0%,
+    rgba(16, 185, 129, 0.28) 18%,
+    rgba(45, 212, 191, 0.20) 30%,
+    transparent 48%,
+    transparent 100%
+  );
+  animation: gradient-spin 18s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes gradient-spin {
+  to { rotate: 360deg; }
+}
+
+/* ── Блик по тексту (shining-text, preetsuthar17) ────────────────────
+   Заливка текста градиентом со светлой полосой, которая проходит слева
+   направо. Базовый цвет непрозрачный: если анимация не поддержана,
+   заголовок остаётся обычным читаемым текстом. */
+
+.shining-text {
+  background-image: linear-gradient(
+    100deg,
+    currentColor 0%,
+    currentColor 40%,
+    rgba(16, 185, 129, 0.95) 50%,
+    currentColor 60%,
+    currentColor 100%
+  );
+  background-size: 250% 100%;
+  background-position: 150% 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: inherit;
+  animation: text-shine 6s ease-in-out infinite;
+}
+
+@keyframes text-shine {
+  0%, 55%, 100% { background-position: 150% 0; }
+  30%           { background-position: -50% 0; }
+}
+
+/* ── Матовое стекло (interactive-frosted-glass-card, dhileepkumargm) ─
+   Полупрозрачная поверхность с размытием фона; при наведении по ней
+   проходит мягкий отблеск. Работает поверх фона-«сияния». */
+
+.frosted-card {
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(16px) saturate(1.3);
+  -webkit-backdrop-filter: blur(16px) saturate(1.3);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  transition: transform .3s cubic-bezier(.22,.61,.36,1), box-shadow .3s;
+}
+
+.dark .frosted-card {
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.frosted-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.16);
+}
+
+.frosted-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent 35%, rgba(255, 255, 255, 0.35) 50%, transparent 65%);
+  translate: -100% 0;
+  transition: translate .7s ease;
+  pointer-events: none;
+}
+
+.frosted-card:hover::after {
+  translate: 100% 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .border-beam::before,
+  .glow-shadow::after,
+  .rotating-gradient::before,
+  .shining-text { animation: none; }
+  .shining-text { -webkit-text-fill-color: currentColor; }
+  .frosted-card,
+  .frosted-card::after { transition: none; }
+  .frosted-card:hover { transform: none; }
+}
+
+/* ── Появление и уход окон ───────────────────────────────────────────
+   Открытие анимировала библиотека (animate-in), закрытия не было вовсе.
+   Классы ниже проигрываются, пока окно ещё в дереве — его держит хук
+   useExitAnimation. */
+
+@keyframes overlay-out {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+@keyframes panel-out-right {
+  from { transform: translateX(0); opacity: 1; }
+  to   { transform: translateX(100%); opacity: .6; }
+}
+
+@keyframes panel-out-center {
+  from { transform: scale(1) translateY(0); opacity: 1; }
+  to   { transform: scale(.96) translateY(8px); opacity: 0; }
+}
+
+@keyframes panel-out-bottom {
+  from { transform: translateY(0); opacity: 1; }
+  to   { transform: translateY(6%); opacity: 0; }
+}
+
+.is-closing { animation: overlay-out .22s ease forwards; }
+.is-closing .panel-right { animation: panel-out-right .22s cubic-bezier(.4, 0, 1, 1) forwards; }
+.is-closing .panel-center { animation: panel-out-center .22s ease forwards; }
+.is-closing .panel-bottom { animation: panel-out-bottom .22s ease forwards; }
+
+@media (prefers-reduced-motion: reduce) {
+  .is-closing,
+  .is-closing .panel-right,
+  .is-closing .panel-center,
+  .is-closing .panel-bottom { animation: none; opacity: 0; }
+}

@@ -140,7 +140,7 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
 
       {/* Dropdown Menu */}
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-64 p-2 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xl z-50 animate-in fade-in zoom-in-95 duration-150">
+        <div className="absolute right-0 mt-2 w-64 p-2 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xl z-[45] animate-in fade-in zoom-in-95 duration-150">
           <div className="px-3 py-2 border-b border-slate-100 dark:border-slate-800 mb-1">
             <div className="flex items-center justify-between">
               <span className="text-[11px] font-extrabold uppercase tracking-wider text-slate-400 dark:text-slate-500">
