@@ -2,6 +2,22 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* ── Шрифты ──────────────────────────────────────────────────────────
+   Inter подключён в index.html, но Tailwind v4 держит в --font-sans свой
+   системный стек — портал рендерился системным шрифтом, а соседние
+   страницы plan2026 в Inter. Переопределяем токены темы. */
+@theme {
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+}
+
+/* Базовый кегль и интерлиньяж — как на странице исполнения плана */
+body {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
 /* Ничто за правым краем не тянет страницу вбок. clip, а не hidden:
    hidden создал бы скролл-контейнер и сломал sticky-шапку. */
 html, body { overflow-x: clip; }
