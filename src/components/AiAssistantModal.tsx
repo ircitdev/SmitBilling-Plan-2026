@@ -12,7 +12,7 @@ import {
   HelpCircle
 } from 'lucide-react';
 import { GoogleGenAI } from '@google/genai';
-import { COMPETITORS, RECOMMENDATIONS, METADATA } from '../data/strategicData';
+import { COMPETITORS, RECOMMENDATIONS, METADATA, POSITIONING_DATA, PRICING_TIERS, PRICING_TERMS_CONFIG } from '../data/strategicData';
 
 interface AiAssistantModalProps {
   isOpen: boolean;
@@ -27,15 +27,15 @@ interface Message {
 const INITIAL_MESSAGES: Message[] = [
   {
     role: 'assistant',
-    text: 'Здравствуйте! Я AI-ассистент по стратегии и продукту **СмИТ Биллинг** (Build 2286). Вы можете спросить меня о сравнении с Carbon Soft, UTM5, Hydra или LANBilling, расчёте окупаемости, архитектуре AI на 7 каналах, модулях 54-ФЗ или плане сертификации СОРМ-3. Чем помочь?'
+    text: 'Здравствуйте! Я AI-ассистент по стратегии и продукту **СмИТ Биллинг** (Build 2286). Вы можете спросить меня о позиционировании, целевых ICP (Mikbill, коттеджные МКС, региональные ISP), сравнении с Carbon Soft, UTM5 или Hydra, расчёте окупаемости, архитектуре AI на 7 каналах и плане сертификации СОРМ-3. Чем помочь?'
   }
 ];
 
 const SUGGESTED_PROMPTS = [
+  'Какое главное позиционирование и целевые ICP?',
   'В чём главное отличие СмИТ от Carbon Soft?',
   'Сколько времени и средств нужно для сертификации СОРМ-3?',
-  'Как устроен мульти-провайдер AI на 7 каналах?',
-  'Почему для ISP выгоднее Android SMS-шлюз, чем SMS-агрегаторы?'
+  'Как устроен мульти-провайдер AI на 7 каналах?'
 ];
 
 export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({ isOpen, onClose }) => {
@@ -53,6 +53,16 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({ isOpen, onCl
       scrollToBottom();
     }
   }, [messages, isOpen]);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isOpen) {
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
 
   const handleSend = async (promptToSend?: string) => {
     const query = promptToSend || inputValue.trim();
@@ -106,7 +116,15 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({ isOpen, onCl
         let fallbackReply = '';
         const lowerQ = query.toLowerCase();
 
-        if (lowerQ.includes('carbon') || lowerQ.includes('карбон')) {
+        if (lowerQ.includes('заключен') || lowerQ.includes('инсайт') || lowerQ.includes('вывод') || lowerQ.includes('итог') || lowerQ.includes('ограничен') || lowerQ.includes('платн')) {
+          fallbackReply = `**Ключевой инсайт (Заключение):**\n\n📌 **Рынок биллинга РФ:**\nРоссийский рынок биллинг-систем для ISP — зрелый и насыщенный, но с двумя пробелами, где мы можем быстро выиграть:\n1. **AI-функции** — никто их не делает. Наша Claude-интеграция — отличный differentiator.\n2. **Современный UX + mobile-app** — у крупных конкурентов legacy. Мы уже опередили их по дизайну.\n\n⚠️ **Главное ограничение прежнее — и стало острее:**\nВнешних платящих клиентов нет. В бою три собственные организации, продукт за год закрыл почти всё, что раньше значилось «сделаем при первом клиенте»: мультиорганизация, сервер лицензий, права по разделам, деньги от банковской выписки до чека в ОФД, обучающие ролики. Дальше наращивать функциональность — значит уходить в разработку ради разработки.\n\n🎯 **Главная рекомендация не меняется:**\nЗа ближайшие 3 месяца получить **2-3 платных клиентов**. Из старого списка «активируется при клиентах» остались только DPI и защита кода — всё остальное уже готово и ждёт, когда его кому-то покажут.`;
+        } else if (lowerQ.includes('воронк') || lowerQ.includes('funnel') || lowerQ.includes('awareness') || lowerQ.includes('retention') || lowerQ.includes('quick win') || lowerQ.includes('маркетинг')) {
+          fallbackReply = `**Воронка продаж и Quick wins маркетинга СмИТ Биллинг:**\n\n📌 **Воронка продаж (5 этапов):**\n1. **Awareness:** Telegram-каналы провайдеров, NAG.ru, Habr.\n2. **Interest:** Demo-видео на YouTube, AI-демонстрация.\n3. **Consideration:** Live-demo + проба на их данных.\n4. **Decision:** Пилот 6 месяцев + бесплатная миграция данных.\n5. **Retention:** AI-поддержка + ежеквартальные обновления.\n\n⚡ **Quick wins маркетинга (запуск за 1–3 дня):**\n1. Demo-аккаунт на **demo.billing.smit34.ru** с реалистичными данными.\n2. Калькулятор цены на сайте: тариф + модули → годовая цена.\n3. Comparison page «СмИТ vs Carbon / UTM5 / Mikbill».\n4. YouTube канал с разборами фич + tutorials.\n5. Telegram-канал разработки в твиттер-стиле (@uspeshnyy).`;
+        } else if (lowerQ.includes('цен') || lowerQ.includes('тариф') || lowerQ.includes('стоимост') || lowerQ.includes('прайс') || lowerQ.includes('скидк') || lowerQ.includes('апселл')) {
+          fallbackReply = `**Цена и условия для первых клиентов (решено 30.08.2026):**\n\n📌 **5 Тарифных планов:**\n1. **«Старт» (Продаём первым)**: **99 000 ₽/год** (9 900 ₽/мес). Биллинг, ЛК, мобильные приложения, СОРМ, Captive-портал.\n2. **«Pro»**: **249 000 ₽/год** (24 900 ₽/мес). Всё из «Старт» + банковские выписки, 54-ФЗ, видеонаблюдение, IPTV, CRM.\n3. **«Бизнес»**: **379 000 ₽/год** (37 900 ₽/мес). Всё из «Pro» + IP-телефония, AI-ассистент, мультиорганизация.\n4. **«Видеонаблюдение»**: **79 000 ₽/год** (7 900 ₽/мес). ЛК, модуль видео, без интернет-биллинга.\n5. **«Enterprise»**: **499 000 ₽/год** (49 900 ₽/мес). Всё из «Бизнес» + автообзвон, маркетинг, White-label.\n\n💡 **Правило скидок и апселла:**\n- **Скидку даём временем, не рублями**: Первым 3 клиентам — 6 месяцев бесплатно, миграция 0 ₽, фиксация цены на 24 мес (взамен отзыв, кейс и 2–3 референс-звонка).\n- **Апселл вместо скидки**: Доп. модули по 2 500 ₽/мес (клиент с 3 модулями платит 189 000 ₽/год — это его выбор, а не скидка).`;
+        } else if (lowerQ.includes('позицион') || lowerQ.includes('icp') || lowerQ.includes('целев')) {
+          fallbackReply = `**Позиционирование и Go-to-market СмИТ Биллинг:**\n\n📌 **Главное определение:**\n«${POSITIONING_DATA.oneSentence}»\n\n🎯 **4 целевых сегмента (ICP):**\n1. **ICP1: Mikbill (Цель №1)** — 500-2000 абонентов, 50-100 в РФ. Тариф «Старт» 99k + модули (99-159k ₽/год). Мигратор + демо AI.\n2. **ICP2: МКС / коттеджи** — 200-1000 абонентов, 100+ сетей. Тариф «Старт» 99k ₽/год. СОРМ не требуется.\n3. **ICP3: Региональный ISP** — 3000-10000 абонентов. Тарифы «Pro» (249k) и «Бизнес» (379k ₽/год). Победа за счёт AI и UX.\n4. **ICP4: Городской с UTM5** — 5000-15000 абонентов. «Бизнес» / «Enterprise» после сертификации СОРМ.`;
+        } else if (lowerQ.includes('carbon') || lowerQ.includes('карбон')) {
           fallbackReply = `**Сравнение СмИТ Биллинг с Carbon Soft:**\n\n1. **AI и автоматизация:** У Carbon Soft нет мультипровайдерного AI-ассистента на 7 каналах (SIP-телефон, мессенджеры, ЛК, почта). В СмИТ AI автоматизирует 72.6% типовых обращений.\n2. **Интерфейс:** Carbon использует устаревший UI начала 2010-х, СмИТ построен на единой дизайн-системе 2026 года с чистым UX и тёмной темой WCAG AA.\n3. **CRM и маркетинг:** У Carbon маркетинг оторван, в СмИТ конструктор лендингов, Salesbot и сбор лидов встроены прямо в ядро.\n4. **Сильная сторона Carbon:** 1000+ внедренных операторов и готовый сертификат СОРМ-3.`;
         } else if (lowerQ.includes('сорм') || lowerQ.includes('сертификат')) {
           fallbackReply = `**План сертификации СОРМ-3 для СмИТ Биллинг:**\n\n- **Что уже готово:** Все 13 форматов выгрузок по Приказу Минцифры №573, кольцевой буфер и неизменяемый лог аудита.\n- **Что требуется:** 1) Подготовка методики испытаний; 2) Выделение аппаратного тестового стенда; 3) Договор с ИЦ ЦНИИС (~500 000 – 1 200 000 ₽); 4) Стендовые испытания (3–6 мес); 5) Согласование с территориальным УФСБ оператора.\n- **Общий срок:** 6–12 месяцев.`;
@@ -135,15 +153,18 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({ isOpen, onCl
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-sm animate-in fade-in duration-200">
+    <div 
+      className="fixed inset-0 z-50 flex justify-end bg-slate-950/60 backdrop-blur-sm animate-in fade-in duration-200"
+      onClick={onClose}
+    >
       <div 
-        className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-2xl w-full h-[650px] max-h-[90vh] shadow-2xl flex flex-col justify-between overflow-hidden"
+        className="w-full max-w-xl sm:max-w-2xl bg-white dark:bg-slate-900 border-l border-slate-200 dark:border-slate-800 h-full shadow-2xl flex flex-col justify-between overflow-hidden animate-in slide-in-from-right duration-300"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
         <div className="flex items-center justify-between gap-4 p-5 sm:p-6 border-b border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-850/50">
           <div className="flex items-center gap-3">
-            <div className="p-3 rounded-2xl bg-emerald-600 text-white shadow-md shadow-emerald-600/30">
+            <div className="p-3 rounded-2xl bg-emerald-600 text-white shadow-md shadow-emerald-600/30 shrink-0">
               <Bot className="w-5 h-5" />
             </div>
             <div>
@@ -163,7 +184,8 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({ isOpen, onCl
 
           <button
             onClick={onClose}
-            className="p-2.5 rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+            className="p-2.5 rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors shrink-0"
+            title="Закрыть (Esc)"
           >
             <X className="w-5 h-5" />
           </button>

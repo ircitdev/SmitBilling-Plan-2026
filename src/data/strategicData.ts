@@ -1,4 +1,4 @@
-import { Competitor, MatrixRow, Recommendation, RoadmapItem, PriceTier, MarketSegment, SormChecklistItem } from '../types';
+import { Competitor, MatrixRow, Recommendation, RoadmapItem, PriceTier, MarketSegment, SormChecklistItem, MarketGrowthYearData, CompetitiveRadarMetric, PositioningData, ConclusionData, ThreatRisk } from '../types';
 
 export const METADATA = {
   version: '1.3 от 30.08.2026',
@@ -18,6 +18,150 @@ export const METADATA = {
   licenseServerUrl: 'https://license.billing.smit34.ru',
   demoUrl: 'https://demo.billing.smit34.ru'
 };
+
+export const POSITIONING_DATA: PositioningData = {
+  oneSentence:
+    'СмИТ Биллинг — современная биллинг-система для малых и средних ISP с встроенным AI-агентом, мобильным приложением нового поколения и собственными Поддержкой и CRM. Без legacy наследия, на современном стеке Python/Django, с готовой миграцией из Carbon 4, Mikbill, UTM5.',
+  author: {
+    name: 'Александр Успешный',
+    initials: 'АУ',
+    role: 'автор плана',
+    versionDate: 'версия 1.3 от 30.08.2026'
+  },
+  taglines: [
+    '«Биллинг для провайдера, который не боится завтрашнего дня»',
+    '«Современный биллинг с AI поддержкой ваших клиентов»',
+    '«СмИТ Биллинг — биллинг провайдера в эпоху ChatGPT»'
+  ],
+  icps: [
+    {
+      id: 'icp1',
+      name: 'ICP1: Mikbill',
+      isStar: true,
+      audienceRange: '500-2000',
+      marketPotential: '50-100 в РФ',
+      pricingRecommendation: '«Старт» 99k + 1–2 модуля ≈ 99–159k ₽/год.',
+      strategyHighlight: 'Мигратор + демо AI.',
+      badge: 'Цель №1'
+    },
+    {
+      id: 'icp2',
+      name: 'ICP2: МКС / коттеджи',
+      isStar: false,
+      audienceRange: '200-1000',
+      marketPotential: '100+',
+      pricingRecommendation: '«Старт» 99k ₽/год.',
+      strategyHighlight: 'Сертификат СОРМ не нужен — продаём уже сегодня.'
+    },
+    {
+      id: 'icp3',
+      name: 'ICP3: Региональный ISP',
+      isStar: false,
+      audienceRange: '3000-10000',
+      marketPotential: '30-50',
+      pricingRecommendation: '«Pro» 249k / «Бизнес» 379k ₽/год.',
+      strategyHighlight: 'Конкурируем с Carbon на AI и UX.'
+    },
+    {
+      id: 'icp4',
+      name: 'ICP4: Городской с UTM5',
+      isStar: false,
+      audienceRange: '5000-15000',
+      marketPotential: '50+',
+      pricingRecommendation: '«Бизнес» 379k / «Enterprise» 499k ₽/год.',
+      strategyHighlight: 'После сертификации СОРМ.'
+    }
+  ],
+  salesFunnel: [
+    {
+      step: 1,
+      stage: 'Awareness',
+      description: 'Telegram-каналы провайдеров, NAG.ru, Habr'
+    },
+    {
+      step: 2,
+      stage: 'Interest',
+      description: 'Demo-видео на YouTube, AI-демонстрация'
+    },
+    {
+      step: 3,
+      stage: 'Consideration',
+      description: 'Live-demo + проба на их данных'
+    },
+    {
+      step: 4,
+      stage: 'Decision',
+      description: 'пилот 6 месяцев + бесплатная миграция данных'
+    },
+    {
+      step: 5,
+      stage: 'Retention',
+      description: 'AI-поддержка + ежеквартальные обновления'
+    }
+  ],
+  marketingQuickWins: [
+    {
+      step: 1,
+      title: 'Demo-аккаунт на demo.billing.smit34.ru с реалистичными данными',
+      actionUrl: 'https://demo.billing.smit34.ru',
+      actionLabel: 'Открыть demo.billing.smit34.ru'
+    },
+    {
+      step: 2,
+      title: 'Калькулятор цены на сайте: тариф + модули → годовая цена',
+      actionLabel: 'Открыть калькулятор'
+    },
+    {
+      step: 3,
+      title: 'Comparison page «СмИТ vs Carbon / UTM5 / Mikbill»',
+      actionLabel: 'Сравнить в матрице'
+    },
+    {
+      step: 4,
+      title: 'YouTube канал с разборами фич + tutorials',
+      actionUrl: 'https://youtube.com',
+      actionLabel: 'Смотреть обзоры'
+    },
+    {
+      step: 5,
+      title: 'Telegram-канал разработки (твиттер-стиль)',
+      actionUrl: 'https://t.me/uspeshnyy',
+      actionLabel: 't.me/uspeshnyy'
+    }
+  ]
+};
+
+export const CONCLUSION_DATA: ConclusionData = {
+  title: 'Ключевой инсайт',
+  badge: 'ЗАКЛЮЧЕНИЕ',
+  marketInsight: {
+    lead: 'Российский рынок биллинг-систем для ISP — зрелый и насыщенный, но с двумя пробелами, где мы можем быстро выиграть:',
+    gapList: [
+      {
+        id: 1,
+        title: 'AI-функции',
+        description: 'никто их не делает. Наша Claude-интеграция — отличный differentiator.'
+      },
+      {
+        id: 2,
+        title: 'Современный UX + mobile-app',
+        description: 'у крупных конкурентов legacy. Мы уже опередили их по дизайну.'
+      }
+    ]
+  },
+  bottleneck: {
+    heading: 'Главное ограничение прежнее — и стало острее:',
+    description:
+      'внешних платящих клиентов нет. В бою три собственные организации, продукт за год закрыл почти всё, что раньше значилось «сделаем при первом клиенте»: мультиорганизация, сервер лицензий, права по разделам, деньги от банковской выписки до чека в ОФД, обучающие ролики. Дальше наращивать функциональность — значит уходить в разработку ради разработки.'
+  },
+  keyRecommendation: {
+    heading: 'Главная рекомендация не меняется:',
+    target: '2-3 платных клиентов',
+    details:
+      'за ближайшие 3 месяца получить 2-3 платных клиентов. Из старого списка «активируется при клиентах» остались только DPI и защита кода — всё остальное уже готово и ждёт, когда его кому-то покажут.'
+  }
+};
+
 
 export const MARKET_STATS = [
   { value: '5.28 млрд ₽', label: 'Объём рынка РФ (2024)', change: '+12% в год' },
@@ -64,6 +208,176 @@ export const MARKET_SEGMENTS: MarketSegment[] = [
     range: '1 000 000+ абонентов',
     description: 'Hydra international, BGBilling, кастомные enterprise АСР уровня Ростелеком, МТС, ЭР-Телеком.',
     players: 'Hydra, кастомные АСР'
+  }
+];
+
+export const MARKET_GROWTH_DATA: MarketGrowthYearData[] = [
+  {
+    year: '2026',
+    periodLabel: '2026 (Факт/Базовый)',
+    microVolume: 0.52,
+    smallVolume: 1.68,
+    mediumVolume: 2.15,
+    largeVolume: 2.15,
+    totalVolume: 6.50,
+    smallOperatorsCount: 1420,
+    mediumOperatorsCount: 410,
+    microOperatorsCount: 1200,
+    aiAdoptionPct: 15,
+    sormCompliantPct: 58,
+    smitProjectedClients: 25
+  },
+  {
+    year: '2027',
+    periodLabel: '2027 (+1 год)',
+    microVolume: 0.46,
+    smallVolume: 2.05,
+    mediumVolume: 2.52,
+    largeVolume: 2.27,
+    totalVolume: 7.30,
+    smallOperatorsCount: 1580,
+    mediumOperatorsCount: 460,
+    microOperatorsCount: 1080,
+    aiAdoptionPct: 34,
+    sormCompliantPct: 76,
+    smitProjectedClients: 85
+  },
+  {
+    year: '2028',
+    periodLabel: '2028 (+2 года)',
+    microVolume: 0.40,
+    smallVolume: 2.48,
+    mediumVolume: 2.92,
+    largeVolume: 2.38,
+    totalVolume: 8.18,
+    smallOperatorsCount: 1740,
+    mediumOperatorsCount: 510,
+    microOperatorsCount: 950,
+    aiAdoptionPct: 55,
+    sormCompliantPct: 91,
+    smitProjectedClients: 190
+  },
+  {
+    year: '2029',
+    periodLabel: '2029 (+3 года)',
+    microVolume: 0.35,
+    smallVolume: 2.95,
+    mediumVolume: 3.35,
+    largeVolume: 2.50,
+    totalVolume: 9.15,
+    smallOperatorsCount: 1910,
+    mediumOperatorsCount: 560,
+    microOperatorsCount: 850,
+    aiAdoptionPct: 78,
+    sormCompliantPct: 98,
+    smitProjectedClients: 340
+  }
+];
+
+export const COMPETITIVE_RADAR_DATA: CompetitiveRadarMetric[] = [
+  {
+    dimension: 'AI & Умная автоматизация',
+    dimensionShort: 'AI & Боты',
+    smitScore: 98,
+    benchmarkScore: 22,
+    carbonScore: 25,
+    hydraScore: 30,
+    category: 'strength',
+    description: 'Мультипровайдерный AI (Claude/GPT/Gemini), 7 каналов включая живой телефонный номер и 22 действия.',
+    smitAdvantage: 'Автономная обработка 72.6% обращений, авто-диагностика порта, авто-распределение тикетов.',
+    marketReality: 'У традиционных систем (Carbon, UTM5) AI отсутствует или ограничивается сторонними кнопочными ботами.',
+    target2027: 99
+  },
+  {
+    dimension: 'Современный UX & Mobile App',
+    dimensionShort: 'UX & Мобильность',
+    smitScore: 95,
+    benchmarkScore: 40,
+    carbonScore: 55,
+    hydraScore: 65,
+    category: 'strength',
+    description: 'Bento Grid, Next.js/React, Tailwind CSS, Dark/Light режимы, Flutter/PWA приложения для абонентов.',
+    smitAdvantage: 'Бесшовный онбординг, мгновенный отклик <100ms, кастомизация брендинга без правки исходников.',
+    marketReality: 'Большинство конкурентов работают на устаревших Win32-клиентах или PHP 5.6/Perl интерфейсах 2010-х годов.',
+    target2027: 98
+  },
+  {
+    dimension: 'Омниканальность & Голосовой бот',
+    dimensionShort: 'Омниканальность',
+    smitScore: 96,
+    benchmarkScore: 32,
+    carbonScore: 40,
+    hydraScore: 48,
+    category: 'strength',
+    description: 'Web-чат, Telegram, VK, Email, SIP-телефония с голосовым ИИ-роботом, суфлер для живых операторов.',
+    smitAdvantage: 'Единая сквозная карточка клиента, контекст диалога сохраняется между звонком и перепиской.',
+    marketReality: 'Разрозненные модули, требующие платных коннекторов к сторонним сервисам (Usedesk, CarrotQuest).',
+    target2027: 97
+  },
+  {
+    dimension: 'Быстрота запуска & Time-to-Value',
+    dimensionShort: 'Быстрый старт',
+    smitScore: 92,
+    benchmarkScore: 46,
+    carbonScore: 62,
+    hydraScore: 42,
+    category: 'strength',
+    description: 'Docker/K8s инсталляция за 15 минут, интерактивный демо-стенд, готовые парсеры для миграции.',
+    smitAdvantage: 'Запуск провайдера в продакшн за 1–3 дня вместо месяцев внедрения.',
+    marketReality: 'Тяжелый On-premise монтаж серверов, долгое конфигурирование ядра специалистами вендора.',
+    target2027: 95
+  },
+  {
+    dimension: 'Прозрачность TCO & Доступность',
+    dimensionShort: 'Прозрачный TCO',
+    smitScore: 90,
+    benchmarkScore: 56,
+    carbonScore: 65,
+    hydraScore: 38,
+    category: 'strength',
+    description: 'Гибкая ежемесячная подписка, официальный сервер лицензий, без скрытых оплат за ядра и протоколы.',
+    smitAdvantage: 'Старт от 5 000 ₽/мес, предсказуемая экономика, окупаемость за 2–3 месяца.',
+    marketReality: 'Высокий входной порог (CAPEX 300k–1.5M ₽) + навязанная платная техподдержка.',
+    target2027: 94
+  },
+  {
+    dimension: 'Сертификация Минцифры СОРМ-3',
+    dimensionShort: 'СОРМ-3 Сертификат',
+    smitScore: 58,
+    benchmarkScore: 92,
+    carbonScore: 95,
+    hydraScore: 96,
+    category: 'weakness',
+    description: '13 форматов выгрузок и аудит в ядре готовы, но официальный сертификат соответствия в процессе.',
+    smitAdvantage: 'Архитектурно полностью готов к интеграции со всеми СОРМ-пультами (Норси-Транс, МФИ Софт, Сигнатек).',
+    marketReality: 'Зрелые лидеры рынка имеют бессрочные или действующие сертификаты связи более 10–15 лет.',
+    target2027: 95
+  },
+  {
+    dimension: 'Масштаб клиентской базы (ISP)',
+    dimensionShort: 'Клиентская база',
+    smitScore: 40,
+    benchmarkScore: 88,
+    carbonScore: 90,
+    hydraScore: 92,
+    category: 'weakness',
+    description: '3 боевые опорные сети (СмІТ, Робор, ИТЦ) + пилотные проекты в регионах против сотен у ветеранов.',
+    smitAdvantage: 'Высокая маневренность, прямой контакт с фаундером, персональное сопровождение каждого провайдера.',
+    marketReality: 'Carbon, LANBilling, UTM5 обладают базой в 300–1000+ внедрений по всей России и СНГ.',
+    target2027: 80
+  },
+  {
+    dimension: 'Партнерская сеть & Интеграторы',
+    dimensionShort: 'Партнерская сеть',
+    smitScore: 62,
+    benchmarkScore: 82,
+    carbonScore: 85,
+    hydraScore: 78,
+    category: 'weakness',
+    description: 'Развитие комьюнити в Telegram, партнерских программ с монтажниками сетей и поставщиками железа.',
+    smitAdvantage: 'Щедрая реферальная модель (до 25% LTV) и готовые API/Webhooks для любых интеграций.',
+    marketReality: 'Устоявшиеся связи лидеров с крупными дистрибьюторами оборудования (NAG, SNR, Eltex).',
+    target2027: 85
   }
 ];
 
@@ -795,6 +1109,12 @@ export const RECOMMENDATIONS: Recommendation[] = [
     summary: 'ISP 500–3 000 клиентов в Волгоградской, Ростовской, Краснодарской областях. Пилот 6 месяцев бесплатно в обмен на отзыв, кейс и 2-3 референс-звонка.',
     intro: 'Без выполнения этой рекомендации все остальные планы — over-engineering. Это критический блокер. План лицензий, обновлений и масштабирования активируется только от реальных внешних клиентов.',
     why: 'Один клиент = нельзя собрать публичные отзывы, use cases, sales references. Потенциальные клиенты спрашивают: «А кто ещё у вас внедрён?» — нечего ответить. У конкурентов — 200–1000+ клиентов.',
+    impactScore: 96,
+    effortScore: 65,
+    quadrant: 'major_projects',
+    quadrantLabel: 'Стратегическая ставка',
+    categoryTag: 'Продажи & Выручка',
+    roiRatio: 1.48,
     budget: {
       time: 'Q2 2026 (3 месяца)',
       money: '0 ₽ прямых + ~80k ₽ скидок',
@@ -848,6 +1168,12 @@ export const RECOMMENDATIONS: Recommendation[] = [
     summary: 'Мульти-провайдер AI-ассистент на 7 каналах (включая голос и телефон), AI-генератор SQL-отчетов, предиктивный анализ оттока абонентов.',
     intro: 'У нас уже есть AI-функциональность, которой нет ни у одного конкурента в РФ. Нужно защитить это преимущество как ядро позиционирования.',
     why: 'Carbon Soft, Hydra, UTM5, LANBilling — ни у кого нет реального AI-чата и голосового агента. Конкуренты догонят через 1–2 года. Сейчас наше окно возможностей.',
+    impactScore: 94,
+    effortScore: 32,
+    quadrant: 'quick_wins',
+    quadrantLabel: 'Быстрая победа',
+    categoryTag: 'AI & Инновации',
+    roiRatio: 2.94,
     budget: {
       time: 'Q2–Q3 2026 (~30 дней)',
       money: 'Claude / Gemini API ~10k ₽/мес',
@@ -895,6 +1221,12 @@ export const RECOMMENDATIONS: Recommendation[] = [
     summary: 'Официальный сертификат соответствия средства связи. 6–12 месяцев, 500k–1M ₽. Блокер для лицензированных операторов связи.',
     intro: 'Без сертификата СОРМ мы не можем легально продавать биллинг крупным операторам связи с лицензией РКН.',
     why: 'Carbon, LANBilling, Hydra, UTM5 — все сертифицированы. Это обязательный пункт в тендерах и при проверках Роскомнадзора.',
+    impactScore: 98,
+    effortScore: 88,
+    quadrant: 'major_projects',
+    quadrantLabel: 'Стратегическая ставка',
+    categoryTag: 'Комплаенс & СОРМ',
+    roiRatio: 1.11,
     budget: {
       time: '6–12 месяцев',
       money: '500k–1.5M ₽ (испытания ЦНИИС)',
@@ -937,6 +1269,12 @@ export const RECOMMENDATIONS: Recommendation[] = [
     summary: 'TAdviser, NAG.ru, Habr, YouTube, Telegram-канал разработки, отраслевые конференции (ConnectedEvent, T+ Telecom).',
     intro: 'Конкуренты известны 15–20 лет. У СмИТ Биллинг нулевая публичная известность. Нужно систематически строить бренд.',
     why: 'Прямые холодные продажи дают конверсию 1–3%. При узнаваемом бренде и экспертных статьях входящая конверсия достигает 15–20%.',
+    impactScore: 70,
+    effortScore: 38,
+    quadrant: 'quick_wins',
+    quadrantLabel: 'Быстрая победа',
+    categoryTag: 'Маркетинг & Бренд',
+    roiRatio: 1.84,
     budget: {
       time: 'Непрерывно с Q2 2026',
       money: '~30k ₽/мес контент + 100-200k/год конференции',
@@ -979,6 +1317,12 @@ export const RECOMMENDATIONS: Recommendation[] = [
     summary: 'Сервер лицензий в бою на license.billing.smit34.ru: тарифы, каталог модулей и виджетов, счета/акты, ЮKassa, автообновление.',
     intro: 'Активируется при появлении нескольких клиентов. Полная инфраструктура лицензирования уже запущена.',
     why: 'Ручное обновление через scp работает для 1–2 установок, но для масштабирования необходим централизованный сервер релизов.',
+    impactScore: 82,
+    effortScore: 18,
+    quadrant: 'quick_wins',
+    quadrantLabel: 'Быстрая победа (Готово)',
+    categoryTag: 'Инфраструктура & Лицензии',
+    roiRatio: 4.55,
     budget: {
       time: 'MVP запущен',
       money: 'admin time + ~10k ₽ Роспатент',
@@ -1017,6 +1361,12 @@ export const RECOMMENDATIONS: Recommendation[] = [
     summary: 'Изоляция данных по организациям в одной БД: реквизиты, кассы 54-ФЗ, платежные настройки, почта, брендинг. В бою СмІТ, Робор, ИТЦ.',
     intro: 'Реализовано как модуль мультиорганизации вместо устаревшего OPERATOR_ID из Carbon 4.',
     why: 'Позволяет холдингам или провайдерам с несколькими юрлицами вести раздельный учет на одной инсталляции.',
+    impactScore: 76,
+    effortScore: 20,
+    quadrant: 'quick_wins',
+    quadrantLabel: 'Быстрая победа (Готово)',
+    categoryTag: 'Архитектура',
+    roiRatio: 3.80,
     budget: {
       time: 'Выполнено',
       money: '0 ₽',
@@ -1049,6 +1399,12 @@ export const RECOMMENDATIONS: Recommendation[] = [
     summary: 'Автоматизированный перенос абонентов, тарифов, сальдо и платежей из Mikbill, UTM5, Carbon 4, LANBilling.',
     intro: 'Главный барьер смены биллинга для провайдера — страх потерять данные абонентов и балансы.',
     why: 'Наличие проверенного скрипта миграции превращает сложный процесс перехода в задачу на 1 рабочий день.',
+    impactScore: 88,
+    effortScore: 46,
+    quadrant: 'quick_wins',
+    quadrantLabel: 'Быстрая победа',
+    categoryTag: 'Продажи & Миграция',
+    roiRatio: 1.91,
     budget: {
       time: '15–20 дней на 4 мигратора',
       money: 'admin time',
@@ -1091,6 +1447,12 @@ export const RECOMMENDATIONS: Recommendation[] = [
     summary: 'Подключение к аппаратно-программному комплексу СКАТ DPI через открытый REST API при появлении клиентов от 5 000 абонентов.',
     intro: 'Стандарт де-факто для средних и крупных операторов РФ для управления трафиком и блокировок.',
     why: 'Позволяет гибко шейпить трафик по категориям (видео, торренты), резать рекламу и выдавать СОРМ-3 FLOW-отчёты.',
+    impactScore: 64,
+    effortScore: 48,
+    quadrant: 'fill_ins',
+    quadrantLabel: 'Тактическое улучшение',
+    categoryTag: 'Сетевые протоколы',
+    roiRatio: 1.33,
     budget: {
       time: '5–7 дней',
       money: 'Лицензия СКАТ на стороне клиента',
@@ -1122,6 +1484,12 @@ export const RECOMMENDATIONS: Recommendation[] = [
     summary: 'Голосовой AI-ассистент на Gemini Live: ответ на реальном номере 61-32-40, голосовой виджет, транскрибация звонков.',
     intro: 'Реализовано на передовом мультимодальном стеке Gemini Live вместо устаревшего классического IVR.',
     why: '30% абонентов старшего поколения предпочитают звонить по телефону, а не писать в чаты.',
+    impactScore: 78,
+    effortScore: 28,
+    quadrant: 'quick_wins',
+    quadrantLabel: 'Быстрая победа (Готово)',
+    categoryTag: 'AI & Телефония',
+    roiRatio: 2.79,
     budget: {
       time: 'Выполнено в бою',
       money: 'API вызовов + SIP-канал',
@@ -1154,6 +1522,12 @@ export const RECOMMENDATIONS: Recommendation[] = [
     summary: 'Модуль управления IP-камерами, живой просмотр, архив, паспорта моделей, сметы монтажа и интеграция со складом ТМЦ.',
     intro: 'Полностью реализовано и прошло 5 спринтов UX-аудита (Build 2030–2044).',
     why: 'Видеонаблюдение — высокомаржинальная допуслуга для ISP с ARPU +150–500 ₽/мес на абонента.',
+    impactScore: 72,
+    effortScore: 25,
+    quadrant: 'quick_wins',
+    quadrantLabel: 'Быстрая победа (Готово)',
+    categoryTag: 'Допуслуги & ARPU',
+    roiRatio: 2.88,
     budget: {
       time: 'Выполнено в проде',
       money: 'admin time',
@@ -1185,6 +1559,12 @@ export const RECOMMENDATIONS: Recommendation[] = [
     summary: '54-ФЗ + выписки из почты + акты/счета + касса на организацию. Высвобождает ставку бухгалтера у малого ISP.',
     intro: 'За последние 200 билдов достроена цепочка: письмо банка → разбор выписки → автопоиск абонента → зачисление → чек 54-ФЗ в ОФД → акт PDF.',
     why: 'У большинства малых ISP этот процесс ведется вручную в 1С и кассовой программе. СмИТ полностью автоматизирует финансовый цикл.',
+    impactScore: 86,
+    effortScore: 22,
+    quadrant: 'quick_wins',
+    quadrantLabel: 'Быстрая победа (High ROI)',
+    categoryTag: 'Финансы & 54-ФЗ',
+    roiRatio: 3.91,
     budget: {
       time: '2–3 недели упаковки',
       money: '0 ₽ прямых',
@@ -1223,6 +1603,12 @@ export const RECOMMENDATIONS: Recommendation[] = [
     summary: 'Найм второго инженера техподдержки при масштабировании базы. До этого 80% типовых вопросов решает встроенный AI-агент.',
     intro: 'Необходимый этап зрелости B2B-продукта при росте числа платящих клиентов.',
     why: 'Крупные операторы требуют жесткий SLA в договоре (время ответа < 15 мин).',
+    impactScore: 48,
+    effortScore: 82,
+    quadrant: 'thankless',
+    quadrantLabel: 'Отложено до 10+ клиентов',
+    categoryTag: 'Операционка & SLA',
+    roiRatio: 0.59,
     budget: {
       time: 'Постоянная роль',
       money: '80–120k ₽/мес',
@@ -1481,15 +1867,14 @@ export const PRICING_TIERS: PriceTier[] = [
     name: 'Старт',
     annualPrice: 99000,
     monthlyPrice: 9900,
-    badge: 'Продаем первым',
+    badge: 'ПРОДАЁМ ПЕРВЫМ',
     isPrimary: true,
     features: [
-      'Биллинг и тарификация по скорости/трафику',
-      'Современный Web Личный кабинет абонента',
-      'Мобильные приложения iOS и Android',
-      'Выгрузки СОРМ-3 (13 типов отчетов)',
-      'Captive-портал с авторизацией по SMS',
-      'Базовая техническая поддержка'
+      'Биллинг и тарификация',
+      'Личный кабинет',
+      'Мобильные приложения',
+      'СОРМ',
+      'Captive-портал'
     ],
     recommendedFor: 'Малые ISP до 1 000 абонентов, миграция с Mikbill'
   },
@@ -1498,13 +1883,13 @@ export const PRICING_TIERS: PriceTier[] = [
     name: 'Pro',
     annualPrice: 249000,
     monthlyPrice: 24900,
-    inheritText: 'Всё из тарифа «Старт», плюс:',
+    inheritText: 'Всё из «Старт», плюс:',
     features: [
-      'Авторазбор банковских выписок из почты',
-      'Фискализация 54-ФЗ (АТОЛ Онлайн)',
-      'Видеонаблюдение «под ключ» и архив',
-      'IPTV биллинг (TVIP / LFStream)',
-      'Встроенная Поддержка + CRM'
+      'Банковские выписки',
+      'Фискализация 54-ФЗ',
+      'Видеонаблюдение',
+      'IPTV',
+      'Поддержка и CRM'
     ],
     recommendedFor: 'Развивающиеся ISP 1 000–3 000 абонентов'
   },
@@ -1513,13 +1898,11 @@ export const PRICING_TIERS: PriceTier[] = [
     name: 'Бизнес',
     annualPrice: 379000,
     monthlyPrice: 37900,
-    inheritText: 'Всё из тарифа «Pro», плюс:',
+    inheritText: 'Всё из «Pro», плюс:',
     features: [
-      'Встроенная IP-телефония (Asterisk/Novofon)',
-      'Мульти-провайдер AI-ассистент (7 каналов)',
-      'Мультиорганизация (раздельные юрлица)',
-      'Склад ТМЦ со сканером штрихкодов',
-      'Приоритетный SLA поддержки'
+      'IP-телефония',
+      'AI-ассистент',
+      'Мультиорганизация'
     ],
     recommendedFor: 'Зрелые операторы 3 000–8 000 абонентов'
   },
@@ -1529,10 +1912,9 @@ export const PRICING_TIERS: PriceTier[] = [
     annualPrice: 79000,
     monthlyPrice: 7900,
     features: [
-      'Личный кабинет абонента и мобильное приложение',
-      'Модуль облачного видеонаблюдения и домофонии',
-      'Биллинг подписок и архива камер',
-      'Без модуля интернет-тарификации'
+      'Личный кабинет',
+      'Модуль видеонаблюдения',
+      'Без интернет-биллинга'
     ],
     recommendedFor: 'Операторы видеонаблюдения, УК и ТСЖ'
   },
@@ -1541,16 +1923,51 @@ export const PRICING_TIERS: PriceTier[] = [
     name: 'Enterprise',
     annualPrice: 499000,
     monthlyPrice: 49900,
-    inheritText: 'Всё из тарифа «Бизнес», плюс:',
+    inheritText: 'Всё из «Бизнес», плюс:',
     features: [
-      'Голосовой AI-агент на телефонной линии',
-      'Маркетинговые воронки и конструктор лендингов',
-      'White-label (полный собственный брендинг)',
-      'Выделенный инженер внедрения 24/7'
+      'Автообзвон',
+      'Маркетинговые механики',
+      'White-label — свой бренд'
     ],
     recommendedFor: 'Крупные операторы от 8 000 абонентов'
   }
 ];
+
+export const PRICING_TERMS_CONFIG = {
+  title: 'Цена и условия для первых клиентов',
+  subtitle: 'Решено 30.08.2026. Прайс заведён на сервере лицензий и работает.',
+  moduleNotice: 'Отдельные модули — банковские выписки, фискализация, видео, CRM — подключаются к любому тарифу по 2 500 ₽ в месяц. Цены без НДС, тарифы заведены на сервере лицензий.',
+  firstClientsPolicy: {
+    title: 'Скидку даём временем, не рублями',
+    points: [
+      {
+        heading: 'Первым трём клиентам:',
+        text: 'шесть месяцев бесплатно (не три — за три месяца провайдер успевает только развернуться и перенести данные), бесплатная миграция (обычно 40 000 ₽), цена зафиксирована на 24 месяца.'
+      },
+      {
+        heading: 'Взамен:',
+        text: 'отзыв с названием компании, кейс с цифрами, 2–3 референс-звонка. Не выполнил — доплачивает за льготный период по прайсу.'
+      },
+      {
+        heading: 'Почему не скидка:',
+        text: 'цену, однажды сломанную, обратно не поднять. Клиент, привыкший к «Pro» за 100k, не заплатит 249k; шесть бесплатных месяцев вернуть можно.'
+      }
+    ]
+  },
+  upsellPolicy: {
+    title: 'Апселл вместо скидки',
+    points: [
+      {
+        heading: '',
+        text: 'Банковские выписки, фискализация, видео, CRM подключаются модулями по 2 500 ₽/мес. Клиент с тремя модулями платит 189 000 ₽/год — и это его решение, а не наша уступка.'
+      },
+      {
+        heading: 'Экономика первого года честная:',
+        text: 'три клиента по полгода платно ≈ 150 тыс. ₽. Второй год на прайсе с парой модулей у каждого ≈ 477 тыс. ₽. Первый год не про деньги, а про три кейса, без которых не появится четвёртый клиент.'
+      }
+    ]
+  }
+};
 
 export const ADDON_MODULES = [
   { id: 'bank', name: 'Банковские выписки из почты', price: 2500, desc: 'Автосопоставление, счета, акты' },
@@ -1665,6 +2082,289 @@ export const SORM_CHECKLIST: SormChecklistItem[] = [
     description: 'Раздельная выгрузка данных для разных юрлиц (ISP) на одной инсталляции с разными номерами лицензий связи.',
     requiredArtifacts: 'Модуль multi_tenant_sorm',
     currentSmITStatus: 'Готово (СмІТ, Робор, ИТЦ работают раздельно)'
+  }
+];
+
+export const THREAT_RISKS_DATA: ThreatRisk[] = [
+  {
+    id: 'risk-sorm',
+    code: 'RISK-01',
+    name: 'Отсутствие сертификата СОРМ-3 Минцифры',
+    category: 'regulatory',
+    categoryLabel: 'Регуляторный',
+    probability: 80,
+    impact: 90,
+    riskScore: 72,
+    mitigatedProbability: 25,
+    mitigatedImpact: 35,
+    mitigatedScore: 9,
+    level: 'critical',
+    levelLabel: 'Критический',
+    description: 'Требование УФСБ и Минцифры (Приказ №573 / ПП РФ №538) к операторам связи иметь сертифицированный биллинг при согласовании плана СОРМ. Блокирует прямые продажи крупным городским ISP (>5 000 абонентов).',
+    consequences: 'Отказ консервативных провайдеров от перехода из-за риска предписаний Роскомнадзора и штрафов по ст. 13.45 КоАП РФ.',
+    mitigationStrategy: '1) Партнерство с производителями сертифицированных съемников (Норси-Транс / МФИ Софт / Сигнатек), отдавая 13 форматов по типовому протоколу. 2) Фокус на ICP1/ICP2 (до 2 000 аб., коттеджи, МКС), где отдельный сертификат на биллинг не запрашивается. 3) Подготовка испытательного стенда в ЦНИИС (~500k ₽) за счет пула первых 5 платных клиентов.',
+    preventiveActions: [
+      'В ядре Build 2286 реализованы все 13 форматов выгрузок СОРМ-3 (абоненты, платежи, сессии, договоры)',
+      'Реализован кольцевой буфер и неизменяемый журнал аудита действий операторов',
+      'Обеспечена мульти-орг изоляция данных для работы нескольких юрлиц'
+    ],
+    owner: 'Архитектор / Юрист по связи',
+    timeline: 'Q3 2026 – Q1 2027',
+    residualRisk: 'Низкий при работе через сертифицированный съемник партнера',
+    color: '#ef4444',
+    iconName: 'ShieldAlert'
+  },
+  {
+    id: 'risk-cto-inertia',
+    code: 'RISK-02',
+    name: 'Технический консерватизм и инерция CTO («Работает — не трогай»)',
+    category: 'market',
+    categoryLabel: 'Рыночный',
+    probability: 85,
+    impact: 80,
+    riskScore: 68,
+    mitigatedProbability: 30,
+    mitigatedImpact: 30,
+    mitigatedScore: 9,
+    level: 'critical',
+    levelLabel: 'Критический',
+    description: 'Главный психологический барьер B2B продаж телеком-софта: страх остановки сети, потери балансов абонентов и ночных сбоев при миграции со старого биллинга 10-летней давности (Carbon 4, Mikbill, UTM5).',
+    consequences: 'Затягивание цикла сделки (6–12 месяцев) и высокий процент отвалов на этапе согласования миграции.',
+    mitigationStrategy: 'Внедрение программы «Безопасный переход»: автоматический конвертер БД + 6 месяцев бесплатного параллельного запуска (Dual-run без риска) + контрактная гарантия сохранения биллинговой истории и 100% манибэк.',
+    preventiveActions: [
+      'Созданы скрипты автоматической миграции баз Mikbill, Carbon 4 и UTM5',
+      'Запуск интерактивного live-демо на обезличенных данных заказчика за 1 рабочий день',
+      'Круглосуточный инженерный саппорт на период переключения абонентов'
+    ],
+    owner: 'Техлид / Пресейл-инженер',
+    timeline: 'Постоянно (внедрено в Build 2286)',
+    residualRisk: 'Умеренный, снимается наглядным Dual-run пилотом',
+    color: '#ef4444',
+    iconName: 'Clock'
+  },
+  {
+    id: 'risk-competitor-dumping',
+    code: 'RISK-03',
+    name: 'Ответный демпинг и маркетинговое давление лидеров (Carbon, UTM5)',
+    category: 'market',
+    categoryLabel: 'Рыночный',
+    probability: 70,
+    impact: 65,
+    riskScore: 45.5,
+    mitigatedProbability: 35,
+    mitigatedImpact: 30,
+    mitigatedScore: 10.5,
+    level: 'high',
+    levelLabel: 'Высокий',
+    description: 'Крупные игроки рынка могут предложить закрытые спец-скидки, бесплатный апгрейд на Carbon 5/X или рассрочку на 2 года для удержания уходящих клиентов при попытке смены биллинга.',
+    consequences: 'Ценовое давление на тарифы СмИТ Биллинг и увеличение расходов на привлечение (CAC).',
+    mitigationStrategy: 'Асимметричная дифференциация: встроенный AI-ассистент первого уровня поддержки (72.6% автоматизации) и современный адаптивный UI/UX, которых нет у legacy-конкурентов; открытый API и нулевая плата за дополнительные модули.',
+    preventiveActions: [
+      'Все 8 модулей (HelpDesk, CRM, Telegram Bot, СОРМ) включены в базовую подписку без скрытых доплат',
+      'Встроенный Android SMS шлюз экономит оператору до 25 000 ₽/мес на оповещениях',
+      'Публичный калькулятор ROI показывает чистую окупаемость перехода за 2.3 месяца'
+    ],
+    owner: 'Product Lead / Маркетинг',
+    timeline: 'Q3–Q4 2026',
+    residualRisk: 'Низкий за счет превосходства в AI и экономии на SMS',
+    color: '#f97316',
+    iconName: 'TrendingDown'
+  },
+  {
+    id: 'risk-telecom-mna',
+    code: 'RISK-04',
+    name: 'M&A консолидация и поглощение малых ISP федеральными операторами',
+    category: 'market',
+    categoryLabel: 'Рыночный',
+    probability: 80,
+    impact: 60,
+    riskScore: 48,
+    mitigatedProbability: 50,
+    mitigatedImpact: 35,
+    mitigatedScore: 17.5,
+    level: 'high',
+    levelLabel: 'Высокий',
+    description: 'Федеральные телеком-гиганты (Ростелеком, ЭР-Телеком / Дом.ру, МТС, МегаФон) ежегодно выкупают десятки региональных независимых операторов, переводя их на корпоративные проприетарные биллинги.',
+    consequences: 'Постепенное сжатие общей емкости рынка классических локальных Ethernet-провайдеров в крупных городах.',
+    mitigationStrategy: 'Диверсификация в растущие ниши: МКС (многоквартирные сети в новостройках), частный сектор и коттеджные поселки (PON), B2B операторы видеонаблюдения, СКУД и домофонии, а также экспансия в страны СНГ (Казахстан, Узбекистан, Беларусь).',
+    preventiveActions: [
+      'Архитектура мульти-организаций и партнерских франшиз в одном биллинге',
+      'Поддержка специфики PON/GPON сетей и интеграция с OLT Huawei, ZTE, BDCOM, Eltex',
+      'Готовые модули учета камер видеонаблюдения и умных домофонов'
+    ],
+    owner: 'Бизнес-девелопмент / CEO',
+    timeline: '2026–2028',
+    residualRisk: 'Контролируемый за счет смежных B2B и Smart City ниш',
+    color: '#f97316',
+    iconName: 'Building2'
+  },
+  {
+    id: 'risk-reestr-import',
+    code: 'RISK-05',
+    name: 'Ужесточение требований Реестра отечественного ПО и 152-ФЗ',
+    category: 'regulatory',
+    categoryLabel: 'Регуляторный',
+    probability: 60,
+    impact: 75,
+    riskScore: 45,
+    mitigatedProbability: 20,
+    mitigatedImpact: 25,
+    mitigatedScore: 5,
+    level: 'high',
+    levelLabel: 'Высокий',
+    description: 'Требования регуляторов и госкомпаний использовать ПО исключительно из Единого реестра Минцифры РФ с обязательной поддержкой отечественных ОС (Astra Linux, РЕД ОС, Альт Линукс) и СУБД (Postgres Pro).',
+    consequences: 'Ограничение участия провайдеров-клиентов в государственных программах («УЦН 2.0», школы, ведомства) и риск предписаний.',
+    mitigationStrategy: 'Подготовка пакета документации и подача заявки в Единый реестр российских программ; тестирование и сертификация совместимости с Astra Linux Special Edition и РЕД ОС.',
+    preventiveActions: [
+      '100% чистый открытый стек: Python 3.12, Django 5, PostgreSQL 16, NGINX, Docker',
+      'Полное отсутствие зарубежных проприетарных библиотек и бинарных блобов',
+      'Соответствие требованиям 152-ФЗ по хранению и обработке персональных данных на территории РФ'
+    ],
+    owner: 'DevOps / Системный архитектор',
+    timeline: 'Q4 2026 – Q2 2027',
+    residualRisk: 'Минимальный благодаря чистому Linux/Postgres стеку',
+    color: '#f97316',
+    iconName: 'FileCheck2'
+  },
+  {
+    id: 'risk-llm-dependency',
+    code: 'RISK-06',
+    name: 'Блокировки зарубежных LLM API / Требования суверенного AI',
+    category: 'technical',
+    categoryLabel: 'Технический',
+    probability: 50,
+    impact: 70,
+    riskScore: 35,
+    mitigatedProbability: 15,
+    mitigatedImpact: 20,
+    mitigatedScore: 3,
+    level: 'medium',
+    levelLabel: 'Умеренный',
+    description: 'Риск блокировок, изменения условий использования внешних API нейросетей или запрет передачи пользовательских промптов на зарубежные серверы.',
+    consequences: 'Временный сбой в работе AI-ассистента техподдержки или регуляторные риски трансграничной передачи данных.',
+    mitigationStrategy: 'Абстрактный модуль AI-Engine с поддержкой отечественных облачных LLM (YandexGPT, GigaChat) и возможностью запуска локальных Open-Source моделей (Qwen 2.5, Llama 3, DeepSeek через Ollama / vLLM) прямо на сервере провайдера.',
+    preventiveActions: [
+      'Автоматическое маскирование персональных данных (ФИО, паспорта, IP) перед отправкой в AI',
+      'Модульная архитектура провайдеров LLM с мгновенным переключением fallback-моделей',
+      'Возможность автономной работы без интернета на локальных квантованных моделях GGUF'
+    ],
+    owner: 'AI / Backend Team',
+    timeline: 'Внедрено в Build 2286',
+    residualRisk: 'Практически устранен локальным on-premise AI контуром',
+    color: '#eab308',
+    iconName: 'Bot'
+  },
+  {
+    id: 'risk-cyberattacks',
+    code: 'RISK-07',
+    name: 'Целевые кибератаки, DDoS на биллинг и компрометация личного кабинета',
+    category: 'technical',
+    categoryLabel: 'Технический',
+    probability: 45,
+    impact: 85,
+    riskScore: 38.25,
+    mitigatedProbability: 15,
+    mitigatedImpact: 25,
+    mitigatedScore: 3.75,
+    level: 'medium',
+    levelLabel: 'Умеренный',
+    description: 'Атаки на финансовый шлюз, распределенный DDoS на личный кабинет абонента или попытки несанкционированного списания/начисления средств администраторами.',
+    consequences: 'Простой критического сервиса провайдера, финансовые потери и утечки абонентских баз.',
+    mitigationStrategy: 'Полная изоляция биллингового ядра во внутреннем сегменте сети (DMZ), обязательная двухфакторная аутентификация (2FA) для админов, Rate Limiting и аппаратная фильтрация трафика.',
+    preventiveActions: [
+      'Криптографически защищенный аудит всех финансовых транзакций без возможности правки',
+      'Изоляция платежных шлюзов (СБП, Т-Банк, Сбер, ЮKassa) с валидацией webhook-подписей',
+      'Автоматическое шифрование резервных копий БД и выгрузка в географически распределенное хранилище'
+    ],
+    owner: 'Security Engineer',
+    timeline: 'Постоянный аудит',
+    residualRisk: 'Низкий при соблюдении регламента сетевой изоляции',
+    color: '#eab308',
+    iconName: 'Lock'
+  },
+  {
+    id: 'risk-scaling-support',
+    code: 'RISK-08',
+    name: 'Узкое горлышко техподдержки при резком масштабировании установок',
+    category: 'operational',
+    categoryLabel: 'Операционный',
+    probability: 65,
+    impact: 50,
+    riskScore: 32.5,
+    mitigatedProbability: 25,
+    mitigatedImpact: 20,
+    mitigatedScore: 5,
+    level: 'medium',
+    levelLabel: 'Умеренный',
+    description: 'При резком наплыве клиентов (10+ одновременных внедрений в месяц) команда разработчиков рискует перегрузиться задачами развертывания, кастомизации и обучения операторов.',
+    consequences: 'Срыв сроков запуска пилотов, падение NPS и отвлечение ресурсов от продуктовой разработки ядра.',
+    mitigationStrategy: 'Автоматизация онбординга: Docker-инсталлятор «в одну команду», интерактивная база знаний docs.billing.smit34.ru, видео-гайды и развитие сети региональных сертифицированных интеграторов.',
+    preventiveActions: [
+      'Развернут готовый демо-стенд demo.billing.smit34.ru для быстрого тест-драйва без участия инженеров',
+      'Интерактивный AI-консультант в документации отвечает на 80% типовых вопросов настройки',
+      'Модульная структура Ansible-плейбуков для развертывания за 15 минут'
+    ],
+    owner: 'Support Lead / DevOps',
+    timeline: 'Q3–Q4 2026',
+    residualRisk: 'Низкий благодаря стандартизации инсталляций',
+    color: '#eab308',
+    iconName: 'Users'
+  },
+  {
+    id: 'risk-sms-provider-costs',
+    code: 'RISK-09',
+    name: 'Рост тарифов сотовых операторов на сервисные SMS-уведомления',
+    category: 'operational',
+    categoryLabel: 'Операционный',
+    probability: 75,
+    impact: 35,
+    riskScore: 26.25,
+    mitigatedProbability: 10,
+    mitigatedImpact: 10,
+    mitigatedScore: 1,
+    level: 'low',
+    levelLabel: 'Низкий',
+    description: 'Операторы «Большой четверки» повышают цены на сервисные SMS до 4–6 ₽ за сообщение, что приводит к дополнительным расходам малого провайдера в 15–30k ₽/мес.',
+    consequences: 'Рост эксплуатационных расходов оператора и жалобы на дороговизну информирования абонентов.',
+    mitigationStrategy: 'Перевод абонентов на бесплатные омниканальные каналы: встроенный Android SMS шлюз (безлимитные SMS со смартфона провайдера за 0 ₽), Telegram Mini App бот, VK-уведомления и Push-сообщения в мобильном приложении.',
+    preventiveActions: [
+      'В Build 2286 полностью отлажен Android SMS Gateway с поддержкой нескольких SIM-карт и балансировкой',
+      'Запущен официальный Telegram-бот самообслуживания абонентов с оплатой через СБП в 1 клик',
+      'Push-уведомления доставляются бесплатно через Firebase / RuStore Push SDK'
+    ],
+    owner: 'Mobile / Integration Lead',
+    timeline: 'Реализовано в Build 2286',
+    residualRisk: 'Нулевой (затраты провайдера на SMS снижены до 0 ₽)',
+    color: '#10b981',
+    iconName: 'Smartphone'
+  },
+  {
+    id: 'risk-cash-flow-delay',
+    code: 'RISK-10',
+    name: 'Кассовые разрывы и задержки платежей со стороны малых ISP',
+    category: 'operational',
+    categoryLabel: 'Операционный',
+    probability: 35,
+    impact: 40,
+    riskScore: 14,
+    mitigatedProbability: 15,
+    mitigatedImpact: 15,
+    mitigatedScore: 2.25,
+    level: 'low',
+    levelLabel: 'Низкий',
+    description: 'Несвоевременная оплата ежемесячной абонентской платы или ежегодной подписки провайдерами в условиях сезонных кассовых разрывов.',
+    consequences: 'Неравномерный денежный поток (Cash Flow) и риски кассового разрыва на этапе активного масштабирования.',
+    mitigationStrategy: 'Стимулирование годовой предоплаты со скидкой 15–20%, система автоматических счетов с фискализацией 54-ФЗ и интеграция с облачным сервером лицензий license.billing.smit34.ru с 14-дневным grace-периодом.',
+    preventiveActions: [
+      'Лицензионный сервер автоматически формирует счета и акты за 10 дней до окончания периода',
+      'Встроен мягкий 14-дневный grace-период для исключения остановки абонентской сети',
+      'Поддержка оплаты по безналичному расчету и бизнес-картами с автоплатежом'
+    ],
+    owner: 'Финансовый директор / Бухгалтерия',
+    timeline: 'Внедрено в Build 2286',
+    residualRisk: 'Низкий, гарантирован годовыми контрактами',
+    color: '#10b981',
+    iconName: 'CreditCard'
   }
 ];
 
