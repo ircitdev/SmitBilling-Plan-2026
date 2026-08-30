@@ -104,7 +104,25 @@ export const PositioningSection: React.FC<PositioningSectionProps> = ({ onOpenCa
               {/* Author and Version Footer */}
               <div className="flex flex-wrap items-center justify-between gap-4 mt-6 pt-5 border-t border-slate-100 dark:border-slate-800">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-emerald-500 text-white font-bold flex items-center justify-center text-sm shadow-sm font-mono shrink-0">
+                  <img
+                    src={METADATA.authorPhoto}
+                    alt=""
+                    loading="lazy"
+                    width={40}
+                    height={40}
+                    className="w-10 h-10 rounded-full object-cover shadow-md ring-2 ring-emerald-500/60"
+                    onError={(e) => {
+                      // фото не загрузилось — показываем кружок с инициалами
+                      const el = e.currentTarget;
+                      el.style.display = 'none';
+                      const fallback = el.nextElementSibling as HTMLElement | null;
+                      if (fallback) fallback.style.display = 'flex';
+                    }}
+                  />
+                  <div
+                    style={{ display: 'none' }}
+                    className="w-10 h-10 rounded-full bg-emerald-500 text-white font-bold items-center justify-center text-sm shadow-md"
+                  >
                     {POSITIONING_DATA.author.initials}
                   </div>
                   <div>

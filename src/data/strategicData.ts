@@ -8,6 +8,7 @@ export const METADATA = {
   icp: 'малые ISP 500–5 000 клиентов',
   author: 'Александр Успешный',
   authorTelegram: 'https://t.me/uspeshnyy',
+  authorPhoto: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/plan2026/usp.jpg',
   reportPath: 'dev_reports/Документация/2026-05-13_Анализ_конкурентов_российский_рынок_биллинга.md',
   audioUrl: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/audio/podcast_ai_smit_billing.m4a',
   googleDocUrl: 'https://docs.google.com/document/d/1w8h3y4DYf5q5O1f4IIx9XJERBLrCszsEIzryXwbwsX8/edit?usp=sharing',

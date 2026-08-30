@@ -299,7 +299,7 @@ export const TLDRSection: React.FC<TLDRSectionProps> = ({
 
         {/* Card 4: Strategic Verdict */}
         <ScrollReveal direction="up" distance={24} delay={0.1} className="md:col-span-2">
-          <div className="glow-shadow relative overflow-hidden p-7 sm:p-9 rounded-[32px] bg-slate-900 text-white dark:bg-slate-900 border border-slate-800 shadow-xl">
+          <div className="glow-shadow rotating-gradient relative overflow-hidden p-7 sm:p-9 rounded-[32px] bg-slate-900 text-white dark:bg-slate-900 border border-slate-800 shadow-xl">
             <Compass className="absolute -right-8 -bottom-8 w-48 h-48 text-white/5 pointer-events-none" />
 
             <div className="relative z-10">

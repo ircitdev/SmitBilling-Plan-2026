@@ -109,7 +109,16 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               </div>
               <div>
                 <p className="text-xs text-slate-400 font-bold uppercase tracking-wider">Автор</p>
-                <a href={METADATA.authorTelegram} target="_blank" rel="noopener noreferrer" className="text-base font-bold text-emerald-600 dark:text-emerald-400 hover:underline block truncate mt-0.5">
+                <a href={METADATA.authorTelegram} target="_blank" rel="noopener noreferrer" className="mt-0.5 flex items-center gap-2 text-base font-bold text-emerald-600 dark:text-emerald-400 hover:underline block truncate mt-0.5">
+                  <img
+                    src={METADATA.authorPhoto}
+                    alt=""
+                    loading="lazy"
+                    width={28}
+                    height={28}
+                    className="w-7 h-7 rounded-full object-cover ring-2 ring-emerald-500/50 shrink-0"
+                    onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                  />
                   {METADATA.author}
                 </a>
               </div>
@@ -121,7 +130,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         <ScrollStagger staggerDelay={0.1} className="flex flex-col gap-6">
           {/* Bento Tile 1: Solid Accent Card (Live Target ICP & Quick ROI) */}
           <ScrollStaggerItem distance={20}>
-            <div className="frosted-card bg-emerald-600/90 text-white rounded-[32px] p-7 shadow-lg flex flex-col justify-between relative overflow-hidden group">
+            <div className="frosted-card rotating-gradient glow-shadow bg-emerald-600/90 text-white rounded-[32px] p-7 shadow-lg flex flex-col justify-between relative overflow-hidden group">
               <div className="flex justify-between items-start">
                 <div className="w-11 h-11 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm">
                   <Target className="w-6 h-6 text-white" />
@@ -154,7 +163,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
           {/* Bento Tile 2: Dark Solid Block (SORM & Market Compliance) */}
           <ScrollStaggerItem distance={20}>
-            <div className="bg-slate-900 text-white rounded-[32px] p-7 shadow-xl flex flex-col justify-between">
+            <div className="rotating-gradient glow-shadow relative bg-slate-900 text-white rounded-[32px] p-7 shadow-xl flex flex-col justify-between">
               <div className="flex justify-between items-center">
                 <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">СОРМ-3 / Нормативы РФ</p>
                 <span className="text-amber-400 text-xs font-bold flex items-center gap-1">
