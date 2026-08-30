@@ -1,0 +1,6 @@
+{
+  "name": "Стратегический план развития СмИТ Биллинг",
+  "description": "Интерактивный стратегический портал и конкурентный анализ рынка биллинг-систем для ISP",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
