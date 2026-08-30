@@ -51,7 +51,7 @@ const LINKS = [
 export const LiveLinks: React.FC = () => {
   return (
     <section className="mb-14 scroll-mt-20" id="live">
-      <div className="rotating-gradient glow-shadow relative overflow-hidden rounded-[32px] bg-slate-900 dark:bg-slate-950 border border-slate-800 shadow-xl p-7 sm:p-9">
+      <div className="animated-gradient glow-shadow relative overflow-hidden rounded-[32px] bg-slate-900 dark:bg-slate-950 border border-slate-800 shadow-xl p-7 sm:p-9">
         <div className="relative z-10">
           <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-500/15 text-emerald-300 text-[11px] font-bold uppercase tracking-wider border border-emerald-500/30">
             <ExternalLink className="w-3.5 h-3.5" />

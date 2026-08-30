@@ -130,7 +130,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         <ScrollStagger staggerDelay={0.1} className="flex flex-col gap-6">
           {/* Bento Tile 1: Solid Accent Card (Live Target ICP & Quick ROI) */}
           <ScrollStaggerItem distance={20}>
-            <div className="frosted-card rotating-gradient glow-shadow bg-emerald-600/90 text-white rounded-[32px] p-7 shadow-lg flex flex-col justify-between relative overflow-hidden group">
+            <div className="frosted-card rotating-gradient rotating-gradient-front glow-outer bg-emerald-600/85 text-white rounded-[32px] p-7 flex flex-col justify-between relative overflow-hidden group">
               <div className="flex justify-between items-start">
                 <div className="w-11 h-11 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm">
                   <Target className="w-6 h-6 text-white" />

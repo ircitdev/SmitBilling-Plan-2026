@@ -19,7 +19,7 @@ import { RECOMMENDATIONS } from '../data/strategicData';
 export const DEFAULT_RECOMMENDATION_STATUSES: Record<string, RecommendationStatus> = {
   r1: 'in-progress',
   r2: 'in-progress',
-  r3: 'planned',
+  r3: 'completed',
   r4: 'in-progress',
   r5: 'completed',
   r6: 'completed',

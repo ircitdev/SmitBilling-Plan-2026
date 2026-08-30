@@ -285,6 +285,17 @@ html {
   pointer-events: none;
 }
 
+/* Поверх непрозрачной заливки: под фоном карточки (z-index -1) градиент
+   почти не читался. Здесь он лежит над фоном, но под содержимым. */
+.rotating-gradient-front::before {
+  z-index: 0;
+}
+
+.rotating-gradient-front > * {
+  position: relative;
+  z-index: 1;
+}
+
 @keyframes gradient-spin {
   to { rotate: 360deg; }
 }
@@ -399,4 +410,68 @@ html {
   .is-closing .panel-right,
   .is-closing .panel-center,
   .is-closing .panel-bottom { animation: none; opacity: 0; }
+}
+
+/* ── Переливающаяся заливка ──────────────────────────────────────────
+   Для широких блоков: вращающееся пятно на них уходит за края и почти
+   не читается, а смещение градиента работает по всей площади. */
+
+.animated-gradient {
+  position: relative;
+  isolation: isolate;
+}
+
+.animated-gradient::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: linear-gradient(
+    115deg,
+    rgba(16, 185, 129, 0.30) 0%,
+    rgba(45, 212, 191, 0.18) 22%,
+    rgba(15, 23, 42, 0) 45%,
+    rgba(52, 211, 153, 0.22) 68%,
+    rgba(20, 184, 166, 0.14) 85%,
+    rgba(16, 185, 129, 0.30) 100%
+  );
+  background-size: 280% 280%;
+  animation: gradient-drift 22s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes gradient-drift {
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animated-gradient::before { animation: none; }
+}
+
+/* ── Свечение тенью ──────────────────────────────────────────────────
+   Вариант glow-shadow для карточек, где уже есть свой контекст
+   наложения: там ореол-псевдоэлемент уходит под фон карточки. */
+
+.glow-outer {
+  animation: glow-outer-pulse 5s ease-in-out infinite;
+}
+
+@keyframes glow-outer-pulse {
+  0%, 100% {
+    box-shadow: 0 10px 30px rgba(16, 185, 129, 0.28),
+                0 0 0 1px rgba(52, 211, 153, 0.20);
+  }
+  50% {
+    box-shadow: 0 16px 48px rgba(16, 185, 129, 0.48),
+                0 0 0 1px rgba(52, 211, 153, 0.35);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glow-outer {
+    animation: none;
+    box-shadow: 0 12px 36px rgba(16, 185, 129, 0.34);
+  }
 }

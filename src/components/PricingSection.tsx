@@ -120,19 +120,19 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onOpenCalculator
                   )}
 
                   <div className="mt-4 pb-5 border-b border-slate-200/80 dark:border-slate-800">
-                    <div className="flex items-baseline gap-1.5">
+                    <div className="flex items-baseline gap-1.5 flex-nowrap whitespace-nowrap">
                       <span
-                        className={`text-3xl font-extrabold tracking-tight tabular-nums ${
+                        className={`text-3xl font-extrabold tracking-tight tabular-nums whitespace-nowrap ${
                           isPrimary ? 'text-[#059669] dark:text-emerald-400' : 'text-slate-900 dark:text-white'
                         }`}
                       >
                         {price.toLocaleString('ru-RU')} ₽
                       </span>
-                      <span className="text-sm font-semibold text-slate-500 dark:text-slate-400">
+                      <span className="text-sm font-semibold text-slate-500 dark:text-slate-400 whitespace-nowrap">
                         {period === 'annual' ? '/ год' : '/ мес'}
                       </span>
                     </div>
-                    <p className="mt-1 text-[11px] text-slate-400 dark:text-slate-500">
+                    <p className="mt-1 text-[11px] text-slate-400 dark:text-slate-500 whitespace-nowrap">
                       {period === 'annual'
                         ? `или ${tier.monthlyPrice.toLocaleString('ru-RU')} ₽ в месяц`
                         : `или ${tier.annualPrice.toLocaleString('ru-RU')} ₽ за год`}

@@ -16,8 +16,13 @@ import { ScrollReveal, ScrollStagger, ScrollStaggerItem } from './ScrollReveal';
 interface TLDRSectionProps {
   onOpenSormDrawer: () => void;
   onOpenCalculator: () => void;
-  /** 'summary' — сводка вверху документа, 'details' — разбор у заключения */
-  part?: 'summary' | 'details' | 'all';
+  /**
+   * 'summary' — сводка вверху документа;
+   * 'verdict' — только главный вывод, идёт в конце, перед заключением;
+   * 'details' — вывод вместе с карточками сильных и слабых сторон
+   *   (полные секции о них есть отдельно, поэтому в документе не нужен).
+   */
+  part?: 'summary' | 'verdict' | 'details' | 'all';
 }
 
 /** Ссылка на карточку модуля в каталоге лендинга — она открывается модалкой. */
@@ -40,8 +45,9 @@ export const TLDRSection: React.FC<TLDRSectionProps> = ({
 }) => {
   const showSummary = part === 'all' || part === 'summary';
   const showDetails = part === 'all' || part === 'details';
+  const showVerdict = showDetails || part === 'verdict';
   return (
-    <section id={part === 'details' ? 'tldr-details' : 'tldr'} className="mb-14 scroll-mt-20">
+    <section id={part === 'summary' || part === 'all' ? 'tldr' : 'tldr-details'} className="mb-14 scroll-mt-20">
       {/* Section Header */}
       {showSummary && (
       <ScrollReveal direction="up" distance={20}>
@@ -297,6 +303,11 @@ export const TLDRSection: React.FC<TLDRSectionProps> = ({
           </div>
         </ScrollReveal>
 
+          </>
+        )}
+
+        {showVerdict && (
+          <>
         {/* Card 4: Strategic Verdict */}
         <ScrollReveal direction="up" distance={24} delay={0.1} className="md:col-span-2">
           <div className="glow-shadow rotating-gradient relative overflow-hidden p-7 sm:p-9 rounded-[32px] bg-slate-900 text-white dark:bg-slate-900 border border-slate-800 shadow-xl">

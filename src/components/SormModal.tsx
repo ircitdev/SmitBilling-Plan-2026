@@ -82,7 +82,17 @@ export const SormModal: React.FC<SormModalProps> = ({ isOpen, onClose }) => {
 
           {/* Intro */}
           <div className="py-4 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed border-b border-slate-100 dark:border-slate-800">
-            Получение официального сертификата соответствия системы СОРМ-3 (для взаимодействия с пультами ПУ ФСБ) — это не просто оплата испытаний в ЦНИИС (~500k–1.2M ₽). Это строгий технологический и организационный регламент из 7 ключевых этапов:
+            <strong className="text-slate-900 dark:text-white">Решение от 30.08.2026: сертификацию не начинаем.</strong>{' '}
+            Сертификат соответствия выдаётся на технические средства СОРМ — оборудование
+            в сети оператора, — а не на биллинг. От биллинга требуется выгрузка сведений
+            об абонентах по приказу Минцифры №573: она реализована полностью и работает
+            в бою. За полтора года переговоров письменного требования «сертифицированный
+            биллинг» не предъявил никто.{' '}
+            <br /><br />
+            Испытания в ЦНИИС стоили бы 500 тыс. – 1,2 млн ₽ и заняли 6–12 месяцев, а
+            сертификат выдаётся на конкретную версию — при еженедельных релизах он устареет
+            раньше, чем окупится. Ниже — что именно пришлось бы сделать, если решение
+            придётся пересмотреть:
           </div>
 
           {/* 7-Step Interactive Checklist */}
@@ -144,13 +154,26 @@ export const SormModal: React.FC<SormModalProps> = ({ isOpen, onClose }) => {
           <div className="p-4 rounded-[22px] bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 text-xs text-amber-900 dark:text-amber-300 flex items-start gap-2.5">
             <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
             <div>
-              <strong>Резюме для стратегии:</strong> Программный контур СмИТ Биллинг (13 форматов, кольцевой буфер и неизменяемый лог аудита) полностью разработан. Главные внешние шаги — выделение тестового стенда для ЦНИИС и согласование схемы с территориальным УФСБ оператора-партнёра.
+              <strong>Что делаем сейчас:</strong> три пункта из семи — наша зона, и они закрыты:
+              13 форматов выгрузки, неизменяемый журнал аудита, изоляция выгрузок по организациям.
+              Остальные четыре — внешние: документация по ГОСТ, аппаратный стенд, испытания
+              в ЦНИИС, согласование с территориальным УФСБ. Они запускаются только по триггеру:
+              клиент с письменным требованием от территориального органа и готовностью
+              участвовать в расходах. До того деньги нужнее на продукт и продажи.
             </div>
           </div>
         </div>
 
         {/* Footer */}
         <div className="pt-6 border-t border-slate-100 dark:border-slate-800 flex justify-end">
+          <a
+            href="/plan2026/sorm/"
+            target="_blank"
+            rel="noopener"
+            className="mr-auto text-xs font-bold text-emerald-700 dark:text-emerald-400 hover:underline"
+          >
+            Что говорить клиенту →
+          </a>
           <button
             onClick={onClose}
             className="px-6 py-2.5 rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold text-xs hover:bg-slate-800 transition-colors shadow-xs"

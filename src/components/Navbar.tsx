@@ -54,7 +54,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <span className="font-extrabold text-base sm:text-lg tracking-tight text-slate-900 dark:text-white">
                   СмИТ Биллинг
                 </span>
-                <span className="bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wider">
+                <span className="hidden sm:inline-flex bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wider">
                   {METADATA.build}
                 </span>
               </div>
@@ -94,11 +94,11 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* AI Strategy Assistant */}
           <button
             onClick={onOpenAiAssistant}
-            className="hidden sm:flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-xs hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
-            title="Задать вопрос AI-стратегу СмИТ"
+            className="hidden sm:flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-xs hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
+            title="Задать вопрос AI-помощнику СмИТ"
           >
             <Bot className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-            <span className="hidden md:inline">AI-Стратег</span>
+            <span>AI</span>
           </button>
 
           {/* Demo Booking Button (High-conversion CTA).
@@ -106,12 +106,11 @@ export const Navbar: React.FC<NavbarProps> = ({
               кнопка, а в шапке место нужнее навигации. */}
           <button
             onClick={() => onOpenDemoWidget?.('book')}
-            className="hidden sm:flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold text-white bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 shadow-md shadow-emerald-600/25 transition-all hover:scale-[1.02] border border-emerald-500/40"
+            className="hidden sm:flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-medium text-white bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 shadow-md shadow-emerald-600/25 transition-all hover:scale-[1.02] border border-emerald-500/40"
             title="Записаться на живую 30-мин демонстрацию СмИТ Биллинг"
           >
             <Sparkles className="w-3.5 h-3.5 text-amber-300 animate-pulse" />
             <span>Демо</span>
-            <span className="hidden sm:inline">6 мес 0 ₽</span>
           </button>
 
           {/* 3-Way Theme Switcher (System / Light / Dark) */}

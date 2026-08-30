@@ -103,10 +103,10 @@ export const MarketSection: React.FC<MarketSectionProps> = ({ onOpenSormModal })
           {MARKET_SEGMENTS.map((seg) => (
             <ScrollStaggerItem key={seg.id} distance={20} className="h-full">
               <div
-                className={`p-5 rounded-[28px] transition-all flex flex-col justify-between h-full ${
+                className={`frosted-card p-5 rounded-[28px] transition-all flex flex-col justify-between h-full ${
                   seg.isTarget
-                    ? 'bg-emerald-50/70 dark:bg-emerald-950/40 border-2 border-emerald-500/60 shadow-md shadow-emerald-500/10'
-                    : 'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm hover:border-slate-300 dark:hover:border-slate-700'
+                    ? 'bg-emerald-50/60 dark:bg-emerald-950/35 border-2 border-emerald-500/60 shadow-md shadow-emerald-500/10'
+                    : 'bg-white/70 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 shadow-sm hover:border-slate-300 dark:hover:border-slate-700'
                 }`}
               >
                 <div>

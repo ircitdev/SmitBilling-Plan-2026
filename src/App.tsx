@@ -207,6 +207,11 @@ export default function App() {
         {/* Interactive Comparison Matrix */}
         <ComparisonMatrix />
 
+        {/* Сравнили с конкурентами — теперь где сильнее и где слабее */}
+        <StrengthsSection onOpenSormDrawer={() => setIsSormOpen(true)} />
+
+        <WeaknessesSection onOpenSormDrawer={() => setIsSormOpen(true)} />
+
         {/* Сильные и слабые стороны разбираются ниже, в блоке тезисов
             под тарифами — здесь они дублировались один в один. */}
 
@@ -236,16 +241,16 @@ export default function App() {
           onOpenDemoWidget={handleOpenDemoWidget}
         />
 
-        {/* Разбор тезисов: преимущества, слабости и главный вывод —
-            после рынка, конкурентов и сравнения, а не до них */}
+        {/* Positioning & Go-To-Market Strategy */}
+        <PositioningSection onOpenCalculator={() => setIsCalculatorOpen(true)} />
+
+        {/* Главный вывод — последним, после всех разделов:
+            сильные и слабые стороны разобраны выше своими секциями */}
         <TLDRSection
-          part="details"
+          part="verdict"
           onOpenSormDrawer={() => setIsSormOpen(true)}
           onOpenCalculator={() => setIsCalculatorOpen(true)}
         />
-
-        {/* Positioning & Go-To-Market Strategy */}
-        <PositioningSection onOpenCalculator={() => setIsCalculatorOpen(true)} />
 
         {/* Работающие адреса продукта — до итогов, как в статической версии */}
         <LiveLinks />
