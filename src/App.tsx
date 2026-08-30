@@ -14,7 +14,9 @@ import { RiskMatrixSection } from './components/RiskMatrixSection';
 import { RecommendationsSection } from './components/RecommendationsSection';
 import { RoadmapStatusSection } from './components/RoadmapStatusSection';
 import { ConclusionSection } from './components/ConclusionSection';
+import { TableOfContents } from './components/TableOfContents';
 import { AuroraBackground } from './components/AuroraBackground';
+import { LiveLinks } from './components/LiveLinks';
 import { RoadmapCta } from './components/RoadmapCta';
 import { Footer } from './components/Footer';
 import { RoiCalculatorModal } from './components/RoiCalculatorModal';
@@ -176,6 +178,8 @@ export default function App() {
 
       <AuroraBackground />
 
+      <TableOfContents />
+
       {/* Main Container */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8">
         {/* Hero Section & Audio Player */}
@@ -242,6 +246,9 @@ export default function App() {
 
         {/* Positioning & Go-To-Market Strategy */}
         <PositioningSection onOpenCalculator={() => setIsCalculatorOpen(true)} />
+
+        {/* Работающие адреса продукта — до итогов, как в статической версии */}
+        <LiveLinks />
 
         {/* Стратегический трекер — итоговый блок, после всех разделов */}
         <GlobalProgressBar
