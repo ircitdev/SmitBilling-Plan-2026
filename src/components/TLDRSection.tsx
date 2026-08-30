@@ -1,5 +1,6 @@
 import React from 'react';
 import { 
+  ExternalLink,
   Target, 
   CheckCircle2, 
   XCircle, 
@@ -18,6 +19,19 @@ interface TLDRSectionProps {
   /** 'summary' — сводка вверху документа, 'details' — разбор у заключения */
   part?: 'summary' | 'details' | 'all';
 }
+
+/** Ссылка на карточку модуля в каталоге лендинга — она открывается модалкой. */
+const ModuleLink: React.FC<{ code: string; children: React.ReactNode }> = ({ code, children }) => (
+  <a
+    href={`https://billing.smit34.ru/#module-${code}`}
+    target="_blank"
+    rel="noopener"
+    className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full border border-slate-200 dark:border-slate-700 text-[11px] font-semibold text-slate-500 dark:text-slate-400 hover:text-emerald-700 dark:hover:text-emerald-400 hover:border-emerald-400/60 hover:bg-emerald-50/60 dark:hover:bg-emerald-950/30 transition-colors whitespace-nowrap"
+  >
+    {children}
+    <ExternalLink className="w-2.5 h-2.5" />
+  </a>
+);
 
 export const TLDRSection: React.FC<TLDRSectionProps> = ({
   onOpenSormDrawer,
@@ -136,49 +150,78 @@ export const TLDRSection: React.FC<TLDRSectionProps> = ({
               <ul className="space-y-3 text-xs sm:text-sm text-slate-700 dark:text-slate-300">
                 <li className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
                   <Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" />
-                  <span>
+                  <span className="min-w-0 flex flex-col">
                     <strong>AI-агент на 7 каналах</strong> — ЛК, mobile, email, виджет, <strong>голос и реальный телефон</strong>, подсказка оператору; мультипровайдер (Claude / GPT / Gemini / Grok / Yandex).
+                  
+                    <span className="mt-1.5 flex flex-wrap gap-1.5">
+                      <ModuleLink code="ai">AI-ассистент</ModuleLink>
+                      <ModuleLink code="voice">Голосовая связь</ModuleLink>
+                    </span>
                   </span>
                 </li>
 
                 <li className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
                   <Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" />
-                  <span>
+                  <span className="min-w-0 flex flex-col">
                     <strong>AI-помощник генерации SQL-отчетов</strong> — уникальная фича на рынке РФ.
+                  
+                    <span className="mt-1.5 flex flex-wrap gap-1.5">
+                      <ModuleLink code="reports">Отчёты и аналитика</ModuleLink>
+                    </span>
                   </span>
                 </li>
 
                 <li className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
                   <Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" />
-                  <span>
+                  <span className="min-w-0 flex flex-col">
                     <strong>Своя Поддержка + CRM</strong> — полный отказ от FreeScout в пользу нативного конвейера тикетов и сделок.
+                  
+                    <span className="mt-1.5 flex flex-wrap gap-1.5">
+                      <ModuleLink code="helpdesk">Поддержка</ModuleLink>
+                      <ModuleLink code="crm">CRM / Продажи</ModuleLink>
+                    </span>
                   </span>
                 </li>
 
                 <li className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
                   <Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" />
-                  <span>
+                  <span className="min-w-0 flex flex-col">
                     <strong>Замкнутый финансовый контур</strong> — банковская выписка из почты → сопоставление клиента → зачисление → счёт и акт → <strong>чек 54-ФЗ в ОФД</strong>.
+                  
+                    <span className="mt-1.5 flex flex-wrap gap-1.5">
+                      <ModuleLink code="bank">Банковские выписки</ModuleLink>
+                      <ModuleLink code="fiscal">Фискализация 54-ФЗ</ModuleLink>
+                    </span>
                   </span>
                 </li>
 
                 <li className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
                   <Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" />
-                  <span>
+                  <span className="min-w-0 flex flex-col">
                     <strong>Мультиорганизация & White-label</strong> + центральный сервер лицензий и автообновлений.
+                  
+                    <span className="mt-1.5 flex flex-wrap gap-1.5">
+                      <ModuleLink code="multiorg">Мультиорганизация</ModuleLink>
+                      <ModuleLink code="whitelabel">Whitelabel</ModuleLink>
+                    </span>
                   </span>
                 </li>
 
                 <li className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
                   <Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" />
-                  <span>
+                  <span className="min-w-0 flex flex-col">
                     <strong>Маркетинг внутри биллинга</strong> — конструктор лендингов, боты-воронки, AI-мастер кампаний и сбор лидов сразу в CRM.
+                  
+                    <span className="mt-1.5 flex flex-wrap gap-1.5">
+                      <ModuleLink code="games">Игры / Маркетинг</ModuleLink>
+                      <ModuleLink code="landing">Лендинги</ModuleLink>
+                    </span>
                   </span>
                 </li>
 
                 <li className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
                   <Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" />
-                  <span>
+                  <span className="min-w-0 flex flex-col">
                     <strong>SMS-шлюз через Android</strong> (sms-gate.app) — отправка по тарифу SIM-карты с экономией 5–15k ₽/мес.
                   </span>
                 </li>
@@ -186,8 +229,13 @@ export const TLDRSection: React.FC<TLDRSectionProps> = ({
             </div>
 
             <div className="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
-              <a href="#strengths" className="text-xs font-bold text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-1">
-                Смотреть все 8 преимуществ <ArrowRight className="w-3.5 h-3.5" />
+              <a
+                href="https://billing.smit34.ru/#modules"
+                target="_blank"
+                rel="noopener"
+                className="text-xs font-bold text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-1"
+              >
+                Все модули в каталоге <ArrowRight className="w-3.5 h-3.5" />
               </a>
             </div>
           </div>

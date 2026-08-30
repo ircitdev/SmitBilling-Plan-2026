@@ -185,7 +185,8 @@ export default function App() {
         />
 
         {/* TL;DR Executive Summary */}
-        <TLDRSection 
+        <TLDRSection
+          part="summary"
           onOpenSormDrawer={() => setIsSormOpen(true)}
           onOpenCalculator={() => setIsCalculatorOpen(true)}
         />
