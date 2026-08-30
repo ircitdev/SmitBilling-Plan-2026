@@ -14,6 +14,7 @@ import { RiskMatrixSection } from './components/RiskMatrixSection';
 import { RecommendationsSection } from './components/RecommendationsSection';
 import { RoadmapStatusSection } from './components/RoadmapStatusSection';
 import { ConclusionSection } from './components/ConclusionSection';
+import { RoadmapCta } from './components/RoadmapCta';
 import { Footer } from './components/Footer';
 import { RoiCalculatorModal } from './components/RoiCalculatorModal';
 import { SormModal } from './components/SormModal';
@@ -256,6 +257,9 @@ export default function App() {
           onOpenDemo={() => handleOpenDemoWidget('book')}
         />
       </main>
+
+      {/* Переход к странице исполнения плана — последнее, что видит читатель */}
+      <RoadmapCta />
 
       {/* Footer */}
       <Footer />
