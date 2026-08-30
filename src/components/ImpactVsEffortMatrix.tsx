@@ -627,7 +627,7 @@ export const ImpactVsEffortMatrix: React.FC<ImpactVsEffortMatrixProps> = ({
                   onClick={() => onSelectRecommendation(item)}
                   onMouseEnter={() => setHoveredId(item.id)}
                   onMouseLeave={() => setHoveredId(null)}
-                  className={`p-2 rounded-xl text-left border transition-all duration-200 text-xs flex flex-col justify-between hover:-translate-y-0.5 hover:shadow-xs ${
+                  className={`p-2 rounded-xl text-left border transition-all duration-200 text-xs flex flex-col justify-between min-w-0 overflow-hidden hover:-translate-y-0.5 motion-reduce:hover:translate-y-0 hover:shadow-xs ${
                     isHovered
                       ? 'border-emerald-500 bg-emerald-50/50 dark:bg-emerald-950/40 shadow-sm -translate-y-0.5'
                       : isDone
@@ -637,15 +637,17 @@ export const ImpactVsEffortMatrix: React.FC<ImpactVsEffortMatrixProps> = ({
                       : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-800/40 hover:border-emerald-500/40 dark:hover:border-emerald-500/40'
                   }`}
                 >
-                  <div className="flex items-center justify-between mb-1">
-                    <span className="font-mono font-bold text-[11px] text-slate-800 dark:text-slate-200">
+                  <div className="flex items-center justify-between gap-2 mb-1">
+                    <span className="font-mono font-bold text-[11px] text-slate-800 dark:text-slate-200 shrink-0">
                       #{item.rank}
                     </span>
-                    <span className="font-mono text-[10px] font-bold text-blue-600 dark:text-blue-400">
+                    <span className="font-mono text-[10px] font-bold text-blue-600 dark:text-blue-400 shrink-0">
                       ROI {item.roiRatio}x
                     </span>
                   </div>
-                  <div className="font-semibold text-slate-700 dark:text-slate-300 truncate text-[11px]">
+                  {/* две строки вместо обрезки в одну: на телефоне из «Найти 2–3
+                      платных клиентов…» в одну строку не остаётся смысла */}
+                  <div className="font-semibold text-slate-700 dark:text-slate-300 text-[11px] leading-snug line-clamp-2 break-words">
                     {item.title}
                   </div>
                 </button>

@@ -19,6 +19,19 @@ export const ComparisonMatrix: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [highlightSmitAdvantages, setHighlightSmitAdvantages] = useState(false);
 
+  // На телефоне восемь колонок не помещаются — сравниваем с одним
+  // конкурентом за раз, остальные переключаются чипами.
+  const RIVALS = [
+    { key: 'carbon' as const, label: 'Carbon Soft' },
+    { key: 'utm5' as const, label: 'UTM5' },
+    { key: 'hydra' as const, label: 'Hydra' },
+    { key: 'lanbilling' as const, label: 'LANBilling' },
+    { key: 'bgbilling' as const, label: 'BGBilling' },
+    { key: 'mikbill' as const, label: 'Mikbill' },
+  ];
+  const [rival, setRival] = useState<typeof RIVALS[number]['key']>('carbon');
+  const rivalLabel = RIVALS.find((r) => r.key === rival)?.label ?? '';
+
   const categories = useMemo(() => {
     const set = new Set(MATRIX_DATA.map((row) => row.category));
     return ['all', ...Array.from(set)];
@@ -173,7 +186,89 @@ export const ComparisonMatrix: React.FC = () => {
 
       {/* Matrix Table */}
       <ScrollReveal direction="up" distance={24} delay={0.1}>
-        <div className="overflow-hidden rounded-[32px] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+
+        {/* Мобильный вид: карточка на параметр вместо восьми колонок */}
+        <div className="md:hidden">
+          {/* Выбор конкурента */}
+          <div className="sticky top-16 z-20 -mx-4 px-4 py-2.5 bg-slate-50/95 dark:bg-[#0f141c]/95 backdrop-blur-sm">
+            <div className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">
+              Сравнить с
+            </div>
+            <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-thin">
+              {RIVALS.map((r) => (
+                <button
+                  key={r.key}
+                  onClick={() => setRival(r.key)}
+                  aria-pressed={rival === r.key}
+                  className={`shrink-0 px-3.5 py-2 rounded-full text-xs font-bold border transition-colors ${
+                    rival === r.key
+                      ? 'bg-slate-900 dark:bg-emerald-600 text-white border-slate-900 dark:border-emerald-500'
+                      : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700'
+                  }`}
+                >
+                  {r.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {filteredData.length === 0 ? (
+            <div className="p-8 text-center text-slate-400 text-sm">
+              Параметров по заданным фильтрам не найдено. Сбросьте поиск или фильтр
+            </div>
+          ) : (
+            <div className="space-y-2.5 mt-3">
+              {filteredData.map((row, idx) => {
+                const isNewCat = idx === 0 || filteredData[idx - 1].category !== row.category;
+                return (
+                  <React.Fragment key={row.id}>
+                    {isNewCat && (
+                      <div className="pt-4 pb-1 text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                        {row.category}
+                      </div>
+                    )}
+                    <div className="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 overflow-hidden">
+                      <div className="px-4 py-3 font-bold text-sm text-slate-900 dark:text-white border-b border-slate-100 dark:border-slate-800">
+                        {row.parameter}
+                      </div>
+                      <div className="px-4 py-3 bg-emerald-500/5 dark:bg-emerald-950/20 border-b border-slate-100 dark:border-slate-800">
+                        <div className="text-[11px] font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 mb-1">
+                          СмИТ Биллинг
+                        </div>
+                        <div className="text-sm text-slate-900 dark:text-white">
+                          {renderStatusCell(row.smit, true, row.smitDocTip, row.smitLink)}
+                        </div>
+                      </div>
+                      <div className="px-4 py-3">
+                        <div className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">
+                          {rivalLabel}
+                        </div>
+                        <div className="text-sm text-slate-700 dark:text-slate-300">
+                          {renderStatusCell(row[rival])}
+                        </div>
+                      </div>
+                    </div>
+                  </React.Fragment>
+                );
+              })}
+            </div>
+          )}
+
+          {/* Легенда */}
+          <div className="mt-4 p-4 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs text-slate-500 dark:text-slate-400 flex flex-wrap gap-x-4 gap-y-2">
+            <span className="flex items-center gap-1.5 font-medium">
+              <Check className="w-3.5 h-3.5 text-emerald-600" /> Поддерживается
+            </span>
+            <span className="flex items-center gap-1.5 font-medium">
+              <Minus className="w-3.5 h-3.5 text-amber-500" /> Ограниченно
+            </span>
+            <span className="flex items-center gap-1.5 font-medium">
+              <X className="w-3.5 h-3.5 text-rose-500" /> Отсутствует
+            </span>
+          </div>
+        </div>
+
+        <div className="hidden md:block overflow-hidden rounded-[32px] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
           <div className="overflow-x-auto max-h-[700px] overflow-y-auto scrollbar-thin">
             <table className="w-full text-left border-collapse text-xs sm:text-sm">
               {/* Table Header */}

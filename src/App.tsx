@@ -189,15 +189,6 @@ export default function App() {
           onOpenCalculator={() => setIsCalculatorOpen(true)}
         />
 
-        {/* Positioning & Go-To-Market Strategy */}
-        <PositioningSection onOpenCalculator={() => setIsCalculatorOpen(true)} />
-
-        {/* Pricing & Terms for First Clients */}
-        <PricingSection 
-          onOpenCalculator={() => setIsCalculatorOpen(true)}
-          onOpenDemoWidget={handleOpenDemoWidget}
-        />
-
         {/* Market Context & Regulatory Drivers */}
         <MarketSection onOpenSormModal={() => setIsSormOpen(true)} />
 
@@ -207,11 +198,8 @@ export default function App() {
         {/* Interactive Comparison Matrix */}
         <ComparisonMatrix />
 
-        {/* SmIT Billing Core Strengths & Live Resources */}
-        <StrengthsSection onOpenSormDrawer={() => setIsSormOpen(true)} />
-
-        {/* Gap Analysis & Weaknesses */}
-        <WeaknessesSection onOpenSormDrawer={() => setIsSormOpen(true)} />
+        {/* Сильные и слабые стороны разбираются ниже, в блоке тезисов
+            под тарифами — здесь они дублировались один в один. */}
 
         {/* Матрица рисков & Внешние угрозы (Scatter Chart) */}
         <RiskMatrixSection 
@@ -233,6 +221,23 @@ export default function App() {
         <RoadmapStatusSection />
 
         {/* Заключение / Key Insight */}
+        {/* Pricing & Terms for First Clients */}
+        <PricingSection 
+          onOpenCalculator={() => setIsCalculatorOpen(true)}
+          onOpenDemoWidget={handleOpenDemoWidget}
+        />
+
+        {/* Разбор тезисов: преимущества, слабости и главный вывод —
+            после рынка, конкурентов и сравнения, а не до них */}
+        <TLDRSection
+          part="details"
+          onOpenSormDrawer={() => setIsSormOpen(true)}
+          onOpenCalculator={() => setIsCalculatorOpen(true)}
+        />
+
+        {/* Positioning & Go-To-Market Strategy */}
+        <PositioningSection onOpenCalculator={() => setIsCalculatorOpen(true)} />
+
         {/* Стратегический трекер — итоговый блок, после всех разделов */}
         <GlobalProgressBar
           statuses={recommendationStatuses}

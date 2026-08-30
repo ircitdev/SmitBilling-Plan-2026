@@ -15,15 +15,21 @@ import { ScrollReveal, ScrollStagger, ScrollStaggerItem } from './ScrollReveal';
 interface TLDRSectionProps {
   onOpenSormDrawer: () => void;
   onOpenCalculator: () => void;
+  /** 'summary' — сводка вверху документа, 'details' — разбор у заключения */
+  part?: 'summary' | 'details' | 'all';
 }
 
 export const TLDRSection: React.FC<TLDRSectionProps> = ({
   onOpenSormDrawer,
-  onOpenCalculator
+  onOpenCalculator,
+  part = 'all'
 }) => {
+  const showSummary = part === 'all' || part === 'summary';
+  const showDetails = part === 'all' || part === 'details';
   return (
-    <section id="tldr" className="mb-14 scroll-mt-20">
+    <section id={part === 'details' ? 'tldr-details' : 'tldr'} className="mb-14 scroll-mt-20">
       {/* Section Header */}
+      {showSummary && (
       <ScrollReveal direction="up" distance={20}>
         <div className="flex items-center gap-2 mb-3">
           <span className="px-3.5 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 text-xs font-bold uppercase tracking-wider border border-emerald-200 dark:border-emerald-800">
@@ -34,8 +40,11 @@ export const TLDRSection: React.FC<TLDRSectionProps> = ({
           Главные тезисы за 60 секунд
         </h2>
       </ScrollReveal>
+      )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+        {showSummary && (
+          <>
         {/* Card 1: Lead Takeaways (Full width Bento Card) */}
         <ScrollReveal direction="up" distance={24} className="md:col-span-2">
           <div className="p-6 sm:p-8 rounded-[32px] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
@@ -101,7 +110,11 @@ export const TLDRSection: React.FC<TLDRSectionProps> = ({
             </ScrollStagger>
           </div>
         </ScrollReveal>
+          </>
+        )}
 
+        {showDetails && (
+          <>
         {/* Card 2: Unique Strengths (Bento Grid Left Card) */}
         <ScrollReveal direction="up" distance={24} delay={0.05} className="h-full">
           <div className="p-6 sm:p-8 rounded-[32px] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between h-full">
@@ -278,6 +291,8 @@ export const TLDRSection: React.FC<TLDRSectionProps> = ({
             </div>
           </div>
         </ScrollReveal>
+          </>
+        )}
       </div>
     </section>
   );
