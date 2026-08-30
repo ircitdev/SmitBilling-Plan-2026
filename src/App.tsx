@@ -174,16 +174,6 @@ export default function App() {
 
       {/* Main Container */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8">
-        {/* Global Progress Bar at the top of the main layout */}
-        <GlobalProgressBar
-          statuses={recommendationStatuses}
-          onUpdateStatus={handleUpdateStatus}
-          onResetStatuses={handleResetStatuses}
-          activeFilter={recoFilter}
-          onSelectFilter={setRecoFilter}
-          onSelectRecommendation={(reco) => setSelectedRecommendation(reco)}
-        />
-
         {/* Hero Section & Audio Player */}
         <HeroSection
           isPlayingAudio={isPlayingAudio}
@@ -243,6 +233,16 @@ export default function App() {
         <RoadmapStatusSection />
 
         {/* Заключение / Key Insight */}
+        {/* Стратегический трекер — итоговый блок, после всех разделов */}
+        <GlobalProgressBar
+          statuses={recommendationStatuses}
+          onUpdateStatus={handleUpdateStatus}
+          onResetStatuses={handleResetStatuses}
+          activeFilter={recoFilter}
+          onSelectFilter={setRecoFilter}
+          onSelectRecommendation={(reco) => setSelectedRecommendation(reco)}
+        />
+
         <ConclusionSection 
           onOpenPricing={() => {
             const el = document.getElementById('pricing');
@@ -280,6 +280,10 @@ export default function App() {
 
       <GeminiDemoWidget
         isOpen={isDemoWidgetOpen}
+        onOpen={() => {
+          setDemoWidgetMode('chat');
+          setIsDemoWidgetOpen(true);
+        }}
         onClose={() => setIsDemoWidgetOpen(false)}
         initialMode={demoWidgetMode}
         initialContext={demoWidgetContext}

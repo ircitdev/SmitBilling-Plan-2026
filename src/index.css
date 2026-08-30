@@ -1,3 +1,79 @@
 @import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
+
+/* Ничто за правым краем не тянет страницу вбок. clip, а не hidden:
+   hidden создал бы скролл-контейнер и сломал sticky-шапку. */
+html, body { overflow-x: clip; }
+
+/* ── Полосы прокрутки ────────────────────────────────────────────────
+   Системная полоса в тёмной теме остаётся светлой и выбивается из
+   страницы. Задаём и стандартными свойствами (Firefox), и вебкитовыми
+   (Chrome, Safari, Edge) — одного набора не хватает ни там, ни там. */
+
+:root {
+  --sb-track: rgba(15, 23, 42, 0.04);
+  --sb-thumb: rgba(100, 116, 139, 0.38);
+  --sb-thumb-hover: rgba(16, 185, 129, 0.65);
+}
+
+.dark {
+  --sb-track: rgba(255, 255, 255, 0.04);
+  --sb-thumb: rgba(148, 163, 184, 0.32);
+  --sb-thumb-hover: rgba(52, 211, 153, 0.7);
+}
+
+/* Ползунок и подложка — Firefox */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--sb-thumb) var(--sb-track);
+}
+
+/* Chrome / Safari / Edge */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--sb-track);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--sb-thumb);
+  border-radius: 999px;
+  /* рамка цвета фона даёт ползунку воздух и делает его тоньше трека */
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--sb-thumb-hover);
+  background-clip: padding-box;
+}
+
+/* Уголок между горизонтальной и вертикальной полосой */
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Внутренние области — чат, боковые панели, таблицы: полоса тоньше,
+   чтобы не спорить с содержимым в узком контейнере */
+.overflow-y-auto::-webkit-scrollbar,
+.overflow-x-auto::-webkit-scrollbar,
+.overflow-auto::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+/* На тач-устройствах полосы рисует система — свои прячем, чтобы не
+   занимать место в и без того узком экране */
+@media (hover: none) and (pointer: coarse) {
+  ::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+  html {
+    scrollbar-width: none;
+  }
+}

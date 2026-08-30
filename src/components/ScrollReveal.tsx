@@ -23,7 +23,23 @@ export const ScrollReveal: React.FC<ScrollRevealProps> = ({
   scale,
   ...props
 }) => {
+  // На узком экране горизонтальный выезд создаёт боковую прокрутку:
+  // элемент до появления сдвинут вправо и выходит за край вьюпорта.
+  // Колонки на телефоне всё равно в одну линию — выезжаем снизу.
+  const [isNarrow, setIsNarrow] = React.useState(false);
+  React.useEffect(() => {
+    if (typeof window === 'undefined' || !window.matchMedia) return;
+    const mq = window.matchMedia('(max-width: 767px)');
+    const apply = () => setIsNarrow(mq.matches);
+    apply();
+    mq.addEventListener('change', apply);
+    return () => mq.removeEventListener('change', apply);
+  }, []);
+
   const getInitialPosition = () => {
+    if (isNarrow && (direction === 'left' || direction === 'right')) {
+      return { x: 0, y: distance };
+    }
     switch (direction) {
       case 'up':
         return { y: distance, x: 0 };

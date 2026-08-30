@@ -88,7 +88,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                   onClick={() => handleDemo('chat')}
                   className="px-4 py-3 rounded-2xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-bold text-xs sm:text-sm border border-slate-200 dark:border-slate-700 flex items-center gap-2 transition-all"
                 >
-                  <span>Спросить у AI Gemini</span>
+                  <span>Спросить у AI</span>
                 </button>
               </div>
             </div>

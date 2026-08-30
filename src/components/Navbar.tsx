@@ -101,10 +101,12 @@ export const Navbar: React.FC<NavbarProps> = ({
             <span className="hidden md:inline">AI-Стратег</span>
           </button>
 
-          {/* Gemini Demo Booking Button (High-conversion CTA) */}
+          {/* Demo Booking Button (High-conversion CTA).
+              На телефоне скрыта: там на запись ведёт плавающая круглая
+              кнопка, а в шапке место нужнее навигации. */}
           <button
             onClick={() => onOpenDemoWidget?.('book')}
-            className="flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold text-white bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 shadow-md shadow-emerald-600/25 transition-all hover:scale-[1.02] border border-emerald-500/40"
+            className="hidden sm:flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold text-white bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 shadow-md shadow-emerald-600/25 transition-all hover:scale-[1.02] border border-emerald-500/40"
             title="Записаться на живую 30-мин демонстрацию СмИТ Биллинг"
           >
             <Sparkles className="w-3.5 h-3.5 text-amber-300 animate-pulse" />

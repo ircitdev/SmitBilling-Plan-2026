@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { 
+import {
+  MessageCircle, 
   Sparkles, 
   X, 
   Send, 
@@ -97,12 +98,20 @@ export const GeminiDemoWidget: React.FC<GeminiDemoWidgetProps> = ({
   // Floating banner dismiss state
   const [showTeaser, setShowTeaser] = useState(true);
 
+  // Кнопка и подсказка появляются не сразу: первые секунды читатель
+  // изучает документ, всплывающий помощник в этот момент только мешает.
+  const [isRevealed, setIsRevealed] = useState(false);
+  useEffect(() => {
+    const t = window.setTimeout(() => setIsRevealed(true), 20000);
+    return () => window.clearTimeout(t);
+  }, []);
+
   // Chat State
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: 'welcome-1',
       sender: 'assistant',
-      text: `Здравствуйте! 👋 Я **AI-консультант Gemini** по системе **СмИТ Биллинг**.
+      text: `Здравствуйте! 👋 Я **AI-консультант** по системе **СмИТ Биллинг**.
 
 Моя цель — помочь вашей сети оптимизировать расходы, уйти от устаревшего софта и организовать для вас **персональное 30-минутное онлайн-демо** на живом стенде.
 
@@ -360,7 +369,10 @@ export const GeminiDemoWidget: React.FC<GeminiDemoWidgetProps> = ({
   return (
     <>
       {/* FLOATING TRIGGER BUTTON (Fixed in bottom right) */}
-      <div className="fixed bottom-5 right-5 z-50 flex flex-col items-end gap-3 pointer-events-auto">
+      <div
+        className={`fixed bottom-5 right-5 z-50 flex flex-col items-end gap-3 transition-opacity duration-500 motion-reduce:transition-none ${isRevealed ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
+        aria-hidden={!isRevealed}
+      >
         {/* Floating Teaser Bubble (Dismissable / Auto-inviting) */}
         {showTeaser && !isOpen && (
           <div className="relative bg-white dark:bg-slate-900 border border-emerald-500/40 dark:border-emerald-500/30 rounded-2xl p-4 shadow-2xl max-w-xs sm:max-w-sm animate-in fade-in slide-in-from-bottom-4 duration-300">
@@ -378,7 +390,7 @@ export const GeminiDemoWidget: React.FC<GeminiDemoWidgetProps> = ({
               <div className="pr-4">
                 <div className="flex items-center gap-1.5 mb-1">
                   <span className="text-[11px] font-bold text-emerald-700 dark:text-emerald-400 uppercase tracking-wider">
-                    AI Gemini Консультант
+                    AI-Консультант
                   </span>
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping" />
                 </div>
@@ -408,42 +420,37 @@ export const GeminiDemoWidget: React.FC<GeminiDemoWidgetProps> = ({
           <button
             onClick={() => {
               setShowTeaser(false);
+              setActiveTab('chat');
               onOpen();
             }}
-            className="group relative flex items-center gap-2.5 px-4 py-3 sm:px-5 sm:py-3.5 rounded-full bg-slate-900 hover:bg-slate-800 dark:bg-emerald-600 dark:hover:bg-emerald-500 text-white shadow-2xl hover:shadow-emerald-600/30 transition-all duration-300 hover:scale-105 border border-slate-700/50 dark:border-emerald-400/40"
-            title="Открыть AI-консультант Gemini и запись на демо"
+            className="group relative w-16 h-16 rounded-full bg-slate-900 hover:bg-slate-800 dark:bg-emerald-600 dark:hover:bg-emerald-500 text-white shadow-2xl hover:shadow-emerald-600/30 transition-all duration-300 hover:scale-105 border border-slate-700/50 dark:border-emerald-400/40 flex items-center justify-center motion-reduce:transition-none motion-reduce:hover:scale-100"
+            title="Спросить AI и записаться на демо"
+            aria-label="Спросить AI и записаться на демо"
           >
             {/* Glowing Accent Aura */}
             <span className="absolute -inset-0.5 rounded-full bg-gradient-to-r from-emerald-500 to-teal-400 opacity-40 group-hover:opacity-75 blur-sm transition-opacity" />
-            
-            <div className="relative flex items-center gap-2.5 z-10">
-              <div className="w-7 h-7 rounded-full bg-white/20 dark:bg-black/20 flex items-center justify-center">
-                <Sparkles className="w-4 h-4 text-emerald-400 dark:text-white animate-spin-slow" />
-              </div>
-              <div className="text-left">
-                <div className="flex items-center gap-1.5">
-                  <span className="text-xs sm:text-sm font-bold tracking-tight">
-                    Запись на демо
-                  </span>
-                  <span className="bg-emerald-500 text-white text-[9px] font-extrabold uppercase px-1.5 py-0.2 rounded-full tracking-wider">
-                    AI Gemini
-                  </span>
-                </div>
-                <p className="text-[10px] text-slate-300 dark:text-emerald-100 hidden sm:block">
-                  Персональный разбор сети ISP
-                </p>
-              </div>
-              <Calendar className="w-4 h-4 text-slate-300 group-hover:translate-x-0.5 transition-transform ml-1" />
-            </div>
+
+            <MessageCircle className="relative z-10 w-7 h-7" />
+
+            {/* У круглой кнопки нет места для текста — статус показываем точкой */}
+            <span className="absolute top-1 right-1 z-10 flex h-3 w-3">
+              <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 animate-ping motion-reduce:animate-none" />
+              <span className="relative inline-flex h-3 w-3 rounded-full bg-emerald-500 border-2 border-slate-900 dark:border-emerald-700" />
+            </span>
+
+            {/* Подпись выезжает слева при наведении и с клавиатуры */}
+            <span className="pointer-events-none absolute right-full mr-3 whitespace-nowrap rounded-full bg-slate-900 dark:bg-slate-800 px-3 py-1.5 text-xs font-bold text-white opacity-0 shadow-lg transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100 hidden sm:block">
+              Запись на демо
+            </span>
           </button>
         )}
       </div>
 
       {/* MODAL / WIDGET WINDOW */}
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-950/60 backdrop-blur-sm animate-in fade-in duration-200">
+        <div className="fixed inset-0 z-50 flex items-stretch sm:items-center justify-center p-0 sm:p-4 bg-slate-950/60 backdrop-blur-sm animate-in fade-in duration-200">
           <div 
-            className="w-full sm:max-w-2xl bg-white dark:bg-slate-900 border-t sm:border border-slate-200 dark:border-slate-800 rounded-t-[32px] sm:rounded-[32px] shadow-2xl flex flex-col max-h-[92vh] sm:max-h-[85vh] overflow-hidden animate-in slide-in-from-bottom-6 duration-300"
+            className="w-full h-[100dvh] sm:h-auto sm:max-w-2xl bg-white dark:bg-slate-900 border-0 sm:border border-slate-200 dark:border-slate-800 rounded-none sm:rounded-[32px] shadow-2xl flex flex-col max-h-none sm:max-h-[85vh] overflow-hidden animate-in slide-in-from-bottom-6 duration-300 motion-reduce:animate-none"
           >
             {/* WIDGET HEADER */}
             <div className="p-4 sm:p-5 border-b border-slate-100 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-900/90 flex items-center justify-between gap-4">
@@ -454,7 +461,7 @@ export const GeminiDemoWidget: React.FC<GeminiDemoWidgetProps> = ({
                 <div>
                   <div className="flex items-center gap-2">
                     <h3 className="font-extrabold text-sm sm:text-base text-slate-900 dark:text-white">
-                      AI Gemini • Запись на демонстрацию
+                      AI • Запись на демонстрацию
                     </h3>
                     <span className="bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">
                       Live
@@ -487,7 +494,7 @@ export const GeminiDemoWidget: React.FC<GeminiDemoWidgetProps> = ({
                 }`}
               >
                 <MessageSquare className="w-4 h-4" />
-                <span>Диалог с Gemini</span>
+                <span>Диалог</span>
               </button>
 
               <button
@@ -499,7 +506,7 @@ export const GeminiDemoWidget: React.FC<GeminiDemoWidgetProps> = ({
                 }`}
               >
                 <Calendar className="w-4 h-4" />
-                <span>Забронировать демо</span>
+                <span>Бронь</span>
                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
               </button>
 
@@ -512,7 +519,7 @@ export const GeminiDemoWidget: React.FC<GeminiDemoWidgetProps> = ({
                 }`}
               >
                 <CalendarCheck className="w-4 h-4" />
-                <span>Мои записи ({savedBookings.length})</span>
+                <span>Записи ({savedBookings.length})</span>
               </button>
             </div>
 
@@ -812,7 +819,7 @@ export const GeminiDemoWidget: React.FC<GeminiDemoWidgetProps> = ({
                           Индивидуальная программа демо
                         </p>
                         <p className="text-[11px] text-slate-500 dark:text-slate-400">
-                          Gemini сформирует 5 персонализированных этапов под ваши параметры
+                          AI сформирует 5 персонализированных этапов под ваши параметры
                         </p>
                       </div>
                       <button
@@ -986,7 +993,7 @@ export const GeminiDemoWidget: React.FC<GeminiDemoWidgetProps> = ({
                       У вас пока нет активных записей
                     </p>
                     <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 max-w-xs mx-auto">
-                      Заполните форму записи или попросите AI Gemini подобрать для вас персональный тайм-слот
+                      Заполните форму записи или попросите AI подобрать для вас персональный тайм-слот
                     </p>
                     <button
                       onClick={() => setActiveTab('book')}
