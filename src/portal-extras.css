@@ -183,7 +183,7 @@ html.wf-locked, html.wf-locked body { overflow: hidden !important; }
 }
 
 .wf-bio-photo { position: relative; flex: 0 0 auto; }
-.wf-bio-photo img { display: block; width: 100%; height: 250px; object-fit: cover; object-position: 32% 20%; }
+.wf-bio-photo img { display: block; width: 100%; height: 320px; object-fit: cover; object-position: 50% 12%; }
 .wf-bio-photo::after {
   content: ""; position: absolute; inset: 0;
   background: linear-gradient(180deg, rgba(15, 23, 42, 0) 42%, rgba(15, 23, 42, .78));

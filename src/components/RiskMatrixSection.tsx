@@ -39,6 +39,7 @@ import {
   BarChart3,
   ListFilter
 } from 'lucide-react';
+import { askAi } from '../services/aiWidget';
 import { THREAT_RISKS_DATA } from '../data/strategicData';
 import { ThreatRisk, RiskCategory, RiskLevel } from '../types';
 
@@ -763,9 +764,9 @@ export const RiskMatrixSection: React.FC<RiskMatrixSectionProps> = ({
 
               {onOpenAiAssistant && (
                 <button
-                  onClick={onOpenAiAssistant}
+                  onClick={() => askAi('Разбери риск «' + selectedRisk.name + '» для СмИТ Биллинга: чем он опасен и что делать')}
                   className="flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-200 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 transition-colors"
-                  title="Задать вопрос AI-стратегу по этой угрозе"
+                  title="Спросить AI-консультанта об этой угрозе"
                 >
                   <Bot className="w-4 h-4 text-emerald-500" />
                   <span>AI анализ</span>

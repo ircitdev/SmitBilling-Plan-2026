@@ -14,26 +14,12 @@ import {
   Activity
 } from 'lucide-react';
 import { METADATA } from '../data/strategicData';
+import { askAi } from '../services/aiWidget';
 import { AudioPodcastPlayer } from './AudioPodcastPlayer';
 import { BrandLogo } from './BrandLogo';
 import { ScrollReveal, ScrollStagger, ScrollStaggerItem } from './ScrollReveal';
 
 
-/**
- * «Спросить у AI» открывает того же консультанта, что и на лендинге:
- * виджет с сервера лицензий знает продукт и умеет передать разговор человеку.
- * Если виджет не загрузился, остаётся встроенный чат записи на демо.
- */
-const STRATEGY_QUESTION = 'Расскажи коротко о стратегии СмИТ Биллинга';
-
-const askStrategyAi = (fallback: () => void) => {
-  const widget = (window as unknown as { SmitWidget?: { ask?: (q: string) => void } }).SmitWidget;
-  if (widget?.ask) {
-    widget.ask(STRATEGY_QUESTION);
-    return;
-  }
-  fallback();
-};
 
 interface HeroSectionProps {
   isPlayingAudio: boolean;
@@ -104,7 +90,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 </button>
 
                 <button
-                  onClick={() => askStrategyAi(() => handleDemo('chat'))}
+                  onClick={() => askAi(undefined, () => handleDemo('chat'))}
                   className="px-4 py-3 rounded-2xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-bold text-xs sm:text-sm border border-slate-200 dark:border-slate-700 flex items-center gap-2 transition-all"
                 >
                   <span>Спросить у AI</span>

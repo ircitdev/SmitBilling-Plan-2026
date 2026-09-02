@@ -73,7 +73,7 @@ export const AuthorPanel: React.FC<AuthorPanelProps> = ({ open, onClose }) => {
         </div>
 
         <div className="wf-bio-photo">
-          <img src={METADATA.authorPhoto} alt="" loading="lazy" />
+          <img src={METADATA.authorPhotoBio} alt="" loading="lazy" />
           <div className="wf-bio-caption">
             <div className="wf-bio-name">Успешный Александр Сергеевич</div>
             <div className="wf-bio-role">Архитектор AI-маркетинговых систем</div>

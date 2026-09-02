@@ -19,12 +19,12 @@ import { AuroraBackground } from './components/AuroraBackground';
 import { LiveLinks } from './components/LiveLinks';
 import { SchemesSection } from './components/SchemesSection';
 import { AuthorPanel } from './components/AuthorPanel';
+import { askAi } from './services/aiWidget';
 import { RoadmapCta } from './components/RoadmapCta';
 import { Footer } from './components/Footer';
 import { RoiCalculatorModal } from './components/RoiCalculatorModal';
 import { SormModal } from './components/SormModal';
 import { RecommendationDrawer } from './components/RecommendationDrawer';
-import { AiAssistantModal } from './components/AiAssistantModal';
 import { SearchModal } from './components/SearchModal';
 import { GeminiDemoWidget } from './components/GeminiDemoWidget';
 import { Recommendation, RecommendationStatus, ThemeMode } from './types';
@@ -87,7 +87,6 @@ export default function App() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isCalculatorOpen, setIsCalculatorOpen] = useState(false);
   const [isSormOpen, setIsSormOpen] = useState(false);
-  const [isAiOpen, setIsAiOpen] = useState(false);
   const [isAuthorOpen, setIsAuthorOpen] = useState(false);
   const [selectedRecommendation, setSelectedRecommendation] = useState<Recommendation | null>(null);
 
@@ -173,7 +172,7 @@ export default function App() {
         onOpenSearch={() => setIsSearchOpen(true)}
         onOpenCalculator={() => setIsCalculatorOpen(true)}
         onOpenSormDrawer={() => setIsSormOpen(true)}
-        onOpenAiAssistant={() => setIsAiOpen(true)}
+        onOpenAiAssistant={() => askAi()}
         onOpenDemoWidget={handleOpenDemoWidget}
         isPlayingAudio={isPlayingAudio}
         onPlayAudio={() => setIsPlayingAudio(!isPlayingAudio)}
@@ -230,7 +229,7 @@ export default function App() {
         <RiskMatrixSection 
           onOpenSormDrawer={() => setIsSormOpen(true)}
           onOpenCalculator={() => setIsCalculatorOpen(true)}
-          onOpenAiAssistant={() => setIsAiOpen(true)}
+          onOpenAiAssistant={() => askAi()}
         />
 
         {/* 12 Strategic Recommendations */}
@@ -307,11 +306,6 @@ export default function App() {
       <SormModal
         isOpen={isSormOpen}
         onClose={() => setIsSormOpen(false)}
-      />
-
-      <AiAssistantModal
-        isOpen={isAiOpen}
-        onClose={() => setIsAiOpen(false)}
       />
 
       <GeminiDemoWidget
