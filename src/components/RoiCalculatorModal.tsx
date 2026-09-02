@@ -90,6 +90,7 @@ export const RoiCalculatorModal: React.FC<RoiCalculatorModalProps> = ({ isOpen, 
 
             <button
               onClick={onClose}
+            aria-label="Закрыть калькулятор окупаемости"
               className="p-2.5 rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors shrink-0"
               title="Закрыть (Esc)"
             >
@@ -233,7 +234,7 @@ export const RoiCalculatorModal: React.FC<RoiCalculatorModalProps> = ({ isOpen, 
         {/* Footer actions */}
         <div className="pt-4 border-t border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-3">
           <span className="text-xs text-slate-400">
-            Расчет основан на метриках Build 2286
+            Расчет основан на метриках Build 2405
           </span>
           <button
             onClick={onClose}

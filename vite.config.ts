@@ -5,6 +5,8 @@ import {defineConfig} from 'vite';
 
 export default defineConfig(() => {
   return {
+    // портал раздаётся из подкаталога, а не из корня домена
+    base: '/plan2026/strategy/',
     plugins: [react(), tailwindcss()],
     resolve: {
       alias: {

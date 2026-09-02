@@ -68,6 +68,7 @@ export const Footer: React.FC = () => {
             onClick={scrollToTop}
             className="p-3.5 rounded-2xl bg-slate-100 dark:bg-slate-800 hover:bg-emerald-50 hover:text-emerald-700 dark:hover:bg-emerald-950/40 dark:hover:text-emerald-400 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 transition-all hover:-translate-y-0.5 shadow-xs shrink-0"
             title="Наверх страницы"
+            aria-label="Наверх страницы"
           >
             <ArrowUp className="w-4 h-4" />
           </button>

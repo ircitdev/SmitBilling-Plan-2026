@@ -43,7 +43,7 @@ export const MarketSection: React.FC<MarketSectionProps> = ({ onOpenSormModal })
       </ScrollReveal>
 
       {/* Stats Grid */}
-      <ScrollStagger staggerDelay={0.06} className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3.5 sm:gap-4 mb-6">
+      <ScrollStagger staggerDelay={0.06} className="wf-stat-grid grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3.5 sm:gap-4 mb-6">
         {MARKET_STATS.map((stat, idx) => (
           <ScrollStaggerItem key={idx} distance={18} className="h-full">
             <div

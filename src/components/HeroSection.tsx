@@ -18,8 +18,26 @@ import { AudioPodcastPlayer } from './AudioPodcastPlayer';
 import { BrandLogo } from './BrandLogo';
 import { ScrollReveal, ScrollStagger, ScrollStaggerItem } from './ScrollReveal';
 
+
+/**
+ * «Спросить у AI» открывает того же консультанта, что и на лендинге:
+ * виджет с сервера лицензий знает продукт и умеет передать разговор человеку.
+ * Если виджет не загрузился, остаётся встроенный чат записи на демо.
+ */
+const STRATEGY_QUESTION = 'Расскажи коротко о стратегии СмИТ Биллинга';
+
+const askStrategyAi = (fallback: () => void) => {
+  const widget = (window as unknown as { SmitWidget?: { ask?: (q: string) => void } }).SmitWidget;
+  if (widget?.ask) {
+    widget.ask(STRATEGY_QUESTION);
+    return;
+  }
+  fallback();
+};
+
 interface HeroSectionProps {
   isPlayingAudio: boolean;
+  onOpenAuthor?: () => void;
   onToggleAudio?: () => void;
   onPlayPauseAudio?: () => void;
   onOpenCalculator?: () => void;
@@ -30,6 +48,7 @@ interface HeroSectionProps {
 
 export const HeroSection: React.FC<HeroSectionProps> = ({
   isPlayingAudio,
+  onOpenAuthor,
   onToggleAudio,
   onPlayPauseAudio,
   onOpenCalculator,
@@ -85,7 +104,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 </button>
 
                 <button
-                  onClick={() => handleDemo('chat')}
+                  onClick={() => askStrategyAi(() => handleDemo('chat'))}
                   className="px-4 py-3 rounded-2xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-bold text-xs sm:text-sm border border-slate-200 dark:border-slate-700 flex items-center gap-2 transition-all"
                 >
                   <span>Спросить у AI</span>
@@ -109,7 +128,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               </div>
               <div>
                 <p className="text-xs text-slate-400 font-bold uppercase tracking-wider">Автор</p>
-                <a href={METADATA.authorTelegram} target="_blank" rel="noopener noreferrer" className="mt-0.5 flex items-center gap-2 text-base font-bold text-emerald-600 dark:text-emerald-400 hover:underline block truncate mt-0.5">
+                <button
+                  type="button"
+                  onClick={onOpenAuthor}
+                  aria-label="Об авторе плана"
+                  className="wf-author-link mt-0.5 flex items-center gap-2 text-base font-bold text-emerald-600 dark:text-emerald-400 truncate"
+                >
                   <img
                     src={METADATA.authorPhoto}
                     alt=""
@@ -120,7 +144,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                     onError={(e) => { e.currentTarget.style.display = 'none'; }}
                   />
                   {METADATA.author}
-                </a>
+                </button>
               </div>
             </div>
           </div>

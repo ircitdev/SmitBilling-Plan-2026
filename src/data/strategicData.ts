@@ -1,12 +1,12 @@
 import { Competitor, MatrixRow, Recommendation, RoadmapItem, PriceTier, MarketSegment, SormChecklistItem, MarketGrowthYearData, CompetitiveRadarMetric, PositioningData, ConclusionData, ThreatRisk } from '../types';
 
 export const METADATA = {
-  version: '1.3 от 30.08.2026',
-  build: 'Build 2286',
+  version: '1.4 от 02.09.2026',
+  build: 'Build 2405',
   marketVolume: '5.28 млрд ₽',
   marketGrowth: '+12% в год',
   icp: 'малые ISP 500–5 000 клиентов',
-  author: 'Александр Успешный',
+  author: 'Успешный А. С.',
   authorTelegram: 'https://t.me/uspeshnyy',
   authorPhoto: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/plan2026/usp.jpg',
   reportPath: 'dev_reports/Документация/2026-05-13_Анализ_конкурентов_российский_рынок_биллинга.md',
@@ -16,6 +16,7 @@ export const METADATA = {
   docsUrl: 'https://docs.billing.smit34.ru/',
   roadmapUrl: 'https://billing.smit34.ru/plan2026/roadmap/',
   graphUrl: 'https://docs.billing.smit34.ru/understand/',
+  schemesUrl: 'https://docs.billing.smit34.ru/Workflow/',
   licenseServerUrl: 'https://license.billing.smit34.ru',
   demoUrl: 'https://demo.billing.smit34.ru'
 };
@@ -24,10 +25,10 @@ export const POSITIONING_DATA: PositioningData = {
   oneSentence:
     'СмИТ Биллинг — современная биллинг-система для малых и средних ISP с встроенным AI-агентом, мобильным приложением нового поколения и собственными Поддержкой и CRM. Без legacy наследия, на современном стеке Python/Django, с готовым мигратором из Mikbill; UTM5 и Carbon 4 — в очереди.',
   author: {
-    name: 'Александр Успешный',
+    name: 'Успешный А. С.',
     initials: 'АУ',
     role: 'автор плана',
-    versionDate: 'версия 1.3 от 30.08.2026'
+    versionDate: 'версия 1.4 от 02.09.2026'
   },
   taglines: [
     '«Биллинг для провайдера, который не боится завтрашнего дня»',
@@ -576,7 +577,7 @@ export const MATRIX_DATA: MatrixRow[] = [
     id: 'm1',
     category: 'Базовая информация',
     parameter: 'Год основания',
-    smit: '2025 (Build 2286)',
+    smit: '2025 (Build 2405)',
     smitStatus: 'yes',
     carbon: '2009',
     utm5: '2003',
@@ -2058,7 +2059,7 @@ export const SORM_CHECKLIST: SormChecklistItem[] = [
     duration: 'Реализовано',
     description: 'Генерация файлов абонентских договоров, IP-сессий, платежей, телефонных соединений и паспортных данных в формате CSV/XML/ASN.1.',
     requiredArtifacts: 'Генераторы отчетов, фоновые cron-воркеры, валидация ИНН/СНИЛС/паспорта РФ',
-    currentSmITStatus: 'Готово на 100% (Build 2286)'
+    currentSmITStatus: 'Готово на 100% (Build 2405)'
   },
   {
     id: 'sorm-2',
@@ -2129,7 +2130,7 @@ export const THREAT_RISKS_DATA: ThreatRisk[] = [
     consequences: 'Консервативный провайдер отказывается от перехода, не разбираясь в предмете: проще выбрать поставщика, который скажет «сертифицированы», чем спорить с собственной службой безопасности.',
     mitigationStrategy: '1) Готовые ответы на три типичных вопроса клиента: разводим техническое средство (сертифицируется), сведения об абонентах (наша зона) и организационную часть. 2) Совместимость с шестью производителями средств СОРМ вендорскими профилями — формат сходится без доработок. 3) На лендинге сказано прямо, что сертификата на решение нет: клиент, для которого это критично, уходит до сделки, а не после. 4) Испытания в ЦНИИС запускаем только по триггеру — письменное требование территориального органа плюс участие клиента в расходах.',
     preventiveActions: [
-      'В ядре Build 2286 реализованы все 13 форматов выгрузок СОРМ-3 (абоненты, платежи, сессии, договоры)',
+      'В ядре Build 2405 реализованы все 13 форматов выгрузок СОРМ-3 (абоненты, платежи, сессии, договоры)',
       'Реализован кольцевой буфер и неизменяемый журнал аудита действий операторов',
       'Обеспечена мульти-орг изоляция данных для работы нескольких юрлиц'
     ],
@@ -2162,7 +2163,7 @@ export const THREAT_RISKS_DATA: ThreatRisk[] = [
       'Круглосуточный инженерный саппорт на период переключения абонентов'
     ],
     owner: 'Техлид / Пресейл-инженер',
-    timeline: 'Постоянно (внедрено в Build 2286)',
+    timeline: 'Постоянно (внедрено в Build 2405)',
     residualRisk: 'Умеренный, снимается наглядным Dual-run пилотом',
     color: '#ef4444',
     iconName: 'Clock'
@@ -2274,7 +2275,7 @@ export const THREAT_RISKS_DATA: ThreatRisk[] = [
       'Возможность автономной работы без интернета на локальных квантованных моделях GGUF'
     ],
     owner: 'AI / Backend Team',
-    timeline: 'Внедрено в Build 2286',
+    timeline: 'Внедрено в Build 2405',
     residualRisk: 'Практически устранен локальным on-premise AI контуром',
     color: '#eab308',
     iconName: 'Bot'
@@ -2353,12 +2354,12 @@ export const THREAT_RISKS_DATA: ThreatRisk[] = [
     consequences: 'Рост эксплуатационных расходов оператора и жалобы на дороговизну информирования абонентов.',
     mitigationStrategy: 'Перевод абонентов на бесплатные омниканальные каналы: встроенный Android SMS шлюз (безлимитные SMS со смартфона провайдера за 0 ₽), Telegram Mini App бот, VK-уведомления и Push-сообщения в мобильном приложении.',
     preventiveActions: [
-      'В Build 2286 полностью отлажен Android SMS Gateway с поддержкой нескольких SIM-карт и балансировкой',
+      'В Build 2405 полностью отлажен Android SMS Gateway с поддержкой нескольких SIM-карт и балансировкой',
       'Запущен официальный Telegram-бот самообслуживания абонентов с оплатой через СБП в 1 клик',
       'Push-уведомления доставляются бесплатно через Firebase / RuStore Push SDK'
     ],
     owner: 'Mobile / Integration Lead',
-    timeline: 'Реализовано в Build 2286',
+    timeline: 'Реализовано в Build 2405',
     residualRisk: 'Нулевой (затраты провайдера на SMS снижены до 0 ₽)',
     color: '#10b981',
     iconName: 'Smartphone'
@@ -2386,7 +2387,7 @@ export const THREAT_RISKS_DATA: ThreatRisk[] = [
       'Поддержка оплаты по безналичному расчету и бизнес-картами с автоплатежом'
     ],
     owner: 'Финансовый директор / Бухгалтерия',
-    timeline: 'Внедрено в Build 2286',
+    timeline: 'Внедрено в Build 2405',
     residualRisk: 'Низкий, гарантирован годовыми контрактами',
     color: '#10b981',
     iconName: 'CreditCard'

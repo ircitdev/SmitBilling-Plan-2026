@@ -1,0 +1,277 @@
+/* ─────────────────────────────────────────────────────────────────────
+   Оформление блоков, которых нет в Tailwind-разметке: витрина схем,
+   панель об авторе, полосы прокрутки и общая рамка фокуса.
+
+   Классы вынесены отдельным файлом, потому что это законченные
+   компоненты со своей геометрией, а не набор утилит.
+   ───────────────────────────────────────────────────────────────────── */
+
+/* ── Видимый фокус ─────────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid #10b981;
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+.dark :focus-visible { outline-color: #34d399; }
+
+/* ── Полосы прокрутки в стиле портала ──────────────────────────────── */
+* { scrollbar-width: thin; scrollbar-color: rgba(16, 185, 129, .5) transparent; }
+*::-webkit-scrollbar { width: 10px; height: 10px; }
+*::-webkit-scrollbar-track { background: transparent; }
+*::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+  background-color: rgba(16, 185, 129, .45);
+}
+*::-webkit-scrollbar-thumb:hover { background-color: rgba(16, 185, 129, .75); }
+.dark *::-webkit-scrollbar-thumb { background-color: rgba(52, 211, 153, .4); }
+.dark *::-webkit-scrollbar-thumb:hover { background-color: rgba(52, 211, 153, .7); }
+*::-webkit-scrollbar-corner { background: transparent; }
+
+/* Пока открыта боковая панель, страница под ней не прокручивается. */
+html.wf-locked, html.wf-locked body { overflow: hidden !important; }
+
+/* ── Витрина схем ──────────────────────────────────────────────────── */
+.wfx { padding: 0 0 8px; margin-bottom: 3.5rem; }
+.wfx-inner {
+  max-width: 1180px; margin: 0 auto; padding: 30px 24px 34px;
+  border-radius: 22px; border: 1px solid rgba(16, 185, 129, .18);
+  background: linear-gradient(135deg, rgba(16, 185, 129, .08), rgba(20, 184, 166, .045));
+}
+.dark .wfx-inner {
+  border-color: rgba(16, 185, 129, .25);
+  background: linear-gradient(135deg, rgba(16, 185, 129, .12), rgba(20, 184, 166, .06));
+}
+.wfx-eyebrow {
+  display: inline-block; padding: 4px 12px; border-radius: 100px;
+  background: rgba(16, 185, 129, .15); border: 1px solid rgba(16, 185, 129, .25);
+  color: #047857; font-size: .72rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 1.5px;
+}
+.dark .wfx-eyebrow { color: #34d399; }
+.wfx h2 {
+  margin: 12px 0 8px; font-size: 1.85rem; font-weight: 800;
+  letter-spacing: -.02em; line-height: 1.15; color: #0f172a;
+}
+.dark .wfx h2 { color: #e9ecef; }
+.wfx-lead { margin: 0; max-width: 70ch; color: #475569; line-height: 1.6; }
+.dark .wfx-lead { color: #cbd5e1; }
+.wfx-top { display: flex; align-items: flex-end; justify-content: space-between; gap: 18px; flex-wrap: wrap; }
+.wfx-all {
+  display: inline-flex; align-items: center; gap: 8px; white-space: nowrap;
+  min-height: 44px; padding: 10px 18px; border-radius: 12px; text-decoration: none;
+  background: #10b981; color: #fff; font-weight: 600; font-size: .92rem;
+  transition: background .18s ease, transform .18s ease;
+}
+.wfx-all:hover { background: #059669; transform: translateY(-1px); }
+
+.wfx-tabs { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 20px 0 16px; }
+.wfx-tab {
+  min-height: 44px; padding: 7px 15px; border-radius: 100px; cursor: pointer;
+  border: 1px solid rgba(0, 0, 0, .09); background: rgba(255, 255, 255, .75);
+  color: #475569; font: inherit; font-size: .87rem; font-weight: 600;
+  transition: background .18s ease, border-color .18s ease, color .18s ease;
+}
+.dark .wfx-tab { border-color: rgba(255, 255, 255, .1); background: rgba(30, 41, 59, .5); color: #cbd5e1; }
+.wfx-tab:hover { border-color: #10b981; color: #047857; }
+.dark .wfx-tab:hover { color: #34d399; }
+.wfx-tab[aria-selected="true"] { background: #10b981; border-color: #10b981; color: #fff; }
+
+.wfx-hint {
+  display: none; align-items: center; gap: 6px; margin-left: auto;
+  padding: 6px 12px; border-radius: 100px;
+  background: rgba(16, 185, 129, .12); border: 1px solid rgba(16, 185, 129, .22);
+  color: #047857; font-size: .75rem; font-weight: 600;
+  opacity: 1; transition: opacity .7s ease;
+}
+.dark .wfx-hint { color: #34d399; }
+.wfx-hint svg { animation: wfx-swipe 1.3s ease-in-out infinite; }
+.wfx-hint-off { opacity: 0; pointer-events: none; }
+@keyframes wfx-swipe {
+  0%, 100% { transform: translateX(-4px); }
+  50% { transform: translateX(7px); }
+}
+@media (prefers-reduced-motion: reduce) { .wfx-hint svg { animation: none; } }
+
+.wfx-slider { position: relative; }
+.wfx-track {
+  display: flex; gap: 16px; overflow-x: auto; scroll-behavior: smooth;
+  scroll-snap-type: x mandatory; padding: 4px 2px 12px;
+}
+.wfx-track::-webkit-scrollbar { height: 6px; }
+.wfx-card {
+  flex: 0 0 300px; scroll-snap-align: start; overflow: hidden;
+  border-radius: 16px; border: 1px solid rgba(0, 0, 0, .08);
+  background: #fff; text-decoration: none; color: inherit;
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.dark .wfx-card { background: rgba(30, 41, 59, .55); border-color: rgba(255, 255, 255, .08); }
+.wfx-card:hover, .wfx-card:focus-visible {
+  transform: translateY(-3px); border-color: rgba(16, 185, 129, .4);
+  box-shadow: 0 14px 32px rgba(15, 23, 42, .13);
+}
+.wfx-media { position: relative; display: block; }
+.wfx-card img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; background: #eef2f5; }
+.wfx-clip {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  opacity: 0; transition: opacity .35s ease; pointer-events: none;
+}
+.wfx-clip.ready { opacity: 1; }
+.wfx-card .wfx-dark { display: none; }
+.dark .wfx-card .wfx-light { display: none; }
+.dark .wfx-card .wfx-dark { display: block; }
+@media (prefers-reduced-motion: reduce) { .wfx-clip { display: none; } }
+.wfx-card-body { display: block; padding: 14px 16px 16px; }
+.wfx-kind {
+  display: inline-block; margin-bottom: 7px; padding: 2px 10px; border-radius: 100px;
+  background: rgba(16, 185, 129, .12); border: 1px solid rgba(16, 185, 129, .2);
+  color: #047857; font-size: .66rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 1.2px;
+}
+.dark .wfx-kind { color: #34d399; }
+.wfx-card-title { display: block; font-size: 1rem; font-weight: 700; line-height: 1.3; color: #0f172a; }
+.dark .wfx-card-title { color: #e9ecef; }
+
+.wfx-nav {
+  position: absolute; top: 38%; z-index: 2; width: 44px; height: 44px;
+  display: flex; align-items: center; justify-content: center; cursor: pointer;
+  border-radius: 50%; border: 1px solid rgba(0, 0, 0, .09); background: rgba(255, 255, 255, .94);
+  color: #0f172a; box-shadow: 0 6px 18px rgba(15, 23, 42, .14);
+  transition: transform .18s ease;
+}
+.dark .wfx-nav { background: rgba(15, 23, 42, .92); border-color: rgba(255, 255, 255, .12); color: #e9ecef; }
+.wfx-nav:hover { transform: scale(1.06); }
+.wfx-prev { left: -14px; }
+.wfx-next { right: -14px; }
+.wfx-nav[hidden] { display: none; }
+
+@media (max-width: 760px) {
+  .wfx-inner { padding: 22px 16px 26px; border-radius: 18px; }
+  .wfx h2 { font-size: 1.4rem; }
+  .wfx-card { flex-basis: 250px; }
+  .wfx-nav { display: none; }
+  .wfx-hint { display: inline-flex; }
+}
+
+/* ── Панель «об авторе» ────────────────────────────────────────────── */
+.wf-author-link {
+  cursor: pointer; background: none; border: 0; padding: 0;
+  font: inherit; color: inherit; text-align: left;
+}
+.wf-author-link:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+.wf-bio-backdrop {
+  position: fixed; inset: 0; z-index: 10000;
+  background: rgba(8, 15, 26, .55);
+  opacity: 0; transition: opacity .25s ease; pointer-events: none;
+}
+.wf-bio-backdrop.open { opacity: 1; pointer-events: auto; }
+.wf-bio {
+  position: fixed; top: 0; right: 0; bottom: 0; z-index: 10001;
+  width: min(420px, 100%);
+  display: flex; flex-direction: column;
+  background: #ffffff; color: #0f172a;
+  box-shadow: -18px 0 48px rgba(15, 23, 42, .22);
+  transform: translateX(100%); transition: transform .3s ease;
+  visibility: hidden;
+}
+.wf-bio.open { transform: translateX(0); visibility: visible; }
+.dark .wf-bio { background: #0f141c; color: #e9ecef; }
+@media (prefers-reduced-motion: reduce) {
+  .wf-bio, .wf-bio-backdrop { transition: none; }
+}
+
+.wf-bio-photo { position: relative; flex: 0 0 auto; }
+.wf-bio-photo img { display: block; width: 100%; height: 250px; object-fit: cover; object-position: 32% 20%; }
+.wf-bio-photo::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0) 42%, rgba(15, 23, 42, .78));
+}
+.wf-bio-caption { position: absolute; left: 20px; right: 20px; bottom: 16px; z-index: 1; color: #fff; }
+.wf-bio-caption .wf-bio-name { font-size: 1.12rem; font-weight: 700; }
+.wf-bio-caption .wf-bio-role { font-size: .84rem; color: rgba(255, 255, 255, .82); }
+
+.wf-bio-head {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 18px; border-bottom: 1px solid rgba(0, 0, 0, .08);
+}
+.dark .wf-bio-head { border-color: rgba(255, 255, 255, .08); }
+.wf-bio-title { font-size: .78rem; text-transform: uppercase; letter-spacing: 1.4px; color: #5a6a7d; }
+.dark .wf-bio-title { color: #94a3b8; }
+.wf-bio-name { font-size: 1.05rem; font-weight: 700; letter-spacing: -.01em; }
+.wf-bio-role { font-size: .84rem; color: #5a6a7d; }
+.dark .wf-bio-role { color: #94a3b8; }
+.wf-bio-close {
+  margin-left: auto; width: 44px; height: 44px; flex: 0 0 44px;
+  display: flex; align-items: center; justify-content: center; cursor: pointer;
+  border-radius: 11px; border: 1px solid rgba(0, 0, 0, .1); background: transparent;
+  color: inherit;
+}
+.dark .wf-bio-close { border-color: rgba(255, 255, 255, .14); }
+
+.wf-bio-body { padding: 20px 22px 26px; overflow-y: auto; }
+.wf-bio-facts { display: flex; gap: 10px; margin-bottom: 18px; flex-wrap: wrap; }
+.wf-bio-fact {
+  flex: 1 1 96px; padding: 12px 14px; border-radius: 14px;
+  background: linear-gradient(135deg, rgba(16, 185, 129, .14), transparent 70%);
+  border: 1px solid rgba(16, 185, 129, .2);
+}
+.wf-bio-fact b { display: block; font-size: 1.15rem; font-weight: 800; }
+.wf-bio-fact span { font-size: .74rem; color: #5a6a7d; }
+.dark .wf-bio-fact span { color: #94a3b8; }
+.wf-bio-body p { margin: 0 0 12px; line-height: 1.62; font-size: .93rem; color: #475569; }
+.dark .wf-bio-body p { color: #cbd5e1; }
+.wf-bio-body h3 {
+  margin: 18px 0 8px; font-size: .78rem; text-transform: uppercase;
+  letter-spacing: 1.4px; color: #047857;
+}
+.dark .wf-bio-body h3 { color: #34d399; }
+.wf-bio-links { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
+.wf-bio-links a {
+  display: inline-flex; align-items: center; gap: 8px; min-height: 44px;
+  padding: 10px 14px; border-radius: 11px; text-decoration: none;
+  border: 1px solid rgba(0, 0, 0, .09); color: inherit; font-size: .9rem; font-weight: 500;
+}
+.dark .wf-bio-links a { border-color: rgba(255, 255, 255, .12); }
+.wf-bio-links a:hover { border-color: #10b981; color: #047857; }
+.dark .wf-bio-links a:hover { color: #34d399; }
+
+/* ── Плитки с цифрами рынка ────────────────────────────────────────── */
+/* Геометрия остаётся родной: меняются только подложка и подсветка при
+   наведении, иначе получается вторая рамка поверх карточки. */
+.wf-stat-grid > * > div {
+  border-radius: 24px;
+  border-color: rgba(16, 185, 129, .16);
+  background-image: linear-gradient(135deg, rgba(16, 185, 129, .16), rgba(20, 184, 166, .05) 62%, transparent);
+}
+.wf-stat-grid > *:nth-child(2) > div { background-image: linear-gradient(135deg, rgba(45, 212, 191, .17), rgba(16, 185, 129, .05) 62%, transparent); }
+.wf-stat-grid > *:nth-child(3) > div { background-image: linear-gradient(135deg, rgba(56, 189, 248, .15), rgba(16, 185, 129, .05) 62%, transparent); }
+.wf-stat-grid > *:nth-child(4) > div { background-image: linear-gradient(135deg, rgba(251, 191, 36, .17), rgba(16, 185, 129, .04) 62%, transparent); }
+.wf-stat-grid > *:nth-child(5) > div { background-image: linear-gradient(135deg, rgba(129, 140, 248, .16), rgba(16, 185, 129, .04) 62%, transparent); }
+.wf-stat-grid > *:nth-child(6) > div { background-image: linear-gradient(135deg, rgba(244, 114, 182, .15), rgba(16, 185, 129, .04) 62%, transparent); }
+.wf-stat-grid > * > div:hover { transform: translateY(-3px); }
+.dark .wf-stat-grid > * > div { border-color: rgba(16, 185, 129, .24); }
+
+/* ── Карточки тезисов ──────────────────────────────────────────────── */
+.wf-thesis-grid > * > div {
+  border-radius: 22px;
+  background-image: linear-gradient(150deg, rgba(16, 185, 129, .16), rgba(16, 185, 129, 0) 62%);
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.wf-thesis-grid > *:nth-child(2) > div { background-image: linear-gradient(150deg, rgba(45, 212, 191, .15), rgba(45, 212, 191, 0) 58%); }
+.wf-thesis-grid > *:nth-child(3) > div { background-image: linear-gradient(150deg, rgba(56, 189, 248, .14), rgba(56, 189, 248, 0) 58%); }
+.wf-thesis-grid > *:nth-child(4) > div { background-image: linear-gradient(150deg, rgba(251, 191, 36, .15), rgba(251, 191, 36, 0) 58%); }
+.wf-thesis-grid > *:nth-child(5) > div { background-image: linear-gradient(150deg, rgba(129, 140, 248, .15), rgba(129, 140, 248, 0) 58%); }
+.wf-thesis-grid > * > div:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(15, 23, 42, .10); }
+.dark .wf-thesis-grid > * > div:hover { box-shadow: 0 12px 28px rgba(0, 0, 0, .45); }
+
+/* номер тезиса окрашен в цвет своей карточки */
+.wf-thesis-grid > *:nth-child(2) span { color: #0d9488; }
+.wf-thesis-grid > *:nth-child(3) span { color: #0369a1; }
+.wf-thesis-grid > *:nth-child(4) span { color: #b45309; }
+.wf-thesis-grid > *:nth-child(5) span { color: #4338ca; }
+.dark .wf-thesis-grid > *:nth-child(2) span { color: #5eead4; }
+.dark .wf-thesis-grid > *:nth-child(3) span { color: #7dd3fc; }
+.dark .wf-thesis-grid > *:nth-child(4) span { color: #fcd34d; }
+.dark .wf-thesis-grid > *:nth-child(5) span { color: #a5b4fc; }

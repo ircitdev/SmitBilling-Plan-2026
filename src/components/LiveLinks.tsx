@@ -1,5 +1,5 @@
 import React from 'react';
-import { ExternalLink, Globe, BookOpen, Network, KeyRound, MonitorPlay } from 'lucide-react';
+import { ExternalLink, Globe, BookOpen, Network, KeyRound, MonitorPlay, LayoutGrid } from 'lucide-react';
 import { METADATA } from '../data/strategicData';
 
 /**
@@ -45,6 +45,13 @@ const LINKS = [
     href: METADATA.licenseServerUrl,
     host: 'license.billing.smit34.ru',
     note: 'тарифы, каталог модулей, счета и акты'
+  },
+  {
+    icon: LayoutGrid,
+    title: 'Схемы системы',
+    href: METADATA.schemesUrl,
+    host: 'docs.billing.smit34.ru/Workflow',
+    note: '16 интерактивных схем: архитектура, процессы, деньги'
   }
 ];
 

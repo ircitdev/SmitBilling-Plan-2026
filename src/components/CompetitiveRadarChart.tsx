@@ -162,7 +162,7 @@ export const CompetitiveRadarChart: React.FC<CompetitiveRadarChartProps> = ({
               Радар конкурентного позиционирования
             </span>
             <span className="text-[11px] font-semibold text-slate-500 font-mono">
-              Build 2286 vs Рынок РФ
+              Build 2405 vs Рынок РФ
             </span>
           </div>
 

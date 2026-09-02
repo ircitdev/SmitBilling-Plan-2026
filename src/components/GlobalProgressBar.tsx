@@ -95,7 +95,8 @@ export const GlobalProgressBar: React.FC<GlobalProgressBarProps> = ({
                 onClick={onResetStatuses}
                 title="Сбросить статус всех 12 рекомендаций к исходным данным дорожной карты"
                 className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700 transition-colors"
-              >
+            aria-label="Сбросить статусы рекомендаций"
+          >
                 <RotateCcw className="w-3 h-3" /> Сбросить к исходным
               </button>
             )}

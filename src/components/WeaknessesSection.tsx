@@ -33,7 +33,7 @@ export const WeaknessesSection: React.FC<WeaknessesSectionProps> = ({
         </h2>
 
         <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 max-w-3xl mb-6">
-          Честный анализ 10 слабых мест и барьеров на Build 2286. 
+          Честный анализ 10 слабых мест и барьеров на Build 2405. 
           За последние полторы сотни билдов ключевые продуктовые дыры закрыты — главными внешними блокерами остаются сертификат СОРМ и набор внешней базы.
         </p>
       </ScrollReveal>

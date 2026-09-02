@@ -82,7 +82,7 @@ export const TLDRSection: React.FC<TLDRSectionProps> = ({
               </div>
             </div>
 
-            <ScrollStagger staggerDelay={0.06} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5 text-sm text-slate-700 dark:text-slate-300">
+            <ScrollStagger staggerDelay={0.06} className="wf-thesis-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5 text-sm text-slate-700 dark:text-slate-300">
               <ScrollStaggerItem distance={16} className="h-full">
                 <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800 flex flex-col justify-between hover:border-emerald-500/30 transition-all h-full">
                   <div>

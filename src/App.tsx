@@ -17,6 +17,8 @@ import { ConclusionSection } from './components/ConclusionSection';
 import { TableOfContents } from './components/TableOfContents';
 import { AuroraBackground } from './components/AuroraBackground';
 import { LiveLinks } from './components/LiveLinks';
+import { SchemesSection } from './components/SchemesSection';
+import { AuthorPanel } from './components/AuthorPanel';
 import { RoadmapCta } from './components/RoadmapCta';
 import { Footer } from './components/Footer';
 import { RoiCalculatorModal } from './components/RoiCalculatorModal';
@@ -86,6 +88,7 @@ export default function App() {
   const [isCalculatorOpen, setIsCalculatorOpen] = useState(false);
   const [isSormOpen, setIsSormOpen] = useState(false);
   const [isAiOpen, setIsAiOpen] = useState(false);
+  const [isAuthorOpen, setIsAuthorOpen] = useState(false);
   const [selectedRecommendation, setSelectedRecommendation] = useState<Recommendation | null>(null);
 
   // AI Demo Widget state
@@ -184,6 +187,7 @@ export default function App() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8">
         {/* Hero Section & Audio Player */}
         <HeroSection
+          onOpenAuthor={() => setIsAuthorOpen(true)}
           isPlayingAudio={isPlayingAudio}
           onToggleAudio={() => setIsPlayingAudio(!isPlayingAudio)}
           onOpenCalculator={() => setIsCalculatorOpen(true)}
@@ -194,6 +198,13 @@ export default function App() {
         {/* TL;DR Executive Summary */}
         <TLDRSection
           part="summary"
+          onOpenSormDrawer={() => setIsSormOpen(true)}
+          onOpenCalculator={() => setIsCalculatorOpen(true)}
+        />
+
+        {/* Главный вывод идёт сразу за тезисами: он отвечает именно на них */}
+        <TLDRSection
+          part="verdict"
           onOpenSormDrawer={() => setIsSormOpen(true)}
           onOpenCalculator={() => setIsCalculatorOpen(true)}
         />
@@ -231,31 +242,7 @@ export default function App() {
           onClearFilter={() => setRecoFilter('all')}
         />
 
-        {/* Detailed Roadmap Status */}
-        <RoadmapStatusSection />
-
-        {/* Заключение / Key Insight */}
-        {/* Pricing & Terms for First Clients */}
-        <PricingSection 
-          onOpenCalculator={() => setIsCalculatorOpen(true)}
-          onOpenDemoWidget={handleOpenDemoWidget}
-        />
-
-        {/* Positioning & Go-To-Market Strategy */}
-        <PositioningSection onOpenCalculator={() => setIsCalculatorOpen(true)} />
-
-        {/* Главный вывод — последним, после всех разделов:
-            сильные и слабые стороны разобраны выше своими секциями */}
-        <TLDRSection
-          part="verdict"
-          onOpenSormDrawer={() => setIsSormOpen(true)}
-          onOpenCalculator={() => setIsCalculatorOpen(true)}
-        />
-
-        {/* Работающие адреса продукта — до итогов, как в статической версии */}
-        <LiveLinks />
-
-        {/* Стратегический трекер — итоговый блок, после всех разделов */}
+        {/* Трекер исполнения — сразу за рекомендациями, по которым он считается */}
         <GlobalProgressBar
           statuses={recommendationStatuses}
           onUpdateStatus={handleUpdateStatus}
@@ -263,6 +250,28 @@ export default function App() {
           activeFilter={recoFilter}
           onSelectFilter={setRecoFilter}
           onSelectRecommendation={(reco) => setSelectedRecommendation(reco)}
+        />
+
+        {/* Detailed Roadmap Status */}
+        <RoadmapStatusSection />
+
+        {/* Заключение / Key Insight */}
+        {/* Работающие адреса продукта — до итогов, как в статической версии */}
+        <LiveLinks />
+
+        {/* Схемы системы — продолжение живых доказательств */}
+        <SchemesSection />
+
+        {/* Pricing & Terms for First Clients */}
+        <PricingSection 
+          onOpenCalculator={() => setIsCalculatorOpen(true)}
+          onOpenDemoWidget={handleOpenDemoWidget}
+        />
+
+        {/* Positioning & Go-To-Market Strategy */}
+        <PositioningSection
+          onOpenCalculator={() => setIsCalculatorOpen(true)}
+          onOpenAuthor={() => setIsAuthorOpen(true)}
         />
 
         <ConclusionSection 
@@ -292,6 +301,8 @@ export default function App() {
         isOpen={isCalculatorOpen}
         onClose={() => setIsCalculatorOpen(false)}
       />
+
+      <AuthorPanel open={isAuthorOpen} onClose={() => setIsAuthorOpen(false)} />
 
       <SormModal
         isOpen={isSormOpen}

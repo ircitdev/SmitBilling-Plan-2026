@@ -306,7 +306,7 @@ export const RiskMatrixSection: React.FC<RiskMatrixSectionProps> = ({
             <span className="text-xs font-medium text-slate-500">/ 100</span>
           </div>
           <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
-            {showMitigated ? 'С учетом защитных мер Build 2286' : 'Базовый уровень риска до внедрения мер'}
+            {showMitigated ? 'С учетом защитных мер Build 2405' : 'Базовый уровень риска до внедрения мер'}
           </p>
         </div>
 
@@ -708,10 +708,10 @@ export const RiskMatrixSection: React.FC<RiskMatrixSectionProps> = ({
                 </p>
               </div>
 
-              {/* Preventive Actions in Build 2286 */}
+              {/* Preventive Actions in Build 2405 */}
               <div className="mb-5">
                 <h4 className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> Готовность мер в Build 2286:
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> Готовность мер в Build 2405:
                 </h4>
                 <ul className="space-y-1.5">
                   {selectedRisk.preventiveActions.map((action, idx) => (
@@ -858,7 +858,7 @@ export const RiskMatrixSection: React.FC<RiskMatrixSectionProps> = ({
               </p>
             </div>
             <span className="px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 text-xs font-bold border border-emerald-200 dark:border-emerald-800">
-              Build 2286: 87% мер внедрено
+              Build 2405: 87% мер внедрено
             </span>
           </div>
 
@@ -870,7 +870,7 @@ export const RiskMatrixSection: React.FC<RiskMatrixSectionProps> = ({
                   <th className="py-3.5 px-4 min-w-[200px]">Угроза / Фактор риска</th>
                   <th className="py-3.5 px-3 text-center">Score (P×I)</th>
                   <th className="py-3.5 px-4 min-w-[280px]">Стратегия митигации</th>
-                  <th className="py-3.5 px-4 min-w-[220px]">Превентивные меры Build 2286</th>
+                  <th className="py-3.5 px-4 min-w-[220px]">Превентивные меры Build 2405</th>
                   <th className="py-3.5 px-3">Сроки</th>
                 </tr>
               </thead>

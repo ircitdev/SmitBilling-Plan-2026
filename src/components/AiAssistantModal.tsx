@@ -29,7 +29,7 @@ interface Message {
 const INITIAL_MESSAGES: Message[] = [
   {
     role: 'assistant',
-    text: 'Здравствуйте! Я AI-ассистент по стратегии и продукту **СмИТ Биллинг** (Build 2286). Вы можете спросить меня о позиционировании, целевых ICP (Mikbill, коттеджные МКС, региональные ISP), сравнении с Carbon Soft, UTM5 или Hydra, расчёте окупаемости, архитектуре AI на 7 каналах и плане сертификации СОРМ-3. Чем помочь?'
+    text: 'Здравствуйте! Я AI-ассистент по стратегии и продукту **СмИТ Биллинг** (Build 2405). Вы можете спросить меня о позиционировании, целевых ICP (Mikbill, коттеджные МКС, региональные ISP), сравнении с Carbon Soft, UTM5 или Hydra, расчёте окупаемости, архитектуре AI на 7 каналах и плане сертификации СОРМ-3. Чем помочь?'
   }
 ];
 
@@ -78,7 +78,7 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({ isOpen, onCl
     try {
       // Build context from strategic facts
       const context = `
-Вы — ведущий стратегический эксперт и продуктовый архитектор системы СмИТ Биллинг (версия Build 2286).
+Вы — ведущий стратегический эксперт и продуктовый архитектор системы СмИТ Биллинг (версия Build 2405).
 Ваша задача — давать точные, аргументированные, структурированные ответы на русском языке на вопросы операторов связи, инженеров и инвесторов.
 
 Ключевые факты о СмИТ Биллинг:
@@ -133,7 +133,7 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({ isOpen, onCl
         } else if (lowerQ.includes('sms') || lowerQ.includes('смс') || lowerQ.includes('шлюз')) {
           fallbackReply = `**Преимущество Android SMS-шлюза (sms-gate.app):**\n\n- **Стоимость агрегаторов:** SMS через SMSC/Stream Telecom стоит 3.2–3.8 ₽ за сообщение. При базе 3000 абонентов оператор тратит 10–15 тыс. ₽/мес.\n- **Android-шлюз в СмИТ:** Используется смартфон с SIM-картой с безлимитными SMS (около 700–900 ₽/мес). Экономия составляет до 150 000 – 180 000 ₽ в год.\n- Поддерживаются двусторонние команды: абонент может отправить «БАЛАНС» или «ОП» (обещанный платеж) в ответ и получить автоматическую обработку.`;
         } else {
-          fallbackReply = `**СмИТ Биллинг (Build 2286)** — это комплексное решение для современных интернет-провайдеров. Ключевые возможности: ядро биллинга (Django/PostgreSQL 17), мульти-провайдер AI (Claude, GPT-4o, Gemini), встроенный HelpDesk и CRM, мобильное приложение на Flutter, 54-ФЗ онлайн-кассы и выгрузки СОРМ-3. Для конкретизации выберите один из быстрых вопросов ниже.`;
+          fallbackReply = `**СмИТ Биллинг (Build 2405)** — это комплексное решение для современных интернет-провайдеров. Ключевые возможности: ядро биллинга (Django/PostgreSQL 17), мульти-провайдер AI (Claude, GPT-4o, Gemini), встроенный HelpDesk и CRM, мобильное приложение на Flutter, 54-ФЗ онлайн-кассы и выгрузки СОРМ-3. Для конкретизации выберите один из быстрых вопросов ниже.`;
         }
 
         setMessages((prev) => [...prev, { role: 'assistant', text: fallbackReply }]);
@@ -191,6 +191,7 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({ isOpen, onCl
             onClick={onClose}
             className="p-2.5 rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors shrink-0"
             title="Закрыть (Esc)"
+            aria-label="Закрыть AI-ассистента"
           >
             <X className="w-5 h-5" />
           </button>

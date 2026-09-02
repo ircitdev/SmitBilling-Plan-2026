@@ -157,7 +157,7 @@ export const TableOfContents: React.FC = () => {
   return (
     <>
       {/* Десктоп: слева, прижато к низу экрана */}
-      <div className="hidden lg:block fixed left-6 bottom-6 z-30">
+      <div className="hidden lg:block fixed left-6 bottom-6 z-[95]">
         {open ? (
           <nav
             aria-label="Содержание"

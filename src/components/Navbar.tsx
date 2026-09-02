@@ -70,6 +70,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Audio Podcast Button */}
           <button
             onClick={onPlayAudio}
+            aria-label="Слушать аудиоверсию плана"
             className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium transition-all ${
               isPlayingAudio
                 ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/30'
@@ -84,6 +85,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* ROI / Pricing Calculator */}
           <button
             onClick={onOpenCalculator}
+            aria-label="Открыть калькулятор окупаемости"
             className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
             title="Калькулятор окупаемости для ISP"
           >
@@ -94,6 +96,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* AI Strategy Assistant */}
           <button
             onClick={onOpenAiAssistant}
+            aria-label="Открыть AI-ассистента"
             className="hidden sm:flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-xs hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
             title="Задать вопрос AI-помощнику СмИТ"
           >

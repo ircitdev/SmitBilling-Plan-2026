@@ -73,6 +73,7 @@ export const SormModal: React.FC<SormModalProps> = ({ isOpen, onClose }) => {
 
             <button
               onClick={onClose}
+            aria-label="Закрыть справку по СОРМ"
               className="p-2.5 rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors shrink-0"
               title="Закрыть (Esc)"
             >

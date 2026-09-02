@@ -220,6 +220,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({
           />
           <button
             onClick={onClose}
+            aria-label="Закрыть поиск"
             className="p-2 rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors shrink-0"
             title="Закрыть (Esc)"
           >

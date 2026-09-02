@@ -1,6 +1,9 @@
 @import "tailwindcss";
+/* Витрина схем, панель об авторе, полосы прокрутки и рамка фокуса. */
+@import "./portal-extras.css";
 
 @custom-variant dark (&:is(.dark, .dark *));
+
 
 /* ── Шрифты ──────────────────────────────────────────────────────────
    Inter подключён в index.html, но Tailwind v4 держит в --font-sans свой

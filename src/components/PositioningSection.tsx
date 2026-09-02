@@ -28,9 +28,10 @@ import { ScrollReveal, ScrollStagger, ScrollStaggerItem } from './ScrollReveal';
 
 interface PositioningSectionProps {
   onOpenCalculator?: () => void;
+  onOpenAuthor?: () => void;
 }
 
-export const PositioningSection: React.FC<PositioningSectionProps> = ({ onOpenCalculator }) => {
+export const PositioningSection: React.FC<PositioningSectionProps> = ({ onOpenCalculator, onOpenAuthor }) => {
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
   const [copiedSentence, setCopiedSentence] = useState(false);
   const [selectedIcp, setSelectedIcp] = useState<string | null>('icp1');
@@ -103,7 +104,12 @@ export const PositioningSection: React.FC<PositioningSectionProps> = ({ onOpenCa
 
               {/* Author and Version Footer */}
               <div className="flex flex-wrap items-center justify-between gap-4 mt-6 pt-5 border-t border-slate-100 dark:border-slate-800">
-                <div className="flex items-center gap-3">
+                <button
+                  type="button"
+                  onClick={onOpenAuthor}
+                  aria-label="Об авторе плана"
+                  className="wf-author-link flex items-center gap-3"
+                >
                   <img
                     src={METADATA.authorPhoto}
                     alt=""
@@ -133,7 +139,7 @@ export const PositioningSection: React.FC<PositioningSectionProps> = ({ onOpenCa
                       {POSITIONING_DATA.author.role} · {POSITIONING_DATA.author.versionDate}
                     </div>
                   </div>
-                </div>
+                </button>
 
                 <div className="flex items-center gap-2">
                   <button
