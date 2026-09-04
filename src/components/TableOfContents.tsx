@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { List, ChevronUp, ChevronDown, X } from 'lucide-react';
 
 /**
@@ -18,15 +18,19 @@ type Item = { id: string; title: string };
 /** Подписи короче заголовков: в узкой колонке важна не полнота, а узнаваемость. */
 const SHORT: Record<string, string> = {
   tldr: 'Ключевые выводы',
+  'tldr-details': 'Главный вывод',
   market: 'Состояние рынка',
   competitors: 'Карта конкурентов',
   table: 'Сравнение по 50+',
+  strengths: 'Сильные стороны',
+  weaknesses: 'Слабые места',
   risks: 'Матрица рисков',
   recommendations: '12 рекомендаций',
   status: 'Статус планов',
+  live: 'Живые адреса',
+  schemes: 'Схемы системы',
   license: 'Сервер лицензий',
   pricing: 'Цена и условия',
-  'tldr-details': 'Сильные и слабые стороны',
   positioning: 'Позиционирование',
   conclusion: 'Заключение'
 };
@@ -120,11 +124,50 @@ export const TableOfContents: React.FC = () => {
 
   const pct = useMemo(() => Math.round(progress), [progress]);
 
+  // таймер дожима: если человек нажал другой пункт, старый обязан замолчать —
+  // иначе он утащит страницу обратно к предыдущему разделу
+  const settleTimer = useRef<number | null>(null);
+
+  /**
+   * Переход к разделу с дожимом.
+   *
+   * Простой scrollIntoView промахивался: страница длиной в двадцать шесть
+   * тысяч пикселей дорисовывает разделы по мере приближения — графики,
+   * карточки конкурентов, матрица, — и пока идёт плавная прокрутка, цель
+   * успевает уехать вниз. Клик по дальнему пункту приводил в середину
+   * соседнего раздела. Поэтому после перехода несколько раз проверяем,
+   * где оказался заголовок, и подправляем.
+   */
   const go = (id: string) => {
     const el = document.getElementById(id);
     if (!el) return;
-    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
     setOpenMobile(false);
+    if (settleTimer.current !== null) window.clearTimeout(settleTimer.current);
+
+    const offset = parseFloat(getComputedStyle(el).scrollMarginTop) || 80;
+    const target = () => el.getBoundingClientRect().top + window.scrollY - offset;
+
+    window.scrollTo({ top: target(), behavior: 'smooth' });
+
+    // Держим цель под прицелом три секунды: разделы с графиками
+    // (конкуренты, риски) достраиваются позже остальных и сдвигают
+    // страницу на пару тысяч пикселей уже после того, как прокрутка
+    // закончилась. Выходим раньше, когда положение трижды подряд
+    // оказалось верным — значит, страница устоялась.
+    let tries = 0;
+    let calm = 0;
+    const settle = () => {
+      const off = el.getBoundingClientRect().top - offset;
+      if (Math.abs(off) > 8) {
+        calm = 0;
+        // мгновенно: плавная анимация здесь снова догоняла бы уехавшую цель
+        window.scrollTo({ top: target(), behavior: 'auto' });
+      } else if (++calm >= 3) {
+        return;
+      }
+      if (++tries < 15) settleTimer.current = window.setTimeout(settle, 200);
+    };
+    settleTimer.current = window.setTimeout(settle, 380);
   };
 
   if (!items.length) return null;
@@ -162,7 +205,7 @@ export const TableOfContents: React.FC = () => {
         {open ? (
           <nav
             aria-label="Содержание"
-            className="flex flex-col w-60 max-h-[min(70vh,34rem)] p-4 rounded-2xl bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border border-slate-200 dark:border-slate-800 shadow-xl animate-in fade-in slide-in-from-bottom-2 duration-200 motion-reduce:animate-none"
+            className="wf-glass flex flex-col w-60 max-h-[min(70vh,34rem)] p-4 rounded-2xl backdrop-blur-md border border-slate-200 dark:border-slate-800 shadow-xl animate-in fade-in slide-in-from-bottom-2 duration-200 motion-reduce:animate-none"
           >
             <div className="flex items-center justify-between gap-2 mb-2">
               <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
@@ -204,7 +247,7 @@ export const TableOfContents: React.FC = () => {
             onClick={toggle}
             aria-label="Развернуть содержание"
             aria-expanded={false}
-            className="flex items-center gap-2.5 pl-3 pr-4 py-2.5 rounded-full bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border border-slate-200 dark:border-slate-700 shadow-lg text-slate-700 dark:text-slate-200 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
+            className="wf-glass flex items-center gap-2.5 pl-3 pr-4 py-2.5 rounded-full backdrop-blur-md border border-slate-200 dark:border-slate-700 shadow-lg text-slate-700 dark:text-slate-200 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
           >
             <List className="w-4 h-4" />
             <span className="text-xs font-bold">Содержание</span>
@@ -219,7 +262,7 @@ export const TableOfContents: React.FC = () => {
       <button
         onClick={() => setOpenMobile(true)}
         aria-label="Содержание документа"
-        className="lg:hidden fixed left-4 bottom-5 z-[45] w-12 h-12 rounded-full bg-white/90 dark:bg-slate-900/90 backdrop-blur border border-slate-200 dark:border-slate-700 shadow-lg flex items-center justify-center text-slate-700 dark:text-slate-200 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
+        className="wf-glass lg:hidden fixed left-4 bottom-5 z-[45] w-12 h-12 rounded-full backdrop-blur border border-slate-200 dark:border-slate-700 shadow-lg flex items-center justify-center text-slate-700 dark:text-slate-200 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
       >
         <List className="w-5 h-5" />
         <span className="absolute -top-1 -right-1 px-1.5 py-0.5 rounded-full bg-emerald-500 text-white text-[10px] font-bold tabular-nums">
@@ -233,7 +276,7 @@ export const TableOfContents: React.FC = () => {
           onClick={() => setOpenMobile(false)}
         >
           <div
-            className="w-full sm:max-w-sm sm:ml-4 sm:mb-4 max-h-[75vh] overflow-y-auto bg-white dark:bg-slate-900 rounded-t-[28px] sm:rounded-[24px] border-t sm:border border-slate-200 dark:border-slate-800 p-5 pb-8 animate-in slide-in-from-bottom-6 duration-300 motion-reduce:animate-none"
+            className="w-full sm:max-w-sm sm:ml-4 sm:mb-4 max-h-[75vh] overflow-y-auto wf-glass-strong rounded-t-[28px] sm:rounded-[24px] border-t sm:border border-slate-200 dark:border-slate-800 p-5 pb-8 animate-in slide-in-from-bottom-6 duration-300 motion-reduce:animate-none"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between mb-3">

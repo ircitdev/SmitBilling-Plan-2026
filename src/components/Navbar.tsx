@@ -41,7 +41,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   isPlayingAudio
 }) => {
   return (
-    <header className="sticky top-0 z-40 w-full backdrop-blur-xl bg-white/80 dark:bg-slate-900/80 border-b border-slate-200/80 dark:border-slate-800/80 transition-colors">
+    <header className="wf-glass sticky top-0 z-40 w-full backdrop-blur-xl border-b border-slate-200/80 dark:border-slate-800/80 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
         {/* Brand / Logo - Bento Style */}
         <div className="flex items-center gap-3 min-w-0">

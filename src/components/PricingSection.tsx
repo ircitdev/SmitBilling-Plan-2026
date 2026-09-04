@@ -35,7 +35,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onOpenCalculator
 
 
   return (
-    <section id="pricing" className="py-16 sm:py-20 border-b border-slate-200/80 dark:border-slate-800/80 relative">
+    <section id="pricing" className="scroll-mt-20 py-16 sm:py-20 border-b border-slate-200/80 dark:border-slate-800/80 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
