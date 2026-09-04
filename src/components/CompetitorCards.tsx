@@ -12,8 +12,14 @@ import {
   ExternalLink,
   ShieldCheck
 } from 'lucide-react';
-import { COMPETITORS } from '../data/strategicData';
+import { COMPETITORS, METADATA } from '../data/strategicData';
 import { ScrollReveal, ScrollStagger, ScrollStaggerItem } from './ScrollReveal';
+
+// отдельные страницы сравнений в портале plan2026
+const COMPARE_PAGES: Record<string, string> = {
+  carbon: METADATA.compareCarbonUrl,
+  lanbilling: METADATA.compareLanbillingUrl,
+};
 
 export const CompetitorCards: React.FC = () => {
   return (
@@ -66,6 +72,19 @@ export const CompetitorCards: React.FC = () => {
                   <span>{comp.website.replace('https://', '')}</span>
                   <ExternalLink className="w-3 h-3" />
                 </a>
+
+                {COMPARE_PAGES[comp.id] && (
+                  <a
+                    href={COMPARE_PAGES[comp.id]}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="Полное сравнение по возможностям"
+                    className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200 dark:border-emerald-800 text-xs font-semibold text-emerald-700 dark:text-emerald-300 self-start sm:self-center transition-all duration-200 hover:-translate-y-0.5 hover:shadow-sm"
+                  >
+                    <span>Полное сравнение</span>
+                    <ExternalLink className="w-3 h-3" />
+                  </a>
+                )}
               </div>
 
               {/* Quick Specs Grid with Bento Hover Lift */}

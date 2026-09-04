@@ -148,17 +148,14 @@ const CustomScatterNode = (props: any) => {
 
       {/* Done Checkmark or Rank Number */}
       {isDone ? (
-        <text
-          x={cx}
-          y={cy + 4}
-          textAnchor="middle"
-          fill="#ffffff"
-          fontSize={11}
-          fontWeight="bold"
-          fontFamily="system-ui"
-        >
-          ✓
-        </text>
+        <path
+          d={`M ${cx - 3.4} ${cy} l 2.6 2.8 l 4.8 -5.6`}
+          fill="none"
+          stroke="#ffffff"
+          strokeWidth={1.9}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
       ) : (
         <text
           x={cx}
@@ -301,7 +298,7 @@ export const ImpactVsEffortMatrix: React.FC<ImpactVsEffortMatrixProps> = ({
               ? 'bg-amber-100 text-amber-800 dark:bg-amber-950/60 dark:text-amber-300'
               : 'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400'
           }`}>
-            {item.status === 'completed' ? '✓ Выполнено' : item.status === 'in-progress' ? '⚡ В работе' : 'В планах'}
+            {item.status === 'completed' ? 'Выполнено' : item.status === 'in-progress' ? 'В работе' : 'В планах'}
           </span>
         </div>
 
@@ -498,7 +495,7 @@ export const ImpactVsEffortMatrix: React.FC<ImpactVsEffortMatrixProps> = ({
               <div className="bg-emerald-500/[0.04] dark:bg-emerald-500/[0.06] rounded-tl-2xl p-4 border-r border-b border-dashed border-slate-200 dark:border-slate-800 flex flex-col justify-between">
                 <div className="flex items-center gap-1.5 text-emerald-700 dark:text-emerald-400 font-extrabold text-xs">
                   <Zap className="w-4 h-4 text-emerald-500" />
-                  <span>🚀 БЫСТРЫЕ ПОБЕДЫ (QUICK WINS)</span>
+                  <span>БЫСТРЫЕ ПОБЕДЫ (QUICK WINS)</span>
                 </div>
                 <div className="text-[11px] text-emerald-600/80 dark:text-emerald-400/70 font-medium">
                   Высокий Impact / Низкий Effort · Делать в первую очередь
@@ -509,7 +506,7 @@ export const ImpactVsEffortMatrix: React.FC<ImpactVsEffortMatrixProps> = ({
               <div className="bg-blue-500/[0.04] dark:bg-blue-500/[0.06] rounded-tr-2xl p-4 border-b border-dashed border-slate-200 dark:border-slate-800 flex flex-col justify-between">
                 <div className="flex items-center gap-1.5 text-blue-700 dark:text-blue-400 font-extrabold text-xs">
                   <Target className="w-4 h-4 text-blue-500" />
-                  <span>🎯 СТРАТЕГИЧЕСКИЕ СТАВКИ (MAJOR BETS)</span>
+                  <span>СТРАТЕГИЧЕСКИЕ СТАВКИ (MAJOR BETS)</span>
                 </div>
                 <div className="text-[11px] text-blue-600/80 dark:text-blue-400/70 font-medium">
                   Высокий Impact / Высокий Effort · Фундамент масштаба
@@ -520,7 +517,7 @@ export const ImpactVsEffortMatrix: React.FC<ImpactVsEffortMatrixProps> = ({
               <div className="bg-purple-500/[0.03] dark:bg-purple-500/[0.05] rounded-bl-2xl p-4 border-r border-dashed border-slate-200 dark:border-slate-800 flex flex-col justify-between">
                 <div className="flex items-center gap-1.5 text-purple-700 dark:text-purple-400 font-extrabold text-xs">
                   <Layers className="w-4 h-4 text-purple-500" />
-                  <span>⚡ ТАКТИЧЕСКИЕ УЛУЧШЕНИЯ (FILL-INS)</span>
+                  <span>ТАКТИЧЕСКИЕ УЛУЧШЕНИЯ (FILL-INS)</span>
                 </div>
                 <div className="text-[11px] text-purple-600/80 dark:text-purple-400/70 font-medium">
                   Умеренный Impact / Низкий Effort · Делать по мере сил

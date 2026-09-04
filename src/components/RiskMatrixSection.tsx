@@ -37,7 +37,9 @@ import {
   HelpCircle,
   ShieldCheck,
   BarChart3,
-  ListFilter
+  ListFilter,
+  Circle,
+  Check
 } from 'lucide-react';
 import { askAi } from '../services/aiWidget';
 import { THREAT_RISKS_DATA } from '../data/strategicData';
@@ -572,28 +574,28 @@ export const RiskMatrixSection: React.FC<RiskMatrixSectionProps> = ({
                 {/* Quadrant Watermark Labels */}
                 <div className="absolute top-6 right-6 text-right pointer-events-none select-none opacity-40 dark:opacity-30">
                   <div className="text-[11px] font-black uppercase tracking-wider text-red-600 dark:text-red-400">
-                    🔴 Критическая зона
+                    <Circle className="w-3 h-3 inline-block mr-1.5 align-[-1px]" aria-hidden="true" />Критическая зона
                   </div>
                   <div className="text-[9px] text-slate-500">Высокая вероятность & Ущерб</div>
                 </div>
 
                 <div className="absolute top-6 left-12 pointer-events-none select-none opacity-40 dark:opacity-30">
                   <div className="text-[11px] font-black uppercase tracking-wider text-orange-600 dark:text-orange-400">
-                    🟠 Зона бдительности
+                    <Circle className="w-3 h-3 inline-block mr-1.5 align-[-1px]" aria-hidden="true" />Зона бдительности
                   </div>
                   <div className="text-[9px] text-slate-500">Высокий ущерб / Низкая вер.</div>
                 </div>
 
                 <div className="absolute bottom-12 right-6 text-right pointer-events-none select-none opacity-40 dark:opacity-30">
                   <div className="text-[11px] font-black uppercase tracking-wider text-yellow-600 dark:text-yellow-400">
-                    🟡 Операционные риски
+                    <Circle className="w-3 h-3 inline-block mr-1.5 align-[-1px]" aria-hidden="true" />Операционные риски
                   </div>
                   <div className="text-[9px] text-slate-500">Высокая вер. / Низкий ущерб</div>
                 </div>
 
                 <div className="absolute bottom-12 left-12 pointer-events-none select-none opacity-40 dark:opacity-30">
                   <div className="text-[11px] font-black uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
-                    🟢 Контролируемая зона
+                    <Circle className="w-3 h-3 inline-block mr-1.5 align-[-1px]" aria-hidden="true" />Контролируемая зона
                   </div>
                   <div className="text-[9px] text-slate-500">Низкий риск / Принятие</div>
                 </div>
@@ -717,8 +719,8 @@ export const RiskMatrixSection: React.FC<RiskMatrixSectionProps> = ({
                 <ul className="space-y-1.5">
                   {selectedRisk.preventiveActions.map((action, idx) => (
                     <li key={idx} className="flex items-start gap-2 text-xs text-slate-600 dark:text-slate-300">
-                      <span className="w-4 h-4 rounded-full bg-emerald-100 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300 flex items-center justify-center shrink-0 text-[10px] font-bold mt-0.5">
-                        ✓
+                      <span className="w-4 h-4 rounded-full bg-emerald-100 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300 flex items-center justify-center shrink-0 mt-0.5">
+                        <Check className="w-2.5 h-2.5" aria-hidden="true" />
                       </span>
                       <span>{action}</span>
                     </li>
@@ -907,7 +909,7 @@ export const RiskMatrixSection: React.FC<RiskMatrixSectionProps> = ({
                       <ul className="space-y-1">
                         {risk.preventiveActions.map((act, i) => (
                           <li key={i} className="text-[11px] text-slate-500 dark:text-slate-400 flex items-start gap-1">
-                            <span className="text-emerald-500 font-bold">✓</span> {act}
+                            <Check className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" aria-hidden="true" /> {act}
                           </li>
                         ))}
                       </ul>

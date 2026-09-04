@@ -82,6 +82,7 @@ export interface RoadmapItem {
   category: 'core' | 'ai' | 'finance' | 'ux' | 'compliance' | 'network' | 'infra';
   build?: string;
   planFile?: string;
+  planUrl?: string;
   isFullWidth?: boolean;
   priority?: 'HIGH' | 'MED' | 'LOW';
 }
