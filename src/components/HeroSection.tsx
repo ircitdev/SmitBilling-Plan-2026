@@ -207,7 +207,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
       {/* Bento Audio Podcast Player Card */}
       <ScrollReveal direction="up" distance={20} delay={0.1} className="mb-6">
-        <AudioPodcastPlayer isPlaying={isPlayingAudio} onPlayPause={handleAudio} />
+        {/* якорь: на подкаст ссылается AI-консультант, когда просят
+            рассказать о планах развития вслух */}
+        <div id="podcast" className="scroll-mt-24">
+          <AudioPodcastPlayer isPlaying={isPlayingAudio} onPlayPause={handleAudio} />
+        </div>
       </ScrollReveal>
 
       {/* Disclaimer Bento Card */}

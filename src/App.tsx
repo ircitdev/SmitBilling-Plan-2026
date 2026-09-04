@@ -83,6 +83,53 @@ export default function App() {
   // Audio Podcast State
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
 
+  /**
+   * Подкаст можно включить ссылкой.
+   *
+   * AI-консультант на вопрос «расскажите о планах развития» предлагает
+   * послушать запись и ведёт на #podcast. Приходить туда молча странно:
+   * человек согласился слушать, значит воспроизведение начинается само.
+   * Автозапуск разрешён потому, что предшествует клик по кнопке — без
+   * него браузер бы его и не дал.
+   */
+  useEffect(() => {
+    /**
+     * Панели и запись открываются ссылкой.
+     *
+     * AI-консультант отвечает кнопкой со ссылкой на эту же страницу, а
+     * половина содержимого живёт не в разделах, а в боковых панелях:
+     * профиль автора, разбор СОРМ, калькулятор окупаемости. Раньше он мог
+     * только описать их словами — теперь ведёт прямо в нужную.
+     */
+    const actions: Record<string, () => void> = {
+      podcast: () => {
+        document.getElementById('podcast')
+          ?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        setIsPlayingAudio(true);
+      },
+      author: () => setIsAuthorOpen(true),
+      sorm: () => setIsSormOpen(true),
+      roi: () => setIsCalculatorOpen(true),
+      calculator: () => setIsCalculatorOpen(true),
+    };
+
+    const runFromHash = () => {
+      const key = decodeURIComponent(window.location.hash || '').replace(/^#/, '');
+      actions[key]?.();
+    };
+    runFromHash();
+    window.addEventListener('hashchange', runFromHash);
+
+    // прямые вызовы со страницы: пригодятся кнопкам вне React-дерева
+    (window as any).SmitPage = {
+      podcast: actions.podcast,
+      author: actions.author,
+      sorm: actions.sorm,
+      roi: actions.roi,
+    };
+    return () => window.removeEventListener('hashchange', runFromHash);
+  }, []);
+
   // Modals & Drawers
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isCalculatorOpen, setIsCalculatorOpen] = useState(false);
