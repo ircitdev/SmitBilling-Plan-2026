@@ -24,6 +24,7 @@ const SHORT: Record<string, string> = {
   risks: 'Матрица рисков',
   recommendations: '12 рекомендаций',
   status: 'Статус планов',
+  license: 'Сервер лицензий',
   pricing: 'Цена и условия',
   'tldr-details': 'Сильные и слабые стороны',
   positioning: 'Позиционирование',

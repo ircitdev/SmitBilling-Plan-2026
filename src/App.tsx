@@ -18,6 +18,7 @@ import { TableOfContents } from './components/TableOfContents';
 import { AuroraBackground } from './components/AuroraBackground';
 import { LiveLinks } from './components/LiveLinks';
 import { SchemesSection } from './components/SchemesSection';
+import { LicenseServerSection } from './components/LicenseServerSection';
 import { AuthorPanel } from './components/AuthorPanel';
 import { askAi } from './services/aiWidget';
 import { RoadmapCta } from './components/RoadmapCta';
@@ -26,7 +27,6 @@ import { RoiCalculatorModal } from './components/RoiCalculatorModal';
 import { SormModal } from './components/SormModal';
 import { RecommendationDrawer } from './components/RecommendationDrawer';
 import { SearchModal } from './components/SearchModal';
-import { GeminiDemoWidget } from './components/GeminiDemoWidget';
 import { Recommendation, RecommendationStatus, ThemeMode } from './types';
 
 export default function App() {
@@ -90,15 +90,16 @@ export default function App() {
   const [isAuthorOpen, setIsAuthorOpen] = useState(false);
   const [selectedRecommendation, setSelectedRecommendation] = useState<Recommendation | null>(null);
 
-  // AI Demo Widget state
-  const [isDemoWidgetOpen, setIsDemoWidgetOpen] = useState(false);
-  const [demoWidgetMode, setDemoWidgetMode] = useState<'chat' | 'book' | 'bookings'>('chat');
-  const [demoWidgetContext, setDemoWidgetContext] = useState<any>(undefined);
-
-  const handleOpenDemoWidget = (mode: 'chat' | 'book' | 'bookings' = 'chat', context?: any) => {
-    setDemoWidgetMode(mode);
-    setDemoWidgetContext(context);
-    setIsDemoWidgetOpen(true);
+  /**
+   * Кнопки «Демо», «Записаться» и «Спросить» открывают один AI-консультант —
+   * тот, что подключён скриптом с сервера лицензий. Своего чата на странице
+   * больше нет: два помощника в одном углу спорили друг с другом, а промпт и
+   * история разговоров нужны в одном месте, где их можно читать и править.
+   */
+  const handleOpenDemoWidget = (mode: 'chat' | 'book' | 'bookings' = 'chat') => {
+    const W = (window as any).SmitWidget;
+    if (!W) return;                       // скрипт ещё не загрузился — молча ждём
+    W.open(mode === 'chat' ? 'chat' : 'book');
   };
 
   // Recommendations Roadmap Statuses (Persisted in localStorage)
@@ -261,6 +262,9 @@ export default function App() {
         {/* Схемы системы — продолжение живых доказательств */}
         <SchemesSection />
 
+        {/* Коммерческая половина: чем биллинг продаётся и обслуживается — перед ценой */}
+        <LicenseServerSection />
+
         {/* Pricing & Terms for First Clients */}
         <PricingSection 
           onOpenCalculator={() => setIsCalculatorOpen(true)}
@@ -306,17 +310,6 @@ export default function App() {
       <SormModal
         isOpen={isSormOpen}
         onClose={() => setIsSormOpen(false)}
-      />
-
-      <GeminiDemoWidget
-        isOpen={isDemoWidgetOpen}
-        onOpen={() => {
-          setDemoWidgetMode('chat');
-          setIsDemoWidgetOpen(true);
-        }}
-        onClose={() => setIsDemoWidgetOpen(false)}
-        initialMode={demoWidgetMode}
-        initialContext={demoWidgetContext}
       />
 
       <RecommendationDrawer
