@@ -8,6 +8,10 @@ import time
 
 new_tab("https://billing.smit34.ru/plan2026/roadmap/")
 wait_for_load()
+
+# волны 2 и 3 свёрнуты в <details> — без раскрытия их задачи не попадают в innerText
+js("(() => { document.querySelectorAll('details').forEach(d => d.open = true); return 1; })()")
+import time as _t; _t.sleep(1)
 time.sleep(7)
 
 SCRIPT = r"""(() => {

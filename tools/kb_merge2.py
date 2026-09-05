@@ -89,6 +89,20 @@ for anchor, (title, kw, prio) in FROM_ROADMAP.items():
     })
     added_r += 1
 
+# обзор рынка (Google Docs) и документы сравнений/планов — отдельные шаги,
+# но в базу идут одним файлом: импорт удаляет статьи plan2026:*, которых в нём нет
+extra = 0
+for path, label in (('D:/tmp/kb_gdoc.json', 'обзор рынка'),
+                    ('D:/tmp/kb_docs.json', 'документы сравнений и планов')):
+    try:
+        part = load(path)
+    except (IOError, OSError):
+        print('  ПРОПУЩЕН источник (%s): %s' % (label, path))
+        continue
+    data.extend(part)
+    extra += len(part)
+    print('  %s: %d' % (label, len(part)))
+
 seen = set()
 for a in data:
     assert a['external_id'] not in seen, 'повтор ключа: ' + a['external_id']
