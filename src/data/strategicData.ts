@@ -1,4 +1,4 @@
-import { Competitor, MatrixRow, Recommendation, RoadmapItem, PriceTier, MarketSegment, SormChecklistItem, MarketGrowthYearData, CompetitiveRadarMetric, PositioningData, ConclusionData, ThreatRisk } from '../types';
+import { Competitor, MatrixRow, Recommendation, RoadmapItem, PriceTier, MarketSegment, SormChecklistItem, MarketGrowthYearData, CompetitiveRadarMetric, PositioningData, ConclusionData, ThreatRisk, PodcastEpisode } from '../types';
 
 export const METADATA = {
   version: '1.5 от 04.09.2026',
@@ -2071,6 +2071,56 @@ export const ADDON_MODULES = [
   { id: 'crm_mod', name: 'Поддержка + CRM', price: 2500, desc: 'Тикеты, наряды, воронки' },
   { id: 'ai_mod', name: 'AI-ассистент (7 каналов)', price: 2500, desc: 'Claude / GPT / Gemini / Grok' },
   { id: 'voice_mod', name: 'Голосовой AI-агент', price: 3500, desc: 'Ответ на реальном телефоне' }
+];
+
+/* Выпуски аудиоразбора. Первый размечен по таймкодам, у свежих их нет —
+   показываем темы без времени, чтобы не выдумывать минуты. */
+export const PODCAST_EPISODES: PodcastEpisode[] = [
+  {
+    id: 'tradeoffs',
+    title: 'Дебаты: почему сознательно отказываемся от функций',
+    subtitle: 'Спор о четырёх решениях — с ценой каждого выбора',
+    url: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/audio/debate_tradeoffs.m4a',
+    duration: '18 минут',
+    badge: 'Новое',
+    topics: [
+      { text: 'Свой DPI против интеграции с чужим: чем рискуем, отказываясь от целой строки сравнения.' },
+      { text: 'Модули против довода конкурента «всё из коробки, без доплат».' },
+      { text: 'Бумаги важнее новых функций: что будет, если отложить сертификацию ещё на полгода.' },
+      { text: 'Физическая касса, кабельное ТВ, гостиницы, железо — чего не делаем и почему.' },
+    ],
+  },
+  {
+    id: 'certificates',
+    title: 'Почему проигрываем без сертификатов',
+    subtitle: 'Разбор: отставание не в функциях, а в бумагах',
+    url: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/audio/podcast_certificates.m4a',
+    duration: '16 минут',
+    badge: 'Новое',
+    topics: [
+      { text: 'Рынок и расстановка сил: шесть конкурентов, их цены и чем они закрыты от сравнения.' },
+      { text: 'Сертификат соответствия в области связи и реестр российского ПО как допуск к сделке.' },
+      { text: 'Пять пробелов по значимости для клиента: обмен с 1С, платформы ТВ, платежи, резерв, касса.' },
+      { text: 'Три трека и четыре волны: почему сначала делаем то, что стоит календаря, а не рук.' },
+    ],
+  },
+  {
+    id: 'ai',
+    title: 'ИИ и автоматизация в СмИТ Биллинг',
+    subtitle: 'Обзор продукта: чем берём рынок и как устроен денежный контур',
+    url: METADATA.audioUrl,
+    duration: '15 минут',
+    topics: [
+      { time: '00:00 – 03:20',
+        text: 'Почему рынок ISP-биллинга в РФ (5,28 млрд ₽) застрял в 2010 году и требует перезагрузки.' },
+      { time: '03:20 – 07:15',
+        text: 'Архитектура СмИТ: мульти-провайдерный ИИ, 7 каналов и голосовой ассистент на реальном телефоне.' },
+      { time: '07:15 – 11:40',
+        text: 'Замкнутый денежный контур: от письма банка до чека 54-ФЗ в ОФД без ручного ввода.' },
+      { time: '11:40 – 15:11',
+        text: 'Сертификация СОРМ-3 в ЦНИИС и условия шестимесячного пилота для первых операторов.' },
+    ],
+  },
 ];
 
 export const SORM_CERT_STAGES = [

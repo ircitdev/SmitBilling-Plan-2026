@@ -498,3 +498,34 @@ html {
 .dark .text-emerald-100 {
   color: #ffffff;
 }
+
+/* ── Подсказка «выпусков несколько» ──────────────────────────────────
+   Карточки по очереди приподнимаются волной: видно, что их три и что
+   они переключаются. Волна проходит четыре раза и затихает — иначе
+   постоянное движение мешает читать. Гаснет и раньше, как только
+   человек переключил выпуск сам: подсказка своё дело сделала. */
+
+@keyframes episode-hint {
+  0%, 100% {
+    transform: translateY(0);
+    box-shadow: 0 0 0 rgba(16, 185, 129, 0);
+  }
+  6% {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 22px rgba(16, 185, 129, 0.16);
+  }
+  16% {
+    transform: translateY(0);
+    box-shadow: 0 0 0 rgba(16, 185, 129, 0);
+  }
+}
+
+.episode-hint-on .episode-card {
+  animation: episode-hint 5.4s ease-in-out var(--hint-delay, 0s) 4 both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .episode-hint-on .episode-card {
+    animation: none;
+  }
+}

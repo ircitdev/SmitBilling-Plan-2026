@@ -87,6 +87,22 @@ export interface RoadmapItem {
   priority?: 'HIGH' | 'MED' | 'LOW';
 }
 
+export interface PodcastTopic {
+  /** таймкод, если разговор размечен; у свежих выпусков его нет */
+  time?: string;
+  text: string;
+}
+
+export interface PodcastEpisode {
+  id: string;
+  title: string;
+  subtitle: string;
+  url: string;
+  duration: string;
+  badge?: string;
+  topics: PodcastTopic[];
+}
+
 export interface SormChecklistItem {
   id: string;
   title: string;

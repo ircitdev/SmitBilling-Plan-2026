@@ -11,7 +11,7 @@ import {
   FileText,
   X
 } from 'lucide-react';
-import { METADATA } from '../data/strategicData';
+import { METADATA, PODCAST_EPISODES } from '../data/strategicData';
 
 interface AudioPodcastPlayerProps {
   isPlaying: boolean;
@@ -28,8 +28,30 @@ export const AudioPodcastPlayer: React.FC<AudioPodcastPlayerProps> = ({
   const [playbackRate, setPlaybackRate] = useState(1);
   const [isMuted, setIsMuted] = useState(false);
   const [showTranscript, setShowTranscript] = useState(false);
+  const [episodeId, setEpisodeId] = useState(PODCAST_EPISODES[0].id);
+  // подсказка про выпуски: гаснет сама и сразу после первого переключения
+  const [showHint, setShowHint] = useState(true);
+
+  const episode = PODCAST_EPISODES.find(e => e.id === episodeId) || PODCAST_EPISODES[0];
 
   const rates = [0.75, 1, 1.25, 1.5, 2];
+
+  // Смена выпуска: начинаем сначала и продолжаем слушать, если слушали.
+  const selectEpisode = (id: string) => {
+    setShowHint(false);
+    if (id === episodeId) return;
+    setEpisodeId(id);
+    setCurrentTime(0);
+    setDuration(0);
+    const el = audioRef.current;
+    if (!el) return;
+    const wasPlaying = isPlaying;
+    window.setTimeout(() => {
+      el.currentTime = 0;
+      el.playbackRate = playbackRate;
+      if (wasPlaying) el.play().catch(() => {});
+    }, 0);
+  };
 
   useEffect(() => {
     if (!audioRef.current) return;
@@ -101,7 +123,8 @@ export const AudioPodcastPlayer: React.FC<AudioPodcastPlayerProps> = ({
 
       <audio
         ref={audioRef}
-        src={METADATA.audioUrl}
+        key={episode.id}
+        src={episode.url}
         onTimeUpdate={handleTimeUpdate}
         onLoadedMetadata={handleLoadedMetadata}
         onEnded={() => onPlayPause()}
@@ -128,13 +151,18 @@ export const AudioPodcastPlayer: React.FC<AudioPodcastPlayerProps> = ({
               <span className="bg-emerald-50 dark:bg-emerald-950/70 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider flex items-center gap-1">
                 <Headphones className="w-3 h-3" /> Аудио-подкаст
               </span>
-              <span className="text-xs text-slate-400 font-medium">15 минут</span>
+              <span className="text-xs text-slate-400 font-medium">{episode.duration}</span>
+              {episode.badge && (
+                <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800">
+                  {episode.badge}
+                </span>
+              )}
             </div>
             <h2 className="font-bold text-base sm:text-lg text-slate-900 dark:text-white truncate">
-              ИИ и автоматизация в СмИТ Биллинг
+              {episode.title}
             </h2>
             <p className="text-xs text-slate-500 dark:text-slate-400 truncate">
-              Разбор стратегического плана: рынок ISP, СОРМ, выписки, AI-агент на 7 каналах
+              {episode.subtitle}
             </p>
           </div>
         </div>
@@ -215,8 +243,8 @@ export const AudioPodcastPlayer: React.FC<AudioPodcastPlayerProps> = ({
             </button>
 
             <a
-              href={METADATA.audioUrl}
-              download="podcast_ai_smit_billing.m4a"
+              href={episode.url}
+              download={episode.url.split('/').pop()}
               className="p-2.5 rounded-xl text-slate-600 dark:text-slate-300 bg-slate-50 dark:bg-slate-800/80 hover:bg-slate-100 dark:hover:bg-slate-750 transition-colors"
               title="Скачать запись (M4A)"
             >
@@ -227,31 +255,77 @@ export const AudioPodcastPlayer: React.FC<AudioPodcastPlayerProps> = ({
       </div>
 
       {/* Transcript / Topics Drawer */}
+      {/* Выпуски: их уже три, поэтому нужен явный выбор, а не один трек */}
+      {PODCAST_EPISODES.length > 1 && (
+        <div className="relative z-10 mt-5 pt-5 border-t border-slate-100 dark:border-slate-800">
+          <div className="text-[11px] uppercase tracking-wider text-slate-400 font-bold mb-2.5">
+            Выпуски
+          </div>
+          <div className={`grid grid-cols-1 sm:grid-cols-3 gap-2.5 ${showHint ? 'episode-hint-on' : ''}`}>
+            {PODCAST_EPISODES.map((ep, i) => {
+              const active = ep.id === episode.id;
+              return (
+                <button
+                  key={ep.id}
+                  onClick={() => selectEpisode(ep.id)}
+                  aria-pressed={active}
+                  style={{ ['--hint-delay' as string]: `${i * 0.32}s` } as React.CSSProperties}
+                  className={`episode-card text-left p-3 rounded-2xl border transition-all ${
+                    active
+                      ? 'border-emerald-500/50 bg-emerald-50/60 dark:bg-emerald-950/30 shadow-sm'
+                      : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-emerald-500/30'
+                  }`}
+                >
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className={`text-[10px] font-bold uppercase tracking-wider ${
+                      active ? 'text-emerald-700 dark:text-emerald-400' : 'text-slate-400'
+                    }`}>
+                      {ep.duration}
+                    </span>
+                    {ep.badge && (
+                      <span className="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300">
+                        {ep.badge}
+                      </span>
+                    )}
+                    {active && isPlaying && (
+                      <span className="text-[10px] font-semibold text-emerald-600 dark:text-emerald-400">звучит</span>
+                    )}
+                  </div>
+                  <div className="text-[13px] font-bold text-slate-900 dark:text-white leading-snug">
+                    {ep.title}
+                  </div>
+                  <div className="text-[11px] text-slate-500 dark:text-slate-400 leading-snug mt-0.5">
+                    {ep.subtitle}
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
       {showTranscript && (
         <div className="mt-5 pt-5 border-t border-slate-100 dark:border-slate-800 text-xs sm:text-sm text-slate-700 dark:text-slate-300 space-y-3 animate-fadeIn">
           <div className="flex items-center justify-between font-bold text-slate-900 dark:text-white">
-            <span className="text-xs uppercase tracking-wider text-slate-400 font-bold">Ключевые темы и таймкоды:</span>
+            <span className="text-xs uppercase tracking-wider text-slate-400 font-bold">
+              {episode.topics.some(t => t.time) ? 'Ключевые темы и таймкоды:' : 'О чём выпуск:'}
+            </span>
             <button onClick={() => setShowTranscript(false)} className="text-slate-400 hover:text-slate-600">
               <X className="w-4 h-4" />
             </button>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-            <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
-              <strong className="text-emerald-600 dark:text-emerald-400 block mb-1">00:00 – 03:20</strong>
-              Почему рынок ISP биллинга в РФ (5.28 млрд ₽) застрял в 2010 году и требует перезагрузки.
-            </div>
-            <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
-              <strong className="text-emerald-600 dark:text-emerald-400 block mb-1">03:20 – 07:15</strong>
-              Архитектура СмИТ: мульти-провайдер AI, 7 каналов и голосовой ассистент на реальном телефоне.
-            </div>
-            <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
-              <strong className="text-emerald-600 dark:text-emerald-400 block mb-1">07:15 – 11:40</strong>
-              Замкнутый денежный контур: от почтовой выписки банка до чека 54-ФЗ в ОФД без ручного ввода.
-            </div>
-            <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800">
-              <strong className="text-emerald-600 dark:text-emerald-400 block mb-1">11:40 – 15:11</strong>
-              СОРМ-3 сертификация в ЦНИИС и условия 6 месяцев бесплатного пилота для первых операторов.
-            </div>
+            {episode.topics.map((t, i) => (
+              <div
+                key={i}
+                className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-800"
+              >
+                {t.time && (
+                  <strong className="text-emerald-600 dark:text-emerald-400 block mb-1">{t.time}</strong>
+                )}
+                {t.text}
+              </div>
+            ))}
           </div>
         </div>
       )}
