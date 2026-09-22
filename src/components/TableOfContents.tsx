@@ -20,6 +20,7 @@ const SHORT: Record<string, string> = {
   tldr: 'Ключевые выводы',
   'tldr-details': 'Главный вывод',
   esign: 'Договор на телефоне',
+  fieldops: 'Выезды монтажников',
   market: 'Состояние рынка',
   competitors: 'Карта конкурентов',
   table: 'Сравнение по 50+',

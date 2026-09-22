@@ -4,6 +4,7 @@ import { GlobalProgressBar, DEFAULT_RECOMMENDATION_STATUSES } from './components
 import { HeroSection } from './components/HeroSection';
 import { TLDRSection } from './components/TLDRSection';
 import { ESignSection } from './components/ESignSection';
+import { FieldOpsSection } from './components/FieldOpsSection';
 import { PositioningSection } from './components/PositioningSection';
 import { PricingSection } from './components/PricingSection';
 import { MarketSection } from './components/MarketSection';
@@ -259,6 +260,9 @@ export default function App() {
 
         {/* Акцент 3.7.0: договор подписывается на телефоне с кодом из СМС */}
         <ESignSection />
+
+        {/* Путь заявки до подключения: наряды, план выездов, график, отчёты */}
+        <FieldOpsSection />
 
         {/* Market Context & Regulatory Drivers */}
         <MarketSection onOpenSormModal={() => setIsSormOpen(true)} />
