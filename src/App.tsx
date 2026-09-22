@@ -3,6 +3,7 @@ import { Navbar } from './components/Navbar';
 import { GlobalProgressBar, DEFAULT_RECOMMENDATION_STATUSES } from './components/GlobalProgressBar';
 import { HeroSection } from './components/HeroSection';
 import { TLDRSection } from './components/TLDRSection';
+import { ESignSection } from './components/ESignSection';
 import { PositioningSection } from './components/PositioningSection';
 import { PricingSection } from './components/PricingSection';
 import { MarketSection } from './components/MarketSection';
@@ -255,6 +256,9 @@ export default function App() {
           onOpenSormDrawer={() => setIsSormOpen(true)}
           onOpenCalculator={() => setIsCalculatorOpen(true)}
         />
+
+        {/* Акцент 3.7.0: договор подписывается на телефоне с кодом из СМС */}
+        <ESignSection />
 
         {/* Market Context & Regulatory Drivers */}
         <MarketSection onOpenSormModal={() => setIsSormOpen(true)} />
