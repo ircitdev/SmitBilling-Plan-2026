@@ -18,6 +18,8 @@ interface Scheme {
   title: string;
   kind: string;
   video?: boolean;
+  /** метка версии: обложка или клип заменены под тем же именем */
+  q?: string;
 }
 
 const GROUPS: { name: string; items: Scheme[] }[] = [
@@ -44,7 +46,9 @@ const GROUPS: { name: string; items: Scheme[] }[] = [
     items: [
       { file: 'smitbilling-support.workflow', title: 'Путь обращения', kind: 'Процесс', video: true },
       { file: 'smitbilling-ai.sequence', title: 'Запрос к ассистенту', kind: 'Последовательность' },
-      { file: 'smitbilling-deal.lifecycle', title: 'Жизненный цикл сделки', kind: 'Состояния' }
+      { file: 'smitbilling-deal.lifecycle', title: 'Жизненный цикл сделки', kind: 'Состояния' },
+      { file: 'smitbilling-fieldwork.workflow', title: 'Выезд монтажника', kind: 'Процесс', video: true, q: '?v=20260922' },
+      { file: 'smitbilling-esign.sequence', title: 'Подпись на телефоне', kind: 'Последовательность', video: true, q: '?v=20260922' }
     ]
   },
   {
@@ -96,14 +100,14 @@ const SchemeCard: React.FC<{ item: Scheme }> = ({ item }) => {
       onBlur={stop}
     >
       <span className="wfx-media">
-        <img className="wfx-light" src={COVERS + item.file + '.jpg'} alt="" loading="lazy" />
-        <img className="wfx-dark" src={COVERS + item.file + '_dark.jpg'} alt="" loading="lazy" />
+        <img className="wfx-light" src={COVERS + item.file + '.jpg' + (item.q || '')} alt="" loading="lazy" />
+        <img className="wfx-dark" src={COVERS + item.file + '_dark.jpg' + (item.q || '')} alt="" loading="lazy" />
         {item.video && (
           <>
             <video
               ref={(el) => { clips.current[0] = el; }}
               className="wfx-clip wfx-light"
-              data-src={COVERS + item.file + '.mp4'}
+              data-src={COVERS + item.file + '.mp4' + (item.q || '')}
               muted
               loop
               playsInline
@@ -113,7 +117,7 @@ const SchemeCard: React.FC<{ item: Scheme }> = ({ item }) => {
             <video
               ref={(el) => { clips.current[1] = el; }}
               className="wfx-clip wfx-dark"
-              data-src={COVERS + item.file + '_dark.mp4'}
+              data-src={COVERS + item.file + '_dark.mp4' + (item.q || '')}
               muted
               loop
               playsInline
