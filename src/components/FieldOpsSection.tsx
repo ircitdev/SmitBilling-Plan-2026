@@ -6,7 +6,8 @@ import {
   BarChart3,
   ExternalLink,
   PhoneCall,
-  MapPin
+  MapPin,
+  CalendarCheck
 } from 'lucide-react';
 import { ScrollReveal, ScrollStagger, ScrollStaggerItem } from './ScrollReveal';
 
@@ -64,6 +65,19 @@ const PARTS = [
       'Пробег по утверждённым выездам',
       'Считается из истории этапов сделок, без ручного учёта'
     ]
+  },
+  {
+    icon: CalendarCheck,
+    title: 'Календарь и синхронизация с телефоном',
+    href: `${DEMO}/calendar/`,
+    wide: true,
+    lead: 'Монтажи и задачи CRM на одной сетке — и в штатном календаре смартфона.',
+    points: [
+      'Месячная сетка, на телефоне — список по дням; слои «всё / монтажи / задачи»',
+      'Цвет по этапу сделки и срочности задачи, легенда рядом',
+      'Монтаж или задачу можно создать прямо с календаря и перенести перетаскиванием',
+      'Задачи и монтажи сами попадают в календарь рабочей почты сотрудника по CalDAV — подключается на телефоне как обычный календарь, перенос и закрытие обновляют событие'
+    ]
   }
 ];
 
@@ -108,7 +122,7 @@ export const FieldOpsSection: React.FC = () => (
       {PARTS.map(p => {
         const Icon = p.icon;
         return (
-          <ScrollStaggerItem key={p.title} distance={18} className="h-full">
+          <ScrollStaggerItem key={p.title} distance={18} className={'h-full' + ((p as { wide?: boolean }).wide ? ' md:col-span-2' : '')}>
             <div className="h-full p-6 rounded-[28px] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col">
               <div className="flex items-center gap-3 mb-3">
                 <div className="p-2.5 rounded-2xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 border border-emerald-200/60 dark:border-emerald-800">
